@@ -1,26 +1,23 @@
 class Solution {
 public:
     int minimizeTheDifference(vector<vector<int>>& mat, int target) {
-      
       int m=mat.size(),n=mat[0].size();
-      unordered_set<int>cap{0};
+      int maxsum=0;
+      vector<int>f{1};
       for(int i=0;i<m;i++){
-        unordered_set<int>tmp;
-        int great=-1;
-        for(int x:cap){
-          for(int y:mat[i]){
-            if(x+y<=target) tmp.insert(x+y);
-            else{
-              if(great==-1||great>x+y) great=x+y;
-            }
-          }
+        int best=*max_element(mat[i].begin(),mat[i].end());
+        vector<int>g(maxsum+best+1);
+        for(int x:mat[i]){
+          for(int j=x;j<=maxsum+x;++j)
+            g[j]|=f[j-x];
         }
-        if(great!=-1) tmp.insert(great);
-        cap=std::move(tmp);
+        f=move(g);
+        maxsum+=best;
       }
-      int diff=INT_MAX;
-      for(int i:cap)
-        diff=min(diff,abs(i-target));
-      return diff;
+      int ans=INT_MAX;
+      for(int i=0;i<=maxsum;++i){
+        if(f[i]&&abs(i-target)<ans) ans=abs(i-target);
+      }
+      return ans;
     }
 };
