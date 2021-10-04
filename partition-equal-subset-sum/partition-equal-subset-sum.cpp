@@ -1,21 +1,19 @@
 class Solution {
   public:
   bool canPartition(vector<int>& nums) {
-    int sum=0;
-    for(int n:nums) sum+=n;
+    int sum=accumulate(nums.begin(),nums.end(),0);
     if(sum%2!=0) return false;
     sum/=2;
-    int n=nums.size();
-    nums.insert(nums.begin(),0);
-    vector<vector<int>>dp(n+1,vector<int>(sum+1,false));
-    //dp[i][j]: true or false, when selecting i numbers to get a sum of j
-    dp[0][0]=true;
-    for(int i=1;i<=n;i++){
-      for(int s=1;s<=sum;s++){
-        dp[i][s]=dp[i-1][s]||(s-nums[i]>=0?dp[i-1][s-nums[i]]:false);
+    unordered_set<int>uniq{0};
+    for(int num:nums){
+      auto tmp=uniq;
+      for(int x:uniq){
+        if(num+x==sum) return true;
+        tmp.insert(num+x);
       }
+      uniq=move(tmp);
     }
-    return dp[n][sum];
+    return false;
   }
 };
 
