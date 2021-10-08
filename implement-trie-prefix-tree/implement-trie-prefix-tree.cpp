@@ -1,34 +1,34 @@
 class Trie {
   Trie* children[26]={};
-  bool isword=false;
+  bool isWord=false;
 public:
-    Trie(){
+    Trie() {
         
     }
     
     void insert(string word) {
-      Trie* node=this;
+      Trie* root=this;
       for(char c:word){
-        if(node->children[c-'a']==nullptr) node->children[c-'a']=new Trie();
-        node=node->children[c-'a'];
+        if(root->children[c-'a']==nullptr) root->children[c-'a']=new Trie();
+        root=root->children[c-'a'];
       }
-      node->isword=true;
+      root->isWord=true;
     }
     
     bool search(string word) {
-      Trie* node=this;
+      Trie* root=this;
       for(char c:word){
-        if(node->children[c-'a']==nullptr) return false;
-        node=node->children[c-'a'];
+        if(root->children[c-'a']==nullptr) return false;
+        root=root->children[c-'a'];
       }
-      return node->isword==true;
+      return root->isWord==true;
     }
     
     bool startsWith(string prefix) {
-      Trie* node=this;
+      Trie* root=this;
       for(char c:prefix){
-        if(node->children[c-'a']==nullptr) return false;
-        node=node->children[c-'a'];
+        if(root->children[c-'a']==nullptr) return false;
+        root=root->children[c-'a'];
       }
       return true;
     }
