@@ -3,43 +3,46 @@ struct Trie{
   Trie* children[26]={};
   string word="";
   Trie(){
+
   }
 };
 class Solution {
-public:
-    vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
-      Trie* root=new Trie();
-      for(string s:words){
-        Trie* node=root;
-        for(char c:s){
-          if(node->children[c-'a']==nullptr) node->children[c-'a']=new Trie();
-          node=node->children[c-'a'];
-        }
-        node->word=s;
+  public:
+  int m,n;
+  vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
+    Trie* root0=new Trie();
+    for(string word:words){
+      Trie* root=root0;
+      for(char c:word){
+        if(root->children[c-'a']==nullptr) root->children[c-'a']=new Trie();
+        root=root->children[c-'a'];
       }
-      vector<string>ans;
-      for(int i=0;i<board.size();i++){
-        for(int j=0;j<board[0].size();j++){
-          dfs(i,j,root,board,ans);
-        }
+      root->word=word;
+    }
+    
+    m=board.size(),n=board[0].size();
+    vector<string>ans;
+    for(int i=0;i<m;i++){
+      for(int j=0;j<n;j++){
+        dfs(i,j,root0,ans,board);
       }
-      return ans;
     }
-  void dfs(int i,int j,Trie* t, vector<vector<char>>&board,vector<string>&ans){
-  if(i<0||i>board.size()-1||j<0||j>board[0].size()-1||board[i][j]=='#') return;
-    char c=board[i][j];
-    if(t->children[c-'a']==nullptr) return;
-    t=t->children[c-'a'];
-    if(t->word!="") {
-      ans.push_back(t->word);
-      t->word="";
+    return ans;
+  }
+  void dfs(int r,int c,Trie* root,vector<string>&ans,vector<vector<char>>&board){
+    if(r<0||r>m-1||c<0||c>n-1||board[r][c]=='#') return;
+    char ch=board[r][c];
+    if(root->children[ch-'a']==nullptr) return;
+    root=root->children[ch-'a'];
+    if(root->word!="") {
+      ans.push_back(root->word);
+      root->word="";
     }
-    board[i][j]='#';
-    dfs(i+1,j,t,board,ans);
-    dfs(i-1,j,t,board,ans);
-    dfs(i,j+1,t,board,ans);
-    dfs(i,j-1,t,board,ans);
-    board[i][j]=c;
-    return;
+    board[r][c]='#';
+    dfs(r+1,c,root,ans,board);
+    dfs(r-1,c,root,ans,board);
+    dfs(r,c+1,root,ans,board);
+    dfs(r,c-1,root,ans,board);
+    board[r][c]=ch;
   }
 };
