@@ -1,22 +1,19 @@
 class Solution {
-  public:
-  double new21Game(int n, int k, int maxPts) {
-    vector<double>dp(n+maxPts,1);
-    for(int i=k;i<=n;i++) dp[i]=1;
-    for(int i=n+1;i<n+maxPts;i++) dp[i]=0;
+public:
+    double new21Game(int N, int K, int W) {
+        double dp[K+W];
+        double s=0;
+        for(int i = K; i<K+W; ++i)
+        {
+            dp[i] = i<=N? 1:0;
+            s+=dp[i];
+        }
+        for(int i = K-1; i>=0; --i)
+        {
+            dp[i] = s/W;
+            s = s-dp[i+W]+dp[i];
+        }
+        return dp[0];
 
-    double sum=0;
-    for(int i=k-1;i>=0;i--){
-      if(i==k-1){
-        for(int j=1;j<=maxPts;j++) sum+=dp[i+j];
-        dp[i]=sum/maxPts;
-      }else if(i<k){
-        sum-=dp[i+maxPts+1];
-        sum+=dp[i+1];
-        dp[i]=sum/maxPts;
-      }
     }
-    return dp[0];
-  }
 };
-
