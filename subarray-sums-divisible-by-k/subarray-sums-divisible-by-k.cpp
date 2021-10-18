@@ -10,6 +10,5 @@ public:
         map[prefix]++;
       }
       return ans;
-        
     }
 };
