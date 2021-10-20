@@ -1,22 +1,27 @@
 class Solution {
   public:
   int numberOfArithmeticSlices(vector<int>& nums) {
-    unordered_map<int,vector<int>>map;
+    unordered_map<int,vector<int>>mp;
+    for(int i=0;i<nums.size();i++) mp[nums[i]].push_back(i);
     int n=nums.size();
-    for(int i=0;i<n;i++) map[nums[i]].push_back(i);
-    vector<vector<int>>dp(n,vector<int>(n,0));
+    vector<vector<long>>dp(n,vector<long>(n,0));
+    //dp[i][j]: # of arithmetic subseq ending with nums[i] and nums[j]
     for(int i=0;i<n;i++){
-      for(int j=0;j<i;j++){
-        long m=nums[j]*2L-nums[i];
-        if(m>INT_MAX || m<INT_MIN) continue;
-        for(int k:map[m]) 
-          if(k<j) dp[j][i]+=dp[k][j]+1;
+      for(int j=i+1;j<n;j++){
+        long first=2*(long)nums[i]-(long)nums[j];
+        if(first>INT_MAX||first<INT_MIN) continue;
+        if(mp.find(first)!=mp.end()) {
+          for(long k:mp[first])
+            if(k<i) dp[i][j]+=dp[k][i]+1;
+        }
       }
     }
-    int ans=0;
-    for(int j=0;j<n;j++)
-      for(int i=j+1;i<n;i++)
-        ans+=dp[j][i];
+    long ans=0;
+    for(int i=0;i<n;i++){
+      for(int j=i+1;j<n;j++){
+        ans+=dp[i][j];
+      }
+    }
     return ans;
   }
 };
