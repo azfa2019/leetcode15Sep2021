@@ -1,7 +1,6 @@
 class RandomizedSet {
-  unordered_map<int,int>hash;
   vector<int>v;
-    
+  unordered_map<int,int>hash;
 public:
     RandomizedSet() {
         
@@ -19,16 +18,16 @@ public:
       int valPos=hash[val];
       int lastPos=v.size()-1;
       v[valPos]=v[lastPos];
-      v.pop_back();
       hash[v[valPos]]=valPos;
+      v.pop_back();
       hash.erase(val);
       return true;
     }
     
     int getRandom() {
       int size=v.size();
-      int pos=rand()%size;
-      return v[pos];
+      int tmp=rand()%size;
+      return v[tmp];
     }
 };
 
