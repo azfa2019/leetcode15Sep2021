@@ -1,6 +1,7 @@
 class RandomizedSet {
   unordered_map<int,int>hash;
   vector<int>v;
+    
 public:
     RandomizedSet() {
         
@@ -15,9 +16,8 @@ public:
     
     bool remove(int val) {
       if(hash.find(val)==hash.end()) return false;
-      
-      int lastPos=v.size()-1;
       int valPos=hash[val];
+      int lastPos=v.size()-1;
       v[valPos]=v[lastPos];
       v.pop_back();
       hash[v[valPos]]=valPos;
