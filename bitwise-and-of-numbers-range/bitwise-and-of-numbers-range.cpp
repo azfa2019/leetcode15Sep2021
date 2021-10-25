@@ -3,8 +3,8 @@ class Solution {
   int rangeBitwiseAnd(int left, int right) {
     int mask=(1<<30);
     int ans=0;
-    while(mask>0 && (left&mask)==(right&mask)){
-      ans|=(left&mask);
+    while(mask>0 && (mask&left)==(mask&right)){
+      ans|=(mask&left);
       mask>>=1;
     }
     return ans;
