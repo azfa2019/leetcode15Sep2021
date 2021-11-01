@@ -1,6 +1,6 @@
 class Solution {
-public:
   long M=1e9+7;
+public:
     int findPaths(int m, int n, int maxMove, int startRow, int startColumn) {
       vector<vector<int>>dp(m,vector<int>(n,0));
       auto tmp=dp;
