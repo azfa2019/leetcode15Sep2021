@@ -1,6 +1,6 @@
 class Solution {
-  vector<int>parent;
   int n;
+  vector<int>parent;
   public:
   int regionsBySlashes(vector<string>& grid) {
     n=grid.size();
@@ -9,21 +9,21 @@ class Solution {
       for(int j=0;j<=n;j++){
         int idx=i*(n+1)+j;
         parent[idx]=idx;
-        if(i==0||i==n||j==0||j==n) parent[idx]=0;
+        if(i==0||j==0||i==n||j==n) parent[idx]=0;
       }
     int count=1;
     for(int i=0;i<n;i++)
       for(int j=0;j<n;j++){
-        if(grid[i][j]==' ') continue;
         int a,b;
-        if(grid[i][j]=='/'){
-          a=node(i,j+1);
-          b=node(i+1,j);
+        if(grid[i][j]==' ') continue;
+        else if(grid[i][j]=='/') {
+          a=node(i+1,j);
+          b=node(i,j+1);
         }else{
-          a=node(i,j);
-          b=node(i+1,j+1);
+          a=node(i+1,j+1);
+          b=node(i,j);
         }
-        if(find(a)==find(b)) count++;
+        if(findParent(a)==findParent(b)) count++;
         else unionNodes(a,b);
       }
     return count;
@@ -31,14 +31,14 @@ class Solution {
   int node(int i,int j){
     return i*(n+1)+j;
   }
-  int find(int x){
-    if(parent[x]!=x) parent[x]=find(parent[x]);
-    return parent[x];
+  int findParent(int n){
+    if(parent[n]!=n) parent[n]=findParent(parent[n]);
+    return parent[n];
   }
-  void unionNodes(int a, int b){
-    a=parent[a];
-    b=parent[b];
-    if(a<b) parent[b]=a;
-    else    parent[a]=b;
+  void unionNodes(int n1,int n2){
+    int p1=parent[n1];
+    int p2=parent[n2];
+    if(p1<p2) parent[p2]=p1;
+    else parent[p1]=p2;
   }
 };
