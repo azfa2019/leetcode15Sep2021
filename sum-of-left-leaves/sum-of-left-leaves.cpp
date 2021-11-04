@@ -16,16 +16,11 @@ public:
     }
   int dfs(TreeNode* node){
     int ans=0;
-    if(node->left!=nullptr) ans+=leafNode(node->left)?node->left->val:dfs(node->left);
-    if(node->right!=nullptr && !leafNode(node->right))
-      ans+=dfs(node->right);
+    if(node->left!=nullptr) ans+=isLeaf(node->left)?node->left->val:dfs(node->left);
+    if(node->right!=nullptr && !isLeaf(node->right)) ans+=dfs(node->right);
     return ans;
   }
-  bool leafNode(TreeNode* node){
+  bool isLeaf(TreeNode* node){
     return node->left==nullptr && node->right==nullptr;
   }
-  
 };
-//  1
-// 2 3
-//4 5
