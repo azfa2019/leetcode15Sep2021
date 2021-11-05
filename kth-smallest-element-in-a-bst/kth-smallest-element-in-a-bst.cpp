@@ -12,15 +12,15 @@
 class Solution {
 public:
     int kthSmallest(TreeNode* root, int k) {
-      vector<int>arr;
-      arr=inorder(root,arr);
-      return arr[k-1];
+      int leftsize=helper(root->left);
+      if(leftsize==k-1) return root->val;
+      else if(leftsize>k-1) return kthSmallest(root->left,k);
+      else return kthSmallest(root->right,k-leftsize-1);
     }
-  vector<int>inorder(TreeNode* root,vector<int>&arr){
-    if(root==nullptr) return {};
-    inorder(root->left,arr);
-    arr.push_back(root->val);
-    inorder(root->right,arr);
-    return arr;
+  int helper(TreeNode* node){
+    if(node==nullptr) return 0;
+    int left=helper(node->left);
+    int right=helper(node->right);
+    return left+right+1;
   }
 };
