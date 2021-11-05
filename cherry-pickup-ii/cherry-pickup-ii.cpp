@@ -3,7 +3,6 @@ class Solution {
   int cherryPickup(vector<vector<int>>& grid) {
     int m=grid.size(),n=grid[0].size();
     vector<vector<int>>dp(n,vector<int>(n,INT_MIN));
-    //dp[r][i][j]: max sum at row r, when robots are at col i & j 
     dp[0][n-1]=grid[0][0]+grid[0][n-1];
     for(int r=1;r<m;r++){
       auto dp_old=dp;
@@ -26,7 +25,5 @@ class Solution {
       for(int j=0;j<n;j++)
         ans=max(ans,dp[i][j]);
     return ans;
-    }
+  }
 };
-//dp1[i][j]=max(dp1[i-1][j-1], dp1[i-1][j],dp1[i-1][j+1]) +grid[i][j];
-//dp2[i][j]=max(dp2[i-1][j-1], dp2[i-1][j],dp2[i-1][j+1]) +grid[i][j];
