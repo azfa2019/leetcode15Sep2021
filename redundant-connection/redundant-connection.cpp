@@ -5,7 +5,7 @@ class UF{
   UF(int n){
     parent=vector<int>(n+1,0);
     rank=vector<int>(n+1,0);
-    for(int i=0;i<parent.size();i++) parent[i]=i;
+    for(int i=0;i<=n;i++) parent[i]=i;
   }
   bool unionNodes(int n1,int n2){
     int p1=findRoot(n1);
@@ -29,8 +29,8 @@ class Solution {
   public:
   vector<int> findRedundantConnection(vector<vector<int>>& edges) {
     UF uf0=UF(edges.size());
-    for(auto e:edges){
-        if(!uf0.unionNodes(e[0],e[1])) return e;
+    for(auto e1:edges){
+        if(!uf0.unionNodes(e1[0],e1[1])) return e1;
     }
     return {};
   }
