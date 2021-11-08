@@ -13,17 +13,31 @@ public:
     }
   bool check(vector<int>&nums,int m,long val){
     int count=1;
-    long total=0;
+    long sum=0;
     for(int num:nums){
       if(num>val) return false;
-      total+=num;
-      if(total>val){
-        total=num;//reset
+      if(sum+num>val){
+        sum=0;
+        count++;
+        if(count>m) return false;
+      }
+      sum+=num;
+    }
+    return true;
+  }
+  bool check2(vector<int>&nums,int m,long val){
+    int count=1;
+    long sum=0;
+    for(int num:nums){
+      if(num>val) return false;
+      sum+=num;
+      if(sum>val){
+        sum=num;
         count++;
         if(count>m) return false;
       }
     }
-    return count<=m;
+    return true;
   }
   bool check1(vector<int>&nums,int m,long val){
     int count=0;
