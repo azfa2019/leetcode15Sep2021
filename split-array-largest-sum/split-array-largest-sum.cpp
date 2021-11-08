@@ -12,6 +12,20 @@ public:
       return left;
     }
   bool check(vector<int>&nums,int m,long val){
+    int count=1;
+    long total=0;
+    for(int num:nums){
+      if(num>val) return false;
+      total+=num;
+      if(total>val){
+        total=num;//reset
+        count++;
+        if(count>m) return false;
+      }
+    }
+    return count<=m;
+  }
+  bool check1(vector<int>&nums,int m,long val){
     int count=0;
     for(int i=0;i<n;i++){
       if(nums[i]>val) return false;
