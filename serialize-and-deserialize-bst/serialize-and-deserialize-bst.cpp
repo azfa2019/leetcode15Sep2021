@@ -13,21 +13,22 @@ public:
     // Encodes a tree to a single string.
     string serialize(TreeNode* root) {
       if(root==nullptr) return "#";
-      return to_string(root->val)+" "+serialize(root->left)+" "+" "+serialize(root->right);
+      return to_string(root->val)+" "+serialize(root->left)+" "+serialize(root->right);
+        
     }
 
     // Decodes your encoded data to tree.
     TreeNode* deserialize(string data) {
-        stringstream ss(data);
-      return buildtree(ss);
+      stringstream ss(data);
+      return buildTree(ss);
     }
-  TreeNode* buildtree(stringstream& ss){
+  TreeNode* buildTree(stringstream& ss){
     string tmp;
     ss>>tmp;
     if(tmp=="#") return nullptr;
     TreeNode* root=new TreeNode(stoi(tmp));
-    root->left=buildtree(ss);
-    root->right=buildtree(ss);
+    root->left=buildTree(ss);
+    root->right=buildTree(ss);
     return root;
   }
 };
