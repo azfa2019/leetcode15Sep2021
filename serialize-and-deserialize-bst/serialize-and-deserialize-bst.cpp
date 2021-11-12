@@ -8,30 +8,26 @@
  * };
  */
 class Codec {
-  public:
+public:
 
-  // Encodes a tree to a single string.
-  string serialize(TreeNode* root) {
-    if(root==nullptr) return "#";
-    //string s= serialize(root->left)+" "+serialize(root->right)+" "+to_string(root->val);
-    //cout<<s<<endl;
-    return to_string(root->val)+" "+serialize(root->left)+" "+serialize(root->right);
-  }
+    // Encodes a tree to a single string.
+    string serialize(TreeNode* root) {
+      if(root==nullptr) return "#";
+      return to_string(root->val)+" "+serialize(root->left)+" "+" "+serialize(root->right);
+    }
 
-  // Decodes your encoded data to tree.
-  TreeNode* deserialize(string data) {
-    stringstream ss(data);
-    return buildTree(ss,INT_MIN,INT_MAX);
-  }
-  TreeNode* buildTree(stringstream& ss,int minVal,int maxVal){
-    string word;
-    ss>>word;
-    if(word=="#") return nullptr;
-    int cur=stoi(word);
-    if(cur<minVal||cur>maxVal) return nullptr;
-    TreeNode* root=new TreeNode(cur);
-    root->left=buildTree(ss,minVal,cur);
-    root->right=buildTree(ss,cur,maxVal);
+    // Decodes your encoded data to tree.
+    TreeNode* deserialize(string data) {
+        stringstream ss(data);
+      return buildtree(ss);
+    }
+  TreeNode* buildtree(stringstream& ss){
+    string tmp;
+    ss>>tmp;
+    if(tmp=="#") return nullptr;
+    TreeNode* root=new TreeNode(stoi(tmp));
+    root->left=buildtree(ss);
+    root->right=buildtree(ss);
     return root;
   }
 };
