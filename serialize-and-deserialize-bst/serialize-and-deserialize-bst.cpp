@@ -8,26 +8,64 @@
  * };
  */
 class Codec {
-public:
+  public:
 
-    // Encodes a tree to a single string.
-    string serialize(TreeNode* root) {
-      if(root==nullptr) return "#";
-      return to_string(root->val)+" "+serialize(root->left)+" "+serialize(root->right);
+  // Encodes a tree to a single string.
+  string serialize(TreeNode* root) {
+    if(root==nullptr) return "#";
+    string str;
+    queue<TreeNode*>q;
+    q.push(root);
+    while(!q.empty()){
+      int count=q.size();
+      while(count--){
+        auto node=q.front();
+        q.pop();
+        if(node==nullptr) str+="#";
+        else{
+          str+=to_string(node->val)+"!";
+          q.push(node->left);
+          q.push(node->right);
+        }
+      }
     }
+    return str;
+  }
 
-    // Decodes your encoded data to tree.
-    TreeNode* deserialize(string data) {
-      stringstream ss(data);
-      return buildTree(ss);
+  // Decodes your encoded data to tree.
+  TreeNode* deserialize(string data) {
+    if(data.size()==0) return nullptr;
+    int i=0,j=0;
+    if(data[i]=='#') return nullptr;
+    while(j<data.size() && data[++j]!='!') ;
+    TreeNode* root=new TreeNode(stoi(data.substr(i,j-i)));
+
+    queue<TreeNode*>q;
+    q.push(root);
+    while(i<data.size()){
+      TreeNode* node=q.front();
+      q.pop();
+      if(node==nullptr) continue;
+      i=++j;
+      if(i>=data.size()) break;
+      if(data[i]=='#') {
+        node->left=nullptr;
+      }else{
+        while(j<data.size() && data[++j]!='!') ;
+        node->left=new TreeNode(stoi(data.substr(i,j-i)));
+      }
+      q.push(node->left);
+
+      i=++j;
+      if(i>=data.size()) break;
+      if(data[i]=='#') {
+        node->right=nullptr;
+      }else{
+        while(j<data.size() && data[++j]!='!') ;
+        node->right=new TreeNode(stoi(data.substr(i,j-i)));
+      }
+      q.push(node->right);
     }
-  TreeNode* buildTree(stringstream& ss){
-    string tmp;
-    ss>>tmp;
-    if(tmp=="#") return nullptr;
-    TreeNode* root=new TreeNode(stoi(tmp));
-    root->left=buildTree(ss);
-    root->right=buildTree(ss);
     return root;
   }
 };
