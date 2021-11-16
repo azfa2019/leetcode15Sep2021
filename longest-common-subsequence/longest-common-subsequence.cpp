@@ -1,11 +1,11 @@
 class Solution {
+  int dp[1001][1001];
   public:
   int longestCommonSubsequence(string text1, string text2) {
-    int m=text1.size(),n=text2.size();
+    int m=text1.size();
+    int n=text2.size();
     text1="#"+text1;
     text2="#"+text2;
-    vector<vector<int>>dp(m+1,vector<int>(n+1,0));
-    //dp[i][j]: longest common subsequence when selecting i from text1 and j from text2
     dp[0][0]=0;
     for(int i=1;i<=m;i++){
       for(int j=1;j<=n;j++){
@@ -18,3 +18,7 @@ class Solution {
     return dp[m][n];
   }
 };
+//     i
+//{[acd]g}
+//{[abc]d}e
+//     j
