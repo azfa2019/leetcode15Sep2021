@@ -12,19 +12,31 @@
 class Solution {
   public:
   TreeNode* deleteNode(TreeNode* root, int key) {
-    if(root==nullptr) return nullptr;
-    if(root->val>key) root->left= deleteNode(root->left,key);
-    else if(root->val<key) root->right= deleteNode(root->right,key);
+    if (root==nullptr) return nullptr;
+    if(key>root->val) root->right=deleteNode(root->right,key);
+    else if(key<root->val) root->left=deleteNode(root->left,key);
+
     else{
-      if(root->left==nullptr) return root->right;
-      else if(root->right==nullptr) return root->left;
-      else{
-        TreeNode* node=root->right;
-        while(node->left!=nullptr) node=node->left;
-        node->left=root->left;
-        return root->right;
+      if(root->left==nullptr && root->right==nullptr) return nullptr;
+      else if(root->right!=nullptr) {
+        root->val=successor(root);
+        root->right=deleteNode(root->right,root->val);
+      }else if(root->left!=nullptr){
+        root->val=predecessor(root);
+        root->left=deleteNode(root->left,root->val);
       }
     }
     return root;
   }
+  int successor(TreeNode* root){
+    root=root->right;
+    while(root->left!=nullptr) root=root->left;
+    return root->val;
+  }
+  int predecessor(TreeNode* root){
+    root=root->left;
+    while(root->right!=nullptr) root=root->right;
+    return root->val;
+  }
+
 };
