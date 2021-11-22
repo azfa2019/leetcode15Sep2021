@@ -20,19 +20,19 @@ public:
 */
 
 class Solution {
+  unordered_map<Node*,Node*>map0;
   public:
   Node* cloneGraph(Node* node) {
-    unordered_map<Node*,Node*>map;
-    return helper(node,map);
+    return helper(node);
   }
-  Node* helper(Node* node,unordered_map<Node*,Node*>&map){
+  Node* helper(Node* node){
     if(node==nullptr) return nullptr;
-    if(map.find(node)==map.end()) {
-      map[node]=new Node(node->val);
+    if(map0.find(node)==map0.end()) {
+      map0[node]=new Node(node->val);
       for(auto nei:node->neighbors){
-        map[node]->neighbors.push_back(helper(nei,map));
+        map0[node]->neighbors.push_back(helper(nei));
       }
     }
-    return map[node];
+    return map0[node];
   }
 };
