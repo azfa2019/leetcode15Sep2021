@@ -11,41 +11,31 @@
 class Solution {
   public:
   void reorderList(ListNode* head) {
-    ListNode* fast=new ListNode();
-    ListNode* slow=new ListNode();
-    //fast->next=head;
-    //slow->next=head;
-    fast=head;
-    slow=head;
-    //1(fast,slow)>2>3>4
-    while(fast!=nullptr && fast->next!=nullptr) {
-      fast=fast->next->next; //fast=3, slow=2; fast=nullptr, slow=3
+    ListNode* dummy=new ListNode(-1);
+    dummy->next=head;
+    ListNode* fast=dummy, *slow=dummy;
+    while(fast!=nullptr && fast->next!=nullptr){
+      fast=fast->next->next;
       slow=slow->next;
-    //1>2>3(slow)>4>null(fast)
     }
-    //cout<<slow->val<<endl;
-    ListNode* left=head,*right=reverse(slow);
-    //while(left!=nullptr) cout<<left->val<<endl,left=left->next;
-    //cout<<"---"<<endl;
-    //while(right!=nullptr) cout<<right->val<<endl,right=right->next;
-    //cout<<left->val<<endl;
-    //cout<<right->val<<endl;
-    while(right!=nullptr && left!=nullptr){
+    ListNode* right=reverse(slow->next);
+    ListNode* left=head;
+    while(left!=nullptr && right!=nullptr){
       ListNode* tmp=left->next;
       left->next=right;
       left=tmp;
+      
       tmp=right->next;
       right->next=left;
       right=tmp;
     }
-    if(left!=nullptr) left->next=nullptr;
     //cout<<left->val<<endl;
-    //cout<<right<<endl;
-    //while(head!=nullptr) cout<<head->val<<endl,head=head->next;
-
+    //cout<<left->next->val<<endl;
+    left->next=nullptr;
+    //if(left!=nullptr) left->next=nullptr;
   }
   ListNode* reverse(ListNode* head){
-    ListNode*  pre=nullptr;
+    ListNode* pre=nullptr;
     while(head!=nullptr){
       ListNode* tmp=head->next;
       head->next=pre;
@@ -55,20 +45,23 @@ class Solution {
     return pre;
   }
 };
+//   
+// 1 2 
+// v/v
+// 4 3  n
+//   l  rt
+//       l
+// 1  2  3  
+// v /v /
+// 5  4  n
+//       rt
 
-//1(left)>2>3>null
-//5(right)>4>3>null
-    //while(right!=nullptr && left!=nullptr){
-    //  ListNode* tmp=left->next; 
-//1>5>2>4>3(right,left)>null(tmp)
-    //  left->next=right; 
-//1>5>2>4>3(right,left) null(tmp)
-    //  left=tmp; 
-//1>5>2>4>3(right) null(left)
-    //  tmp=right->next; 
-//1>5>2>4>3(right,tmp) null(left)
-    //  right->next=left;
-//1>5>2>4>3(right,tmp)>null(left)
-    //  right=tmp;
-//1>5>2>4>3(right,tmp)>null(left)
-    //}
+//  1 2 3 4 
+//f   f   f
+//s s s
+
+//  1 2 3 4 5
+//f   f   f   f
+//s s s s
+//  1 2 3 4 
+// p
