@@ -11,15 +11,10 @@
 class Solution {
   public:
   void reorderList(ListNode* head) {
-    ListNode* dummy=new ListNode(-1);
-    dummy->next=head;
-    ListNode* fast=dummy, *slow=dummy;
-    while(fast!=nullptr && fast->next!=nullptr){
-      fast=fast->next->next;
-      slow=slow->next;
-    }
-    ListNode* right=reverse(slow->next);
-    ListNode* left=head;
+    ListNode* fast=head,*slow=head;
+    while(fast!=nullptr && fast->next!=nullptr) fast=fast->next->next,slow=slow->next;
+    ListNode*left=head;
+    ListNode*right=reverse(slow);
     while(left!=nullptr && right!=nullptr){
       ListNode* tmp=left->next;
       left->next=right;
@@ -29,14 +24,12 @@ class Solution {
       right->next=left;
       right=tmp;
     }
-    //cout<<left->val<<endl;
-    //cout<<left->next->val<<endl;
-    left->next=nullptr;
-    //if(left!=nullptr) left->next=nullptr;
+    
+    if(left!=nullptr) left->next=nullptr;
   }
   ListNode* reverse(ListNode* head){
     ListNode* pre=nullptr;
-    while(head!=nullptr){
+    while(head!=nullptr) {
       ListNode* tmp=head->next;
       head->next=pre;
       pre=head;
@@ -45,7 +38,11 @@ class Solution {
     return pre;
   }
 };
-//   
+//    
+// 1 2 
+// v/v
+// 5 4>3>  n
+//         rlt
 // 1 2 
 // v/v
 // 4 3  n
@@ -56,6 +53,14 @@ class Solution {
 // 5  4  n
 //       rt
 
+//1 2 3 4 
+//f   f   f
+//s s s
+
+//1 2 3 4 5
+//f   f   f 
+//s s s
+
 //  1 2 3 4 
 //f   f   f
 //s s s
@@ -63,5 +68,3 @@ class Solution {
 //  1 2 3 4 5
 //f   f   f   f
 //s s s s
-//  1 2 3 4 
-// p
