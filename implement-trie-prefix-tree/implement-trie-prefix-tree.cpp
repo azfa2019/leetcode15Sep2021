@@ -1,37 +1,36 @@
 class Trie {
   Trie* children[26]={};
-  bool isWord=false;
-public:
-    Trie() {
-        
+  bool isword=false;
+  public:
+  Trie() {
+  }
+
+  void insert(string word) {
+    Trie* node=this;
+    for(char c:word){
+      if(node->children[c-'a']==nullptr) node->children[c-'a']=new Trie();
+      node=node->children[c-'a'];
     }
-    
-    void insert(string word) {
-      Trie* root=this;
-      for(char c:word){
-        if(root->children[c-'a']==nullptr) root->children[c-'a']=new Trie();
-        root=root->children[c-'a'];
-      }
-      root->isWord=true;
+    node->isword=true;
+  }
+
+  bool search(string word) {
+    Trie* node=this;
+    for(char c:word){
+      if(node->children[c-'a']==nullptr) return false;
+      node=node->children[c-'a'];
     }
-    
-    bool search(string word) {
-      Trie* root=this;
-      for(char c:word){
-        if(root->children[c-'a']==nullptr) return false;
-        root=root->children[c-'a'];
-      }
-      return root->isWord==true;
+    return node->isword==true;
+  }
+
+  bool startsWith(string prefix) {
+    Trie* node=this;
+    for(char c:prefix){
+      if(node->children[c-'a']==nullptr) return false;
+      node=node->children[c-'a'];
     }
-    
-    bool startsWith(string prefix) {
-      Trie* root=this;
-      for(char c:prefix){
-        if(root->children[c-'a']==nullptr) return false;
-        root=root->children[c-'a'];
-      }
-      return true;
-    }
+    return true;
+  }
 };
 
 /**
