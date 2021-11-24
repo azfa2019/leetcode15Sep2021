@@ -1,19 +1,21 @@
 class Solution {
   public:
   bool canFinish(int numCourses, vector<vector<int>>& pre) {
-    vector<vector<int>>graph(numCourses);
-    for(auto p:pre) graph[p[1]].push_back(p[0]);
+    vector<vector<int>>g(numCourses);
+    for(auto p:pre) g[p[1]].push_back(p[0]);
     vector<int>flags(numCourses,0);
-    for(int i=0;i<numCourses;i++)
-      if(!dfs(i,flags,graph)) return false;
+    for(int i=0;i<numCourses;i++){
+      if(dfs(i,g,flags)==false) return false;
+    }
     return true;
   }
-  bool dfs(int i,vector<int>&flags,vector<vector<int>>&graph){
-    if(flags[i]==-1) return true;
+  bool dfs(int i,vector<vector<int>>&g,vector<int>&flags){
     if(flags[i]==1) return false;
+    if(flags[i]==-1) return true;
     flags[i]=1;
-    for(int next:graph[i])
-      if(!dfs(next,flags,graph)) return false;
+    for(int next:g[i]){
+      if(dfs(next,g,flags)==false) return false;
+    }
     flags[i]=-1;
     return true;
   }
