@@ -3,6 +3,7 @@ class Trie {
   bool isword=false;
   public:
   Trie() {
+
   }
 
   void insert(string word) {
