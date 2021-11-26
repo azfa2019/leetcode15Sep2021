@@ -10,17 +10,19 @@
  * };
  */
 class Solution {
-public:
-    int kthSmallest(TreeNode* root, int k) {
-      int leftsize=helper(root->left);
-      if(leftsize==k-1) return root->val;
-      else if(leftsize>k-1) return kthSmallest(root->left,k);
-      else return kthSmallest(root->right,k-leftsize-1);
+  public:
+  int kthSmallest(TreeNode* root, int k) {
+    stack<TreeNode*>stack;
+    while(true){
+      while(root!=nullptr){
+        stack.push(root);
+        root=root->left;
+      }
+      root=stack.top();
+      stack.pop();
+      if(--k==0) return root->val;
+      root=root->right;
     }
-  int helper(TreeNode* node){
-    if(node==nullptr) return 0;
-    int left=helper(node->left);
-    int right=helper(node->right);
-    return left+right+1;
+    return 0;
   }
 };
