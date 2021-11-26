@@ -2,6 +2,7 @@ class Solution {
   public:
   bool isAnagram(string s, string t) {
     vector<int>count(26,0);
+    if(s.size()!=t.size()) return false;
     for(char c:s){
       count[c-'a']++;
     }
