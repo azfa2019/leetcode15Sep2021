@@ -1,12 +1,11 @@
 class Solution {
-public:
-    bool canAttendMeetings(vector<vector<int>>& intervals) {
-      sort(intervals.begin(),intervals.end());
-      vector<int> e0{-1,-1};
-      for(auto e:intervals){
-        if(e0[1]>e[0]) return false;
-        e0=e;
-      }
-      return true;
+  public:
+  bool canAttendMeetings(vector<vector<int>>& intervals) {
+    sort(intervals.begin(),intervals.end());
+    int n=intervals.size();
+    for(int i=1;i<n;i++){
+      if(intervals[i-1][1]>intervals[i][0]) return false;
     }
+    return true;
+  }
 };
