@@ -1,25 +1,36 @@
-class Solution {
+class UF{
   public:
-  bool validTree(int n, vector<vector<int>>& edges) {
-    unordered_map<int,vector<int>>g;
-    for(auto e:edges){
-      g[e[0]].push_back(e[1]);
-      g[e[1]].push_back(e[0]);
-    }
-    stack<int>stack0;
-    stack0.push(0);
-    unordered_map<int,int>parent;
-    parent[0]=-1;
-    while(!stack0.empty()){
-      int cur=stack0.top();
-      stack0.pop();
-      for(int nei:g[cur]){
-        if(parent[cur]==nei) continue;
-        if(parent.find(nei)!=parent.end()) return false;
-        parent[nei]=cur;
-        stack0.push(nei);
-      }
-    }
-    return parent.size()==n;
+  vector<int>parent;
+  vector<int>rank;
+  UF(int n){
+    parent=vector<int>(n,0);
+    rank=vector<int>(n,0);
+    for(int i=0;i<n;i++) parent[i]=i;
   }
+  bool unionNodes(int x,int y){
+    x=findParent(x);
+    y=findParent(y);
+    if(x==y) return false;
+    if(rank[x]>rank[y]) parent[y]=x;
+    else if(rank[x]<rank[y]) parent[x]=y;
+    else parent[y]=x,rank[x]++;
+    return true;
+  }
+  int findParent(int x){
+    if(x!=parent[x]) parent[x]=findParent(parent[x]);
+    return parent[x];
+  }
+};
+class Solution {
+public:
+    bool validTree(int n, vector<vector<int>>& edges) {
+      UF uf=UF(n);
+      for(auto e:edges){
+        if(uf.unionNodes(e[0],e[1])==false) return false;
+      }
+
+      unordered_set<int>set;
+      for(int i=0;i<n;i++) set.insert(uf.findParent(i));
+      return set.size()==1;
+    }
 };
