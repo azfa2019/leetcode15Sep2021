@@ -1,36 +1,37 @@
-class UF{
+class UnionFind{
   public:
   vector<int>parent;
   vector<int>rank;
-  UF(int n){
+  UnionFind(int n){
     parent=vector<int>(n,0);
     rank=vector<int>(n,0);
-    for(int i=0;i<n;i++) parent[i]=i;
+    for(int i=0;i<parent.size();i++) parent[i]=i;
   }
-  bool unionNodes(int x,int y){
-    x=findParent(x);
-    y=findParent(y);
-    if(x==y) return false;
-    if(rank[x]>rank[y]) parent[y]=x;
-    else if(rank[x]<rank[y]) parent[x]=y;
-    else parent[y]=x,rank[x]++;
+  bool unionnodes(int n1,int n2){
+    int p1=findroot(n1);
+    int p2=findroot(n2);
+    if(p1==p2) return false;
+    if(rank[p1]<rank[p2]) parent[p1]=p2;
+    else if(rank[p1]>rank[p2]) parent[p2]=p1;
+    else parent[p2]=p1,rank[p1]++;
     return true;
   }
-  int findParent(int x){
-    if(x!=parent[x]) parent[x]=findParent(parent[x]);
-    return parent[x];
+  int findroot(int n){
+    if(n!=parent[n]) parent[n]=findroot(parent[n]);
+    return parent[n];
   }
 };
 class Solution {
 public:
     bool validTree(int n, vector<vector<int>>& edges) {
-      UF uf=UF(n);
+      if(edges.size()!=n-1) return false;
+      UnionFind uf=UnionFind(n);
       for(auto e:edges){
-        if(uf.unionNodes(e[0],e[1])==false) return false;
+        if(!uf.unionnodes(e[0],e[1])) return false;
       }
-
-      unordered_set<int>set;
-      for(int i=0;i<n;i++) set.insert(uf.findParent(i));
-      return set.size()==1;
+      return true;
+      //unordered_set<int>set;
+      //for(int i=0;i<n;i++) set.insert(uf.findroot(i));
+      //return set.size()==1;
     }
 };
