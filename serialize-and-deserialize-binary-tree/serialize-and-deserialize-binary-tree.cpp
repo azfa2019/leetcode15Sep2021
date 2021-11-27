@@ -12,47 +12,22 @@ class Codec {
 
   // Encodes a tree to a single string.
   string serialize(TreeNode* root) {
-    queue<TreeNode*>q;
     if(root==nullptr) return "#";
-    string ans;
-    q.push(root);
-    while(!q.empty()){
-      TreeNode* cur=q.front();q.pop();
-      if(cur==nullptr) ans+="# ";
-      else{
-        ans+=to_string(cur->val)+" ";
-        q.push(cur->left);
-        q.push(cur->right);
-      }
-    }
-    return ans;
+    return to_string(root->val)+" "+serialize(root->left)+" "+serialize(root->right);
   }
 
   // Decodes your encoded data to tree.
   TreeNode* deserialize(string data) {
     stringstream ss(data);
+    return helper(ss);
+  }
+  TreeNode* helper(stringstream& ss){
     string tmp;
-    queue<TreeNode*>q;
     ss>>tmp;
     if(tmp=="#") return nullptr;
     TreeNode* root=new TreeNode(stoi(tmp));
-    q.push(root);
-    while(!q.empty()){
-      TreeNode* cur=q.front();q.pop();
-      if(cur==nullptr) continue;
-      ss>>tmp;
-      if(tmp!="#"){
-        TreeNode* l=new TreeNode(stoi(tmp));
-        q.push(l);
-        cur->left=l;
-      }
-      ss>>tmp;
-      if(tmp!="#"){
-        TreeNode* r=new TreeNode(stoi(tmp));
-        q.push(r);
-        cur->right=r;
-      }
-    }
+    root->left=helper(ss);
+    root->right=helper(ss);
     return root;
   }
 };
