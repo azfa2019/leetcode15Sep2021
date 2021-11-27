@@ -22,17 +22,19 @@ class UF{
   }
 };
 class Solution {
-public:
-    int findCircleNum(vector<vector<int>>& isConnected) {
-      int n=isConnected.size();
-      UF uf0=UF(n);
-      for(int i=0;i<n;i++)
-        for(int j=i+1;j<n;j++){
-          if(isConnected[i][j]==1) uf0.unionNodes(i,j);
-        }
-      unordered_set<int>set0;
-      for(int i=0;i<n;i++) set0.insert(uf0.findParent(i));
-      return set0.size();
-        
+  public:
+  int findCircleNum(vector<vector<int>>& isConnected) {
+    int n=isConnected.size();
+    UF uf=UF(n);
+    for(int i=0;i<n;i++){
+      for(int j=i+1;j<n;j++){
+        if(isConnected[i][j]) uf.unionNodes(i,j);
+      }
     }
+    unordered_set<int>set;
+    for(int i=0;i<n;i++){
+      set.insert(uf.findParent(i));
+    }
+    return set.size();
+  }
 };
