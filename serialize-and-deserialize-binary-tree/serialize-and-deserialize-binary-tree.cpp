@@ -13,14 +13,14 @@ class Codec {
   // Encodes a tree to a single string.
   string serialize(TreeNode* root) {
     queue<TreeNode*>q;
+    if(root==nullptr) return "#";
     string ans;
-    if(root==nullptr) return "# ";
     q.push(root);
     while(!q.empty()){
       TreeNode* cur=q.front();q.pop();
       if(cur==nullptr) ans+="# ";
-      else {
-        ans+=(to_string(cur->val)+" ");
+      else{
+        ans+=to_string(cur->val)+" ";
         q.push(cur->left);
         q.push(cur->right);
       }
@@ -39,7 +39,7 @@ class Codec {
     q.push(root);
     while(!q.empty()){
       TreeNode* cur=q.front();q.pop();
-      if (cur==nullptr) continue;
+      if(cur==nullptr) continue;
       ss>>tmp;
       if(tmp!="#"){
         TreeNode* l=new TreeNode(stoi(tmp));
