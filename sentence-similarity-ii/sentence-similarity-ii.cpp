@@ -24,22 +24,26 @@ class UF{
 class Solution {
 public:
     bool areSentencesSimilarTwo(vector<string>& sentence1, vector<string>& sentence2, vector<vector<string>>& similarPairs) {
-      unordered_map<string,int>map0;
       int m=sentence1.size();
-      if(m!=sentence2.size()) return false;
-      int n=similarPairs.size();
-      if(n==0) return false;
-      int count=0;
-      for(int i=0;i<m;i++) {
-        if(map0.find(sentence1[i])==map0.end()) map0[sentence1[i]]=count++;
-        if(map0.find(sentence2[i])==map0.end()) map0[sentence2[i]]=count++;
+      int n=sentence2.size();
+      if(m!=n) return false;
+      unordered_set<string>set;
+for(string s:sentence1) set.insert(s);
+for(string s:sentence2) set.insert(s);
+      for(auto e:similarPairs) {
+        set.insert(e[0]);
+        set.insert(e[1]);
       }
-      UF uf0=UF(map0.size());
-      for(int i=0;i<n;i++){
-        uf0.unionNodes(map0[similarPairs[i][0]], map0[similarPairs[i][1]]);
+      vector<string>all(set.begin(),set.end());
+      unordered_map<string,int>map;
+      for(int i=0;i<all.size();i++) map[all[i]]=i;
+      UF uf=UF(all.size());
+      for(int i=0;i<similarPairs.size();i++){
+        uf.unionNodes(map[similarPairs[i][0]],map[similarPairs[i][1]]);
+      } 
+      for(int i=0;i<n;i++) {
+        if(uf.findParent(map[sentence1[i]])!=uf.findParent(map[sentence2[i]])) return false;
       }
-      for(int i=0;i<m;i++)
-        if(uf0.findParent(map0[sentence1[i]])!=uf0.findParent(map0[sentence2[i]])) return false;
       return true;
     }
 };
