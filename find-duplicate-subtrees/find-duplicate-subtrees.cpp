@@ -10,18 +10,14 @@
  * };
  */
 class Solution {
-  vector<TreeNode*>ans;
-  int uid=0;
-  map<tuple<int,int,int>,int>treeid;
-  map<int,int>count;
-  int dfs(TreeNode* node){
-    if(node==nullptr) return -1;
-    auto curtree=make_tuple(node->val,dfs(node->left),dfs(node->right));
-    if(treeid.find(curtree)==treeid.end()) treeid[curtree]=uid,uid++;
-    int curid=treeid[curtree];
-    count[curid]++;
-    if(count[curid]==2) ans.push_back(node);
-    return curid;
+  unordered_map<string,int>count;
+  vector<TreeNode*> ans;
+  string dfs(TreeNode* node){
+    if(node==nullptr) return "#";
+    string cur= to_string(node->val)+","+dfs(node->left)+","+dfs(node->right);
+    count[cur]++;
+    if(count[cur]==2) ans.push_back(node);
+    return cur;
   }
 public:
     vector<TreeNode*> findDuplicateSubtrees(TreeNode* root) {
