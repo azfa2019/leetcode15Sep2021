@@ -1,7 +1,7 @@
 class UF{
   public:
-  vector<int> parent;
-  vector<int> rank;
+  vector<int>parent;
+  vector<int>rank;
   UF(int n){
     parent=vector<int>(n,0);
     rank=vector<int>(n,0);
@@ -17,7 +17,7 @@ class UF{
     if(px==py) return false;
     if(rank[px]>rank[py]) parent[py]=px;
     else if(rank[px]<rank[py]) parent[px]=py;
-    else parent[px]=py, rank[py]++;
+    else parent[px]=py,rank[py]++;
     return true;
   }
 };
@@ -27,6 +27,7 @@ class Solution {
     unordered_map<string,int>mail2id;
     int n=accounts.size();
     UF uf=UF(n);
+
     for(int i=0;i<n;i++){
       int m=accounts[i].size();
       for(int j=1;j<m;j++){
@@ -35,9 +36,7 @@ class Solution {
       }
     }
     unordered_map<int,vector<string>>id2mail;
-    for(auto e:mail2id){
-      id2mail[uf.findParent(e.second)].push_back(e.first);
-    }
+    for(auto& e:mail2id) id2mail[uf.findParent(e.second)].push_back(e.first);
     vector<vector<string>>ans;
     for(auto& e:id2mail){
       vector<string>tmp{accounts[e.first][0]};
