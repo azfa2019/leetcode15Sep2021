@@ -25,7 +25,7 @@ class Solution {
     if(l[1]<root->val && r[0]>root->val){
       int size=l[2]+r[2]+1;
       ans=max(ans,size);
-      return {l[0]==INT_MAX?root->val:l[0],r[1]==INT_MIN?root->val:r[1],size};
+      return {l[2]==0?root->val:l[0],r[1]==INT_MIN?root->val:r[1],size};
     }else return {INT_MIN,INT_MAX,-1};
   }
 };
