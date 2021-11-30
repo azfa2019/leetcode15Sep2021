@@ -10,18 +10,24 @@
  * };
  */
 class Solution {
-  unordered_map<string,int>count;
+  unordered_map<string,int>key2id;
+  unordered_map<string,int>key2count;
   vector<TreeNode*> ans;
-  string dfs(TreeNode* node){
-    if(node==nullptr) return "#";
-    string cur= to_string(node->val)+","+dfs(node->left)+","+dfs(node->right);
-    count[cur]++;
-    if(count[cur]==2) ans.push_back(node);
-    return cur;
-  }
 public:
     vector<TreeNode*> findDuplicateSubtrees(TreeNode* root) {
-      dfs(root);
+      getId(root);
       return ans;
     }
+  int getId(TreeNode* node){
+    if(node==nullptr) return -1;
+    string key=to_string(node->val)+"#"+to_string(getId(node->left))+"#"+to_string(getId(node->right));
+    if(key2id.find(key)==key2id.end()){
+      key2id[key]=key2id.size();
+      key2count[key]=1;
+    }else{
+      key2count[key]++;
+      if(key2count[key]==2) ans.push_back(node);
+    }
+    return key2id[key];
+  }
 };
