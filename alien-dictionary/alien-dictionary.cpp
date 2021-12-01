@@ -6,34 +6,27 @@ class Solution {
     int n=words.size();
     unordered_map<char,vector<char>>g;
     unordered_map<char,int>indegree;
-    queue<char>source;
-    for(string w:words)
-      for(char c:w)
-        indegree[c]=0;
+    for(string w:words) for(char c:w) indegree[c]=0;
     for(int i=0;i<n-1;i++){
       if(words[i].size()>words[i+1].size() && words[i].find(words[i+1])==0) return "";
       for(int j=0;j<min(words[i].size(),words[i+1].size());j++){
-        if(words[i][j]!=words[i+1][j]){
-          g[words[i][j]].push_back(words[i+1][j]);
-          indegree[words[i+1][j]]++;
-          break;
-        }
+        if(words[i][j]==words[i+1][j]) continue;
+        g[words[i][j]].push_back(words[i+1][j]);
+        indegree[words[i+1][j]]++;
+        break;
       }
     }
-    for(auto e:indegree){
-      if(e.second==0) source.push(e.first);
-    }
-    string ans="";
+    queue<char>source;
+    for(auto e:indegree) if(e.second==0) source.push(e.first);
+    string ans;
     while(!source.empty()){
-      char cur=source.front();
-      source.pop();
-      ans+=cur;
-      for(char next:g[cur]){
+      char cur=source.front();source.pop();
+      ans.push_back(cur);
+      for(auto next:g[cur]){
         indegree[next]--;
         if(indegree[next]==0) source.push(next);
       }
     }
-    
     return ans.size()==indegree.size()?ans:"";
   }
 };
