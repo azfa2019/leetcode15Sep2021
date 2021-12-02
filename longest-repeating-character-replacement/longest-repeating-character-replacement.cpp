@@ -1,19 +1,22 @@
 class Solution {
-  public:
-  int characterReplacement(string s, int k) {
-    int right,left=0,maxRep=0;
-    int ans=0;
-    unordered_map<char,int>map0;
-    for(right=0;right<s.size();right++){
-      char r=s[right];
-      map0[r]++;
-      maxRep=max(maxRep,map0[r]);
-      if(right-left+1>maxRep+k){
-        char l=s[left++];
-        map0[l]--;
-      }
-      ans=max(ans,right-left+1);
+public:
+    int characterReplacement(string s, int k) {
+        vector<int>map(26,0);
+        int n=s.size();
+        int left=0;
+        int maxRepeat=0;
+        int ans=0;
+        for(int right=0;right<n;right++){
+            char r=s[right];
+            map[r-'A']++;
+            maxRepeat=max(maxRepeat,map[r-'A']);
+            while(right-left+1>maxRepeat+k){
+                char l=s[left];
+                map[l-'A']--;
+                left++;
+            }
+            ans=max(ans,right-left+1);
+        }
+        return ans;
     }
-    return ans;
-  }
 };
