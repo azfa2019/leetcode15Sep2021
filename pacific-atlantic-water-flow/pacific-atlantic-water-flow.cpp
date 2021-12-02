@@ -27,12 +27,12 @@ public:
     }
   void dfs(int i,int j,vector<vector<int>>& heights,vector<vector<int>>& sea)
   {
-    if(i<0||j<0||i>m-1||j>n-1||sea[i][j]==1) return;
+    //if(i<0||j<0||i>m-1||j>n-1||sea[i][j]==1) return;
     sea[i][j]=1;
     for(int d=0;d<4;d++){
       int r=i+dir[d];
       int c=j+dir[d+1];
-      if(r<0||c<0||r>m-1||c>n-1) continue;
+      if(r<0||c<0||r>m-1||c>n-1||sea[r][c]==1) continue;
       if(heights[r][c]>=heights[i][j])
         dfs(r,c,heights,sea);
     }
