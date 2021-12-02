@@ -18,7 +18,6 @@ class Codec {
     q.push(root);
     while(!q.empty()){
       int count=q.size();
-      while(count--){
         auto node=q.front();
         q.pop();
         if(node==nullptr) str+="#";
@@ -28,7 +27,6 @@ class Codec {
           q.push(node->right);
         }
       }
-    }
     return str;
   }
 
@@ -37,31 +35,31 @@ class Codec {
     if(data.size()==0) return nullptr;
     int i=0,j=0;
     if(data[i]=='#') return nullptr;
-    while(j<data.size() && data[++j]!='!') ;
+    while(j<data.size() && data[++j]!='!');
     TreeNode* root=new TreeNode(stoi(data.substr(i,j-i)));
-
     queue<TreeNode*>q;
     q.push(root);
     while(i<data.size()){
       TreeNode* node=q.front();
       q.pop();
       if(node==nullptr) continue;
+      
       i=++j;
       if(i>=data.size()) break;
-      if(data[i]=='#') {
+      if(data[i]=='#'){
         node->left=nullptr;
       }else{
-        while(j<data.size() && data[++j]!='!') ;
+        while(j<data.size() && data[++j]!='!');
         node->left=new TreeNode(stoi(data.substr(i,j-i)));
       }
       q.push(node->left);
 
       i=++j;
       if(i>=data.size()) break;
-      if(data[i]=='#') {
+      if(data[i]=='#'){
         node->right=nullptr;
       }else{
-        while(j<data.size() && data[++j]!='!') ;
+        while(j<data.size() && data[++j]!='!');
         node->right=new TreeNode(stoi(data.substr(i,j-i)));
       }
       q.push(node->right);
