@@ -8,24 +8,21 @@
  * };
  */
 class Codec {
-    public:
+public:
 
     // Encodes a tree to a single string.
     string serialize(TreeNode* root) {
         if(root==nullptr) return "#";
-        queue<TreeNode*>q;
+        queue<TreeNode*> q;
         q.push(root);
         string ans;
         while(!q.empty()){
-            int size=q.size();
-            while(size--){
-                TreeNode* cur=q.front();q.pop();
-                if(cur==nullptr) ans+="#";
-                else {
-                    ans+=to_string(cur->val)+"!";
-                    q.push(cur->left);
-                    q.push(cur->right);
-                }
+            TreeNode* node=q.front();q.pop();
+            if(node==nullptr) ans+="#";
+            else{
+                ans+=to_string(node->val)+"!";
+                q.push(node->left);
+                q.push(node->right);
             }
         }
         return ans;
@@ -40,25 +37,25 @@ class Codec {
         queue<TreeNode*>q;
         q.push(root);
         while(!q.empty()){
-            TreeNode* cur=q.front();q.pop();
-            if(cur==nullptr) continue;
+            TreeNode* node=q.front();q.pop();
+            if(node==nullptr) continue;
             i=++j;
             if(i>=data.size()) break;
-            if(data[i]=='#') cur->left=nullptr;
+            if(data[i]=='#') node->left=nullptr;
             else{
                 j=data.find_first_of("!",i);
-                cur->left=new TreeNode(stoi(data.substr(i,j-i)));
+                node->left=new TreeNode(stoi(data.substr(i,j-i)));
             }
-            q.push(cur->left);
-
+            q.push(node->left);
+            
             i=++j;
             if(i>=data.size()) break;
-            if(data[i]=='#') cur->right=nullptr;
+            if(data[i]=='#') node->right=nullptr;
             else{
                 j=data.find_first_of("!",i);
-                cur->right=new TreeNode(stoi(data.substr(i,j-i)));
+                node->right=new TreeNode(stoi(data.substr(i,j-i)));
             }
-            q.push(cur->right);
+            q.push(node->right);
         }
         return root;
     }
