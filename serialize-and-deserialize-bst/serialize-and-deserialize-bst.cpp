@@ -39,7 +39,7 @@ class Codec {
     TreeNode* root=new TreeNode(stoi(data.substr(i,j-i)));
     queue<TreeNode*>q;
     q.push(root);
-    while(i<data.size()){
+    while(!q.empty()){
       TreeNode* node=q.front();
       q.pop();
       if(node==nullptr) continue;
@@ -49,7 +49,8 @@ class Codec {
       if(data[i]=='#'){
         node->left=nullptr;
       }else{
-        while(j<data.size() && data[++j]!='!');
+        //while(j<data.size() && data[++j]!='!');
+          j=data.find_first_of("!",i);
         node->left=new TreeNode(stoi(data.substr(i,j-i)));
       }
       q.push(node->left);
