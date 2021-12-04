@@ -1,24 +1,43 @@
 class Solution {
-public:
+    public:
     int mctFromLeafValues(vector<int>& arr) {
         int n=arr.size();
-        vector<vector<int>>dp(n,vector<int>(n,INT_MAX));
-        vector<vector<int>>large(n,vector<int>(n,INT_MIN));
-        int sum=0;
+        vector<int>nextBig(n,INT_MAX);
+        vector<int>prevBig(n,INT_MAX);
+        stack<int>stack;
         for(int i=0;i<n;i++){
-            dp[i][i]=arr[i];
-            large[i][i]=arr[i];
-            sum+=arr[i];
-        }
-        for(int len=2;len<=n;len++){
-            for(int i=0;i+len-1<n;i++){
-                int j=i+len-1;
-                for(int k=i;k<j;k++){
-                    dp[i][j]=min(dp[i][j],dp[i][k]+dp[k+1][j]+large[i][k]*large[k+1][j]);
-                    large[i][j]=max(large[i][k],large[k+1][j]);
+            if(stack.empty() || arr[stack.top()]>=arr[i]){
+                stack.push(i);
+            }else{
+                while(!stack.empty() && arr[stack.top()]<=arr[i]){
+                    nextBig[stack.top()]=arr[i];
+                    stack.pop();
                 }
+                stack.push(i);
             }
         }
-        return dp[0][n-1]-sum;
+        while(!stack.empty()) stack.pop();
+        for(int i=0;i<n;i++){
+            if(stack.empty() || arr[stack.top()]>=arr[i]){
+                if(!stack.empty()) prevBig[i]=arr[stack.top()];
+                stack.push(i);
+            }else{
+                while(!stack.empty() && arr[stack.top()]<=arr[i]){
+                    stack.pop();
+                }
+                if(!stack.empty()) prevBig[i]=arr[stack.top()];
+                stack.push(i);
+            }
+        }
+        int ans=0;
+        for(int i=0;i<n;i++){
+            int x=min(prevBig[i],nextBig[i]);
+            if(x!=INT_MAX) ans+=x*arr[i];
+        }
+        return ans;
     }
 };
+
+//1 2 3 4 5 4
+//    
+//5 4 3 5
