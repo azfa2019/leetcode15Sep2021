@@ -1,26 +1,49 @@
 class Solution {
-public:
+    public:
     int countSubstrings(string s) {
-      int n=s.size();
-      s="#"+s;
-      vector<vector<int>>dp(n+1,vector<int>(n+1,0));
-      for(int i=1;i<=n;i++){
-        dp[1][i]=1;
-        dp[0][i]=1;
-      }
-      int count=0;
-      for(int len=2;len<=n;len++){
-        for(int j=len;j<=n;j++){
-          if(s[j]==s[j-len+1]){
-            dp[len][j]=dp[len-2][j-1];
-          }
-          count+=dp[len][j];
+        string t="#";
+        for(char c:s){
+            t.push_back(c);
+            t.push_back('#');
         }
-      }
-      return count+n;
+        int maxR=-1,maxC=-1;
+        int n=t.size();
+        vector<int>p(n,0);
+        for(int i=0;i<n;i++){
+            int r;
+            if(maxR>=i){
+                int j=2*maxC-i;
+                r=min(maxR-i,p[j]);
+                while(i+r<n&& i-r>=0 && t[i+r]==t[i-r]) r++;
+            }else{
+                r=0;
+                while(i+r<n&& i-r>=0 && t[i+r]==t[i-r]) r++;
+            }
+            p[i]=r-1;
+            if(i+p[i]>maxR){
+                maxR=i+p[i];
+                maxC=i;
+            }
+        }
+        int ans=0;
+        for(int i=0;i<n;i++){
+            ans+=(p[i]+1)/2;
+        }
+        return ans;
     }
 };
-// daac
-//012345
-//dp[4][4]=dp[2][3]
-//dp[len][j]=dp[len-2][j-1] if s[j]==s[j-len+1]
+
+// {x  [x   x   x]   x   x   x   [x   x   x]   x}   x    x   x   x
+//          j           ctr           i       maxR        
+//p[i]=min(p[j],maxR-i)
+
+//.        j     ctr     i     maxR
+//.    *-*---*-*     * *.  * *
+//x {x x x x x x  x  x x x x x x}   x x x 
+
+
+//.                        maxR
+//x {x x x x x  x  x x x x x}   x x 
+//.  * *   * *     * *   * *
+//.  ---------
+//       j     ctr     i  
