@@ -19,20 +19,20 @@ class Solution {
     ListNode* mergeKLists(vector<ListNode*>& lists) {
         priority_queue<ListNode*,vector<ListNode*>,compare>pq;
         for(auto l:lists) if(l!=nullptr) pq.push(l);
-        ListNode* cur=new ListNode();
-        ListNode* pre=cur;
+        ListNode* pre=new ListNode();
+        ListNode* headpre=pre;
 
         while(!pq.empty()){
-            ListNode*tmp=pq.top();
-            cur->next=tmp;pq.pop();
-            if(tmp!=nullptr && tmp->next!=nullptr) pq.push(tmp->next);
-            cur=cur->next;
+            ListNode*cur=pq.top();pq.pop();
+            pre->next=cur;
+            pre=pre->next;
+            if(cur!=nullptr && cur->next!=nullptr) pq.push(cur->next);
         }
-        cur->next=nullptr;
-        return pre->next;
+        pre->next=nullptr;
+        return headpre->next;
     }
 };
-// cur > y
+// pre > y
 // pq [Y x x ]  
 // l1 xxx
 // l2 xxx
