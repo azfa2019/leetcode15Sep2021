@@ -9,56 +9,31 @@
  * };
  */
 class Solution {
-  public:
-  struct compare{
-    bool operator()(ListNode* a,ListNode* b){
-      return a->val>b->val;
+    class compare{
+        public:
+        bool operator()(ListNode*a, ListNode *b){
+            return a->val>b->val;
+        }
+    };
+    public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        priority_queue<ListNode*,vector<ListNode*>,compare>pq;
+        for(auto l:lists) if(l!=nullptr) pq.push(l);
+        ListNode* cur=new ListNode();
+        ListNode* pre=cur;
+
+        while(!pq.empty()){
+            ListNode*tmp=pq.top();
+            cur->next=tmp;pq.pop();
+            if(tmp!=nullptr && tmp->next!=nullptr) pq.push(tmp->next);
+            cur=cur->next;
+        }
+        cur->next=nullptr;
+        return pre->next;
     }
-  };
-  
-  ListNode* mergeKLists(vector<ListNode*>& lists) {
-    //maintain a minHeap, when popping out the top link next node, and push node->next to minHeap
-    //if not nullptr push to minHeap
-    priority_queue<ListNode*,vector<ListNode*>,compare>minHeap;
-    for(auto l:lists) if(l!=nullptr) minHeap.push(l);
-    ListNode* pre=new ListNode(-1);
-    auto dummy=pre;
-    while(!minHeap.empty()){
-      auto cur=minHeap.top();
-      minHeap.pop();
-      pre->next=cur;
-      pre=pre->next;
-      if(cur->next!=nullptr){
-        minHeap.push(cur->next);
-      }
-    }
-    return dummy->next;
-  }
 };
-//class Solution {
-//public:
-//    struct compare{
-//        bool operator()(const ListNode*a,const ListNode*b){
-//            return a->val>b->val;
-//        }
-//    };
-//    ListNode* mergeKLists(vector<ListNode*>& lists) {
-//        //maintain a minHeap, when popping out the top link next node, and push node->next to minHeap
-//        priority_queue<ListNode*,vector<ListNode*>,compare> minHeap;
-//        for(ListNode* root:lists) 
-//            if(root!=nullptr) minHeap.push(root);
-//        
-//        ListNode*resHead=nullptr, *resTail=nullptr;
-//        while(!minHeap.empty()){
-//            ListNode* node=minHeap.top();
-//            minHeap.pop();
-//            if(resHead==nullptr) resHead=resTail=node;
-//            else{
-//                resTail->next=node;
-//                resTail=resTail->next;
-//            }
-//            if(node->next!=nullptr) minHeap.push(node->next);
-//        }
-//        return resHead;
-//    }
-//};
+// cur > y
+// pq [Y x x ]  
+// l1 xxx
+// l2 xxx
+// l3 xxx
