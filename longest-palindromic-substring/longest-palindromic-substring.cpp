@@ -16,7 +16,8 @@ class Solution {
         for(int len=3;len<=n;len++){
             for(int i=0;i+len-1<n;i++){
                 int j=i+len-1;
-                if(s[i]==s[j] && dp[i+1][j-1]==j-1-i) dp[i][j]=2+dp[i+1][j-1];
+                if(s[i]==s[j] && dp[i+1][j-1]==j-1-i) 
+                    dp[i][j]=2+dp[i+1][j-1];
                 else dp[i][j]=max(dp[i][j-1],dp[i+1][j]);
                 if(dp[i][j]>maxLen){
                     maxLen=dp[i][j];
