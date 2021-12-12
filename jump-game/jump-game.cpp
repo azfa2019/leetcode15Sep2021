@@ -1,14 +1,15 @@
 class Solution {
-  public:
-  bool canJump(vector<int>& nums) {
-    int n=nums.size();
-    int pos=n-1;
-    for(int i=n-1;i>=0;i--){
-      if(i+nums[i]>=pos) pos=i;
+    public:
+    bool canJump(vector<int>& nums) {
+        int n=nums.size();
+        int pos=n-1;
+        for(int i=n-1;i>=0;i--){
+            if(nums[i]+i>=pos) pos=i;
+        }
+        return pos==0;
     }
-    return pos==0;
-  }
 };
+// 0 1 2 3 4
 // 3 2 1 0 4
 //         i pos=4
 //       i   pos=4
