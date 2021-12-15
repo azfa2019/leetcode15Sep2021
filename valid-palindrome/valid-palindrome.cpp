@@ -1,16 +1,16 @@
 class Solution {
-  public:
-  bool isPalindrome(string s) {
-    int n=s.size();
-    int left=0,right=n-1;
-    while(left<right){
-      while(left<right && isalnum(s[left])==false) left++;
-      while(left<right && isalnum(s[right])==false) right--;
-      char l=toupper(s[left]);
-      char r=toupper(s[right]);
-      if(l!=r) return false;
-      else left++,right--;
+public:
+    bool isPalindrome(string s) {
+        int n=s.size();
+        int l=0,r=n-1;
+        while(l<r){
+            while(l<r && !isalnum(s[l])) l++;
+            while(l<r && !isalnum(s[r])) r--;
+            char lc=toupper(s[l]);
+            char rc=toupper(s[r]);
+            if(lc!=rc) return false;
+            l++,r--;
+        }
+        return true;
     }
-    return true;
-  }
 };
