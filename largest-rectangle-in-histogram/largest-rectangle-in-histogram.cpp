@@ -1,21 +1,23 @@
 class Solution {
-  public:
-  int largestRectangleArea(vector<int>& heights) {
-    int ans=0;
-    stack<int>stack;
-    stack.push(-1);
-    int n=heights.size();
-    for( int i=0;i<n;i++){
-      while(stack.top()!=-1 && heights[stack.top()]>=heights[i]){
-        int tmp=heights[stack.top()];stack.pop();
-        ans=max(ans,tmp*(i-stack.top()-1));
-      }
-      stack.push(i);
+    public:
+    int largestRectangleArea(vector<int>& heights) {
+        int n=heights.size();
+        stack<int>stck;
+        stck.push(-1); //to calculate the border of the first element
+        int ans=0;
+        for(int i=0;i<n;i++){
+            while(stck.top()!=-1 && heights[stck.top()]>=heights[i]){
+                int cur=heights[stck.top()];stck.pop();
+                int leftBoundary=stck.top();
+                ans=max(ans,cur*(i-leftBoundary-1));
+            }
+            stck.push(i);
+        }
+        while(stck.top()!=-1){
+            int cur=heights[stck.top()];stck.pop();
+            int leftBoundary=stck.top();
+            ans=max(ans,(n-leftBoundary-1)*cur);
+        }
+        return ans;
     }
-    while(stack.top()!=-1){
-      int tmp=heights[stack.top()];stack.pop();
-      ans=max(ans,tmp*(n-stack.top()-1));
-    }
-    return ans;
-  }
 };
