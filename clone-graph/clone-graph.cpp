@@ -20,17 +20,14 @@ public:
 */
 
 class Solution {
+    unordered_map<Node*,Node*>mp;
     public:
     Node* cloneGraph(Node* node) {
-        unordered_map<Node*,Node*>mp;
-        return dfs(node,mp);
-    }
-    Node* dfs(Node* node,unordered_map<Node*,Node*>& mp){
         if(!node) return nullptr;
         if(mp.find(node)==mp.end()){
             mp[node]=new Node(node->val);
             for(auto nei:node->neighbors){
-                mp[node]->neighbors.push_back(dfs(nei,mp));
+                mp[node]->neighbors.push_back(cloneGraph(nei));
             }
         }
         return mp[node];
