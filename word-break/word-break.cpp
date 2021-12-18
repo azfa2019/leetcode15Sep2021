@@ -1,16 +1,20 @@
 class Solution {
   public:
   bool wordBreak(string s, vector<string>& wordDict) {
-    int n=s.size();
-    s="#"+s;
-    vector<bool>dp(n+1,false);
-    dp[0]=true;
-    unordered_set<string> set(wordDict.begin(),wordDict.end());
-    for(int i=1;i<=n;i++){
-      for(int j=1;j<=i;j++){
-        if(dp[j-1]==true && set.find(s.substr(j,i-j+1))!=set.end()) dp[i]=true;
+      int n=s.size();
+      unordered_set<string>st;
+      for(auto s:wordDict) st.insert(s);
+      s="#"+s;
+      vector<bool>dp(n+1,false);
+      dp[0]=true;
+      for(int j=1;j<=n;j++){
+          for(int i=1;i<=j;i++){
+              string cur=s.substr(i,j-i+1);
+              if(st.find(cur)!=st.end() && dp[i-1]==true) dp[j]=true;
+          }
       }
-    }
-    return dp[n];
+      return dp[n];
   }
 };
+//n=1
+// j=1
