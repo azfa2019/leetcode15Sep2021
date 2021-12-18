@@ -20,16 +20,13 @@ class Solution {
             }
             stck.push(i);
         }
-        priority_queue<pair<int,int>>pq;
-        for(int i=0;i<n;i++) pq.push({nums[i],i});
-        vector<int>ans;
-        for(int len=1;len<=n;len++){
-            while(!pq.empty()){
-                int idxMin=pq.top().second;
-                if(nextLess[idxMin]-prevLess[idxMin]-1>=len) break;
-                pq.pop();
-            }
-            ans.push_back(pq.top().first);
+        vector<int>ans(n,0);
+        for(int i=0;i<n;i++){
+            int len=nextLess[i]-prevLess[i]-1;
+            ans[len-1]=max(ans[len-1],nums[i]);
+        }
+        for(int i=n-2;i>=0;i--){
+            ans[i]=max(ans[i+1],ans[i]);
         }
         return ans;
     }
