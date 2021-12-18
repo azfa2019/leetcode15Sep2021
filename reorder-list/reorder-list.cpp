@@ -9,62 +9,55 @@
  * };
  */
 class Solution {
-  public:
-  void reorderList(ListNode* head) {
-    ListNode* fast=head,*slow=head;
-    while(fast!=nullptr && fast->next!=nullptr) fast=fast->next->next,slow=slow->next;
-    ListNode*left=head;
-    ListNode*right=reverse(slow);
-    while(left!=nullptr && right!=nullptr){
-      ListNode* tmp=left->next;
-      left->next=right;
-      left=tmp;
-      
-      tmp=right->next;
-      right->next=left;
-      right=tmp;
+public:
+    void reorderList(ListNode* head) {
+        ListNode* fast=head,*slow=head;
+        while(fast && fast->next){
+            fast=fast->next->next;
+            slow=slow->next;
+        }
+        ListNode* right=reverse(slow);
+        ListNode* left=head;
+        while(left && right){
+            ListNode* tmp=left->next;
+            left->next=right;
+            left=tmp;
+            tmp=right->next;
+            right->next=left;
+            right=tmp;
+        }
+        if(left) left->next=nullptr;
     }
-    
-    if(left!=nullptr) left->next=nullptr;
-  }
-  ListNode* reverse(ListNode* head){
-    ListNode* pre=nullptr;
-    while(head!=nullptr) {
-      ListNode* tmp=head->next;
-      head->next=pre;
-      pre=head;
-      head=tmp;
+    ListNode* reverse(ListNode* head){
+        ListNode* pre=nullptr;
+        while(head){
+            ListNode* tmp=head->next;
+            head->next=pre;
+            pre=head;
+            head=tmp;
+        }
+        return pre;
     }
-    return pre;
-  }
 };
-//    
-// 1 2 
+//.      lt
+// 1 2 3 n
+// v/v/
+// 5 4 3>n
+//.      rt
+//     l
+// 1 2 3
 // v/v
-// 5 4>3>  n
-//         rlt
-// 1 2 
-// v/v
-// 4 3  n
-//   l  rt
-//       l
-// 1  2  3  
-// v /v /
-// 5  4  n
-//       rt
+// 4 3 n
+//.  r t
+// right->next=3
 
-//1 2 3 4 
-//f   f   f
-//s s s
-
-//1 2 3 4 5
-//f   f   f 
-//s s s
-
-//  1 2 3 4 
-//f   f   f
-//s s s
-
-//  1 2 3 4 5
-//f   f   f   f
-//s s s s
+// 1 2 3 4 n
+//
+// 1  2  3  4  n
+// fs
+//    s  f
+//       s     f
+// 1  2  3  4  5  n
+// fs
+//    s  f
+//       s     f
