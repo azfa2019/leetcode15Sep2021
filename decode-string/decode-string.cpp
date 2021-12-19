@@ -1,23 +1,23 @@
 class Solution {
 public:
     string decodeString(string s) {
+        int n=s.size();
+        string cur;
         stack<string>str;
         stack<int>nums;
-        string cur;
-        for(int i=0;i<s.size();i++){
+        for(int i=0;i<n;i++){
             if(isdigit(s[i])){
                 int i0=i;
-                while(i<s.size()&& isdigit(s[i])) i++;
+                while(i<n && isdigit(s[i])) i++;
                 int num=stoi(s.substr(i0,i-i0));
                 nums.push(num);
                 str.push(cur);
                 cur="";
             }else if(s[i]==']'){
                 int num=nums.top();nums.pop();
-                string tmp=cur;
-                for(int i=0;i<num-1;i++)
-                    cur+=tmp;
-                cur=str.top()+cur;
+                string temp;
+                for(int i=0;i<num;i++) temp+=cur;
+                cur=str.top()+temp;
                 str.pop();
             }else cur.push_back(s[i]);
         }
