@@ -10,17 +10,16 @@
  * };
  */
 class Solution {
+    vector<int>ans;
 public:
     int kthSmallest(TreeNode* root, int k) {
-        int left=count(root->left);
-        if(left==k-1) return root->val;
-        else if(left>k-1) return kthSmallest(root->left,k);
-        else return kthSmallest(root->right,k-left-1);
+        inorder(root);
+        return ans[k-1];
     }
-    int count(TreeNode* node){
-        if(!node) return 0;
-        int left=count(node->left);
-        int right=count(node->right);
-        return left+right+1;
+    void inorder(TreeNode* node){
+        if(!node) return;
+        inorder(node->left);
+        ans.push_back(node->val);
+        inorder(node->right);
     }
 };
