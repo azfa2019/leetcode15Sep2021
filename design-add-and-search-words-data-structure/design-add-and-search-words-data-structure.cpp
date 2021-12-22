@@ -5,34 +5,35 @@ class WordDictionary {
         bool isWord=false;
         Trie(){};
     };
-    Trie* root;
-    public:
+    Trie* root=new Trie();
+public:
     WordDictionary() {
-        root=new Trie();
+        
     }
-
+    
     void addWord(string word) {
-        Trie*node=root;
+        Trie* node=root;
         for(char c:word){
             if(node->children[c-'a']==nullptr) node->children[c-'a']=new Trie();
             node=node->children[c-'a'];
         }
         node->isWord=true;
     }
-
+    
     bool search(string word) {
-        Trie*node=root;
-        return find(node,0,word);
+        Trie* node=root;
+        return find(0,node,word);
     }
-    bool find(Trie* node,int idx,string& word){
-        if(!node) return false;
-        if(idx==word.size()) return node->isWord==true;
+    bool find(int idx,Trie* node,string& word){
+        if(node==nullptr) return false;
+        if(idx==word.size()) return node->isWord;
         if(word[idx]=='.'){
-            for(auto next:node->children)
-                if(find(next,idx+1,word)==true) return true;
+            for(auto next:node->children){
+                if(find(idx+1,next,word)==true) return true;
+            }
         }else{
             auto next=node->children[word[idx]-'a'];
-            return find(next,idx+1,word);
+            return find(idx+1,next,word);
         }
         return false;
     }
