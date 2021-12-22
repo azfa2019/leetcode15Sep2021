@@ -10,16 +10,19 @@
  * };
  */
 class Solution {
-    vector<int>ans;
 public:
     int kthSmallest(TreeNode* root, int k) {
-        inorder(root);
-        return ans[k-1];
-    }
-    void inorder(TreeNode* node){
-        if(!node) return;
-        inorder(node->left);
-        ans.push_back(node->val);
-        inorder(node->right);
+        stack<TreeNode*> stck;
+        while(true){
+            while(root){
+                stck.push(root);
+                root=root->left;
+            }
+            root=stck.top();stck.pop();
+            k--;
+            if(k==0) return root->val;
+            root=root->right;
+        }
+        return -1;
     }
 };
