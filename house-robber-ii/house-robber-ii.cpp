@@ -3,19 +3,16 @@ public:
     int rob(vector<int>& nums) {
         int n=nums.size();
         if(n==1) return nums[0];
-        nums.insert(nums.begin(),0);
-        vector<int>dp(n+1,0);
-        dp[1]=nums[1];
-        for(int i=2;i<=n-1;i++){
-            dp[i]=max(dp[i-2]+nums[i],dp[i-1]);
+        vector<vector<int>>dp(n,vector<int>(n,0));
+        for(int i=0;i<n;i++) dp[i][i]=nums[i];
+        for(int len=2;len<=n;len++){
+            for(int i=0;i+len-1<n;i++){
+                int j=i+len-1;
+                dp[i][j]=max(nums[i]+(i+2>j?0:dp[i+2][j]),dp[i+1][j]);
+            }
         }
-        int ans1=dp[n-1];
-        fill(dp.begin(),dp.end(),0);
-        dp[2]=nums[2];
-        for(int i=3;i<=n;i++){
-            dp[i]=max(dp[i-2]+nums[i],dp[i-1]);
-        }
-        int ans2=dp[n];
-        return max(ans1,ans2);
+        return max(dp[0][n-2],dp[1][n-1]);
     }
 };
+// x x x x x
+// i.    j
