@@ -3,11 +3,11 @@ class Solution {
 public:
     vector<int> findOrder(int numCourses, vector<vector<int>>& prerequisites) {
         int n=prerequisites.size();
-        if(n==0) {
-            vector<int>ans;
-            for(int i=0;i<numCourses;i++) ans.push_back(i);
-            return ans;
-        }
+        //if(n==0) {
+        //    vector<int>ans;
+        //    for(int i=0;i<numCourses;i++) ans.push_back(i);
+        //    return ans;
+        //}
         unordered_map<int,vector<int>>g;
         for(auto p:prerequisites){
             g[p[1]].push_back(p[0]);
