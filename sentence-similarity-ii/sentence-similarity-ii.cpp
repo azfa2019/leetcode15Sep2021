@@ -1,48 +1,41 @@
-class UF{
-    public:
-    vector<int>parent;
-    vector<int>rank;
-    UF(int n){
-        parent=vector<int>(n,0);
-        rank=vector<int>(n,0);
-        for(int i=0;i<n;i++) parent[i]=i;
-    }
-    bool unionNodes(int n1,int n2){
-        int p1=findParent(n1);
-        int p2=findParent(n2);
-        if(p1==p2) return false;
-        if(rank[p1]>rank[p2]) parent[p2]=p1;
-        else if(rank[p1]<rank[p2]) parent[p1]=p2;
-        else parent[p1]=p2,rank[p2]++;
-        return true;
-    }
-    int findParent(int i){
-        if(i!=parent[i]) parent[i]=findParent(parent[i]);
-        return parent[i];
-    }
+class UnionFind{
+  public:
+  unordered_map<string,string>parent;
+  unordered_map<string,int>rank;
+  UnionFind(vector<vector<string>>&similarPairs){
+    for(auto p:similarPairs) rank[p[0]]=0,rank[p[1]]=0;
+    for(auto p:rank) parent[p.first]=p.first;
+  }
+  string findroot(string& s){
+    if(s!=parent[s]) parent[s]=findroot(parent[s]);
+    return parent[s];
+  }
+  bool unionnodes(string& s1,string& s2){
+    string p1=findroot(s1);
+    string p2=findroot(s2);
+    if(p1==p2) return false;
+    if(rank[p1]>rank[p2]) parent[p2]=p1;
+    else if(rank[p1]<rank[p2]) parent[p1]=p2;
+    else parent[p1]=p2, rank[p2]++;
+    return true;
+  }
 };
 class Solution {
-    public:
+public:
     bool areSentencesSimilarTwo(vector<string>& sentence1, vector<string>& sentence2, vector<vector<string>>& similarPairs) {
-        if(sentence1.size()!=sentence2.size()) return false;
-        unordered_set<string>st;
-        for(int i=0;i<sentence1.size();i++){
-            st.insert(sentence1[i]);
-            st.insert(sentence2[i]);
-        }
-        int i=1;
-        unordered_map<string,int>mp;
-        for(auto e:st){
-            mp[e]=i++;
-        }
-        int n=st.size();
-        UF uf=UF(n+1);
-        for(auto e:similarPairs){
-            uf.unionNodes(mp[e[0]],mp[e[1]]);
-        }
-        for(int i=0;i<sentence1.size();i++ ){
-            if(uf.findParent(mp[sentence1[i]])!=uf.findParent(mp[sentence2[i]]))  return false;
-        }
-        return true;
+      UnionFind uf=UnionFind(similarPairs);
+      if(sentence1.size()!=sentence2.size()) return false;
+      int m=similarPairs.size();
+      if(m==0) return false;
+      for(int i=0;i<m;i++) uf.unionnodes(similarPairs[i][0],similarPairs[i][1]);
+      int n=sentence1.size();
+      for(int i=0;i<n;i++){
+        if(sentence1[i]==sentence2[i]) continue;
+        string s1=uf.findroot(sentence1[i]);
+        string s2=uf.findroot(sentence2[i]);
+        //cout<<"s1="<<s1<<",s2="<<s2<<endl;
+        if(s1!=s2) return false;
+      }
+      return true;
     }
 };
