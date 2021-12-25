@@ -1,16 +1,15 @@
 class Solution {
     vector<int>count;
-    int k;
     string s;
+    int k;
 public:
     int characterReplacement(string s, int k) {
         int right=0;
         int n=s.size();
-        this->k=k;
-        this->s=s;
-        this->count=vector<int>(26,0);
         int ans=0;
-        
+        this->s=s;
+        this->k=k;
+        this->count=vector<int>(26,0);
         for(int left=0;left<n;left++){
             while(right<n && checkOk(right,right-left+1)) right++;
             ans=max(ans,right-left);
