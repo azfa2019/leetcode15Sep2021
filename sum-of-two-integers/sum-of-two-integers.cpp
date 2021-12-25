@@ -1,12 +1,10 @@
 class Solution {
-public:
+    public:
     int getSum(int a, int b) {
-        int a0,b0;
         while(b!=0){
-            a0=a;
-            b0=b;
-            a=(a0^b0);
-            b=((unsigned int)(a0&b0)<<1);
+            int carry=((unsigned int)(a&b))<<1;
+            a=(a^b);
+            b=carry;
         }
         return a;
     }
