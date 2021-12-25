@@ -1,53 +1,38 @@
 class Solution {
 public:
     int calculate(string s) {
+        string s0="+";
+        for(char c:s){
+            if(c==' ') continue;
+            s0.push_back(c);
+            if(c=='(') s0.push_back('+');
+        }
+        s=s0;
         stack<int>nums;
-        nums.push(0);
-        replace(s);
-        stack<char>ops;
-        int n=s.size();
-        for(int i=0;i<n;i++){
-            char c=s[i];
-            if(c=='(') ops.push(c);
-            else if(c==')'){
-                while(!ops.empty()){
-                    char op=ops.top();
-                    if(op!='(') calc(nums,ops);
-                    else {
-                        ops.pop();
-                        break;
-                    }
-                }
-            }else{
-                if(isdigit(c)){
-                    int cur=0;
-                    int j=i;
-                    while(j<n && isdigit(s[j])) cur=cur*10+(s[j++]-'0');
-                    nums.push(cur);
-                    i=j-1;
-                }else{
-                    if(i>0 && (s[i-1]=='(' || s[i-1]=='+' || s[i-1]=='-')) nums.push(0);
-                    while(!ops.empty() && ops.top()!='(') calc(nums,ops);
-                    ops.push(c);
-                }
+        stack<int>signs;
+        int sum=0;
+        int sign=0;
+        
+        for(int i=0;i<s.size();i++){
+            char ch=s[i];
+            if(ch=='+' || ch=='-') sign=ch=='+'?1:-1;
+            else if(isdigit(ch)){
+                int i0=i;
+                while(i<s.size() && isdigit(s[i])) i++;
+                int num=stoi(s.substr(i0,i-i0));
+                i--;
+                sum+=num*sign;
+            }else if(ch=='('){
+                signs.push(sign);
+                nums.push(sum);
+                sum=0;
+            }else if(ch==')'){
+                sum=signs.top()*sum;
+                signs.pop();
+                sum=nums.top()+sum;
+                nums.pop();
             }
         }
-        while(!ops.empty()) calc(nums,ops);
-        return nums.top();
-        
-    }
-    void replace(string& s){
-        int pos=s.find(" ");
-        while(pos!=-1){
-            s.replace(pos,1,"");
-            pos=s.find(" ");
-        }
-    }
-    void calc(stack<int>&nums,stack<char>& ops){
-        if(nums.size()<2 || ops.empty()) return;
-        int b=nums.top(); nums.pop();
-        int a=nums.top(); nums.pop();
-        char op=ops.top(); ops.pop();
-        nums.push(op=='+'?a+b:a-b);
+        return sum;
     }
 };
