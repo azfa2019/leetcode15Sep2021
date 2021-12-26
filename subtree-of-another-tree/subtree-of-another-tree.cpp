@@ -13,10 +13,11 @@ class Solution {
 public:
     bool isSubtree(TreeNode* root, TreeNode* subRoot) {
         if(root==nullptr || subRoot==nullptr) return root==subRoot;
-        return sameTree(root,subRoot)||isSubtree(root->left,subRoot) || isSubtree(root->right,subRoot);
+        return helper(root,subRoot) || isSubtree(root->left,subRoot) || isSubtree(root->right,subRoot);
     }
-    bool sameTree(TreeNode* n1,TreeNode* n2){
-        if(n1==nullptr || n2==nullptr) return n1==n2;
-        return n1->val==n2->val && sameTree(n1->left,n2->left) && sameTree(n1->right,n2->right);
+    bool helper(TreeNode* node1, TreeNode* node2){
+        if(node1==nullptr || node2==nullptr) return node1==node2;
+        if(node1->val!=node2->val) return false;
+        return helper(node1->left,node2->left) && helper(node1->right,node2->right);
     }
 };
