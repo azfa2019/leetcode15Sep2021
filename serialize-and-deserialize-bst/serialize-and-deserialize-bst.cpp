@@ -13,16 +13,16 @@ class Codec {
     // Encodes a tree to a single string.
     string serialize(TreeNode* root) {
         if(root==nullptr) return "#";
+        string ans;
         queue<TreeNode*>q;
         q.push(root);
-        string ans;
         while(!q.empty()){
-            TreeNode* node=q.front();q.pop();
-            if(node==nullptr) ans+="#";
+            TreeNode* cur=q.front();q.pop();
+            if(cur==nullptr) ans+="#";
             else {
-                ans+=to_string(node->val)+"!";
-                q.push(node->left);
-                q.push(node->right);
+                ans+=to_string(cur->val)+"!";
+                q.push(cur->left);
+                q.push(cur->right);
             }
         }
         return ans;
@@ -30,8 +30,8 @@ class Codec {
 
     // Decodes your encoded data to tree.
     TreeNode* deserialize(string data) {
-        int n=data.size();
         if(data=="#") return nullptr;
+        int n=data.size();
         int i=0,j=0;
         j=data.find("!",i);
         string tmp=data.substr(i,j-i);
@@ -39,27 +39,28 @@ class Codec {
         queue<TreeNode*>q;
         q.push(root);
         while(!q.empty()){
-            TreeNode* node=q.front();q.pop();
-            if(node==nullptr) continue;
+            TreeNode* cur=q.front();q.pop();
+            if(cur==nullptr) continue;
+            
             i=++j;
             if(i>n-1) break;
-            if(data[i]=='#') node->left=nullptr;
+            if(data[i]=='#') cur->left=nullptr;
             else{
                 j=data.find("!",i);
                 tmp=data.substr(i,j-i);
-                node->left=new TreeNode(stoi(tmp));
+                cur->left=new TreeNode(stoi(tmp));
             }
-            q.push(node->left);
-
+            q.push(cur->left);
+            
             i=++j;
             if(i>n-1) break;
-            if(data[i]=='#') node->right=nullptr;
+            if(data[i]=='#') cur->right=nullptr;
             else{
                 j=data.find("!",i);
                 tmp=data.substr(i,j-i);
-                node->right=new TreeNode(stoi(tmp));
+                cur->right=new TreeNode(stoi(tmp));
             }
-            q.push(node->right);
+            q.push(cur->right);
         }
         return root;
     }
