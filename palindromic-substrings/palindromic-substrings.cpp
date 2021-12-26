@@ -1,27 +1,38 @@
 class Solution {
-    int n;
-    string s;
 public:
     int countSubstrings(string s) {
-        this->s=s;
-        this->n=s.size();
-        int count=0;
-        for(int i=0;i<n;i++){
-            count+=expand(i,i);
+        string t="#";
+        for(char c:s){
+            t.push_back(c);
+            t.push_back('#');
         }
-        for(int i=0;i<n-1;i++){
-            if(s[i]==s[i+1]){
-                count+=expand(i,i+1)-1;
+        
+        int maxR=-1,maxC=-1;
+        int n=t.size();
+        vector<int>p(n,0);
+        for(int i=0;i<n;i++){
+            int r;
+            if(maxR>=i){
+                int j=2*maxC-i;
+                r=min(maxR-i,p[j]);
+                while(i+r<n && i-r>=0 && t[i+r]==t[i-r]) r++;
+            }else{
+                r=0;
+                while(i+r<n && i-r>=0 && t[i+r]==t[i-r]) r++;
+            }
+            p[i]=r-1;
+            if(i+p[i]>maxR){
+                maxR=i+p[i];
+                maxC=i;
             }
         }
-        return count;
-    }
-    int expand(int i,int j){
-        while(i>=0 && j<n && s[i]==s[j]) i--,j++;
-        return (j-i+1)/2;
+        int ans=0;
+        for(int i=0;i<n;i++){
+            ans+=(p[i]+1)/2;
+        }
+        return ans;
     }
 };
-// cbabd
-// 01234
-// c dbbd a
-// 0 1234 5
+//  
+// [x x {x x x x x} x x x {x x x x x} x x] x x x x x x 
+//           j        mC       i        mR
