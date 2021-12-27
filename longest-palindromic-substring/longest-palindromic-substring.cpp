@@ -1,39 +1,24 @@
 class Solution {
-    int n;
-    string s;
     public:
     string longestPalindrome(string s) {
-        int maxLen=0;
-        this-> n=s.size();
-        this-> s=s;
-        string ans;
-        for(int i=0;i<n;i++){
-            int curLen=expand(i,i);
-            if(curLen>maxLen) {
-                maxLen=curLen;
-                ans=s.substr(i-curLen/2,curLen);
-            }
-            if(i==1) cout<<curLen<<" "<<ans;
-        }
-        for(int i=0;i<n-1;i++){
-            if(s[i]==s[i+1]){
-                int curLen=expand(i,i+1);
-                if(curLen>maxLen) {
-                    maxLen=curLen;
-                    ans=s.substr(i-curLen/2+1,curLen);
+        int n=s.size();
+        vector<vector<bool>>dp(n,vector<bool>(n,false));
+        for(int i=0;i<n;i++) dp[i][i]=true;
+        int maxLen=1;
+        int start=0;
+        for(int len=2;len<=n;len++){
+            for(int i=0;i+len-1<n;i++){
+                int j=i+len-1;
+                if(s[i]==s[j]){
+                    if(i+1==j) dp[i][j]=true;
+                    else if(i+1<j) dp[i][j]=dp[i+1][j-1];
+                }
+                if(dp[i][j]==true && j-i+1>maxLen) {
+                    maxLen=j-i+1;
+                    start=i;
                 }
             }
         }
-        return ans;
-    }
-    int expand(int i,int j){
-        while(i>=0 && j<n && s[i]==s[j]) i--,j++;
-        return j-1-(i+1)+1; 
+        return s.substr(start,maxLen);
     }
 };
-// bab
-// 012
-// baab
-// 0123
-// cbaabc
-// 012345
