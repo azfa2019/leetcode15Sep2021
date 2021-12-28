@@ -10,17 +10,21 @@
 class Solution {
 public:
     TreeNode* inorderSuccessor(TreeNode* root, TreeNode* p) {
-        TreeNode* ans=nullptr;
-        TreeNode* tmp=root;
-        while(root!=nullptr){
-            if(root->val<=p->val){
-                root=root->right;
-            } else {
-                ans=root;
+        if(p->right!=nullptr) return findMin(p->right);
+        TreeNode* succ=nullptr;
+        while(root!=nullptr) {
+            if(root->val>p->val){
+                succ=root;
                 root=root->left;
-            }
+            }else if(root->val<p->val){
+                root=root->right;
+            }else break;
         }
-        return ans;
+        return succ;
+    }
+    TreeNode* findMin(TreeNode* node){
+        while(node->left!=nullptr) node=node->left;
+        return node;
     }
 };
 //                6
