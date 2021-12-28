@@ -7,14 +7,15 @@ public:
         int left=0,right=n-1;
         while(left<right){
             int mid=left+(right-left)/2;
-            if(nums[mid]>=target) right=mid;
-            else left=mid+1;
+            if(nums[mid]<target) left=mid+1;
+            else right=mid;
         }
         return left;
     }
 };
-
-// 1  3 5 6 
-//.   m t
-// 1  3 5 6 t=2
-//.   m 
+// 1 3 5 6 t=5
+//   m
+// 1 3 5 6 t=3
+//   m
+// 1 3 5 6 t=2
+//   m
