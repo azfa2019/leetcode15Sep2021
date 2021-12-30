@@ -10,23 +10,17 @@
  * };
  */
 class Solution {
+    vector<vector<int>>ans;
 public:
     vector<vector<int>> levelOrder(TreeNode* root) {
-        vector<vector<int>>ans;
-        if(!root) return {};
-        queue<TreeNode*>q;
-        q.push(root);
-        while(!q.empty()){
-            int levelSize=q.size();
-            vector<int>level;
-            while(levelSize--){
-                auto cur=q.front();q.pop();
-                level.push_back(cur->val);
-                if(cur->left) q.push(cur->left);
-                if(cur->right) q.push(cur->right);
-            }
-            ans.push_back(level);
-        }
+        dfs(root,0);
         return ans;
+    }
+    void dfs(TreeNode* node,int depth){
+        if(node==nullptr) return;
+        if(depth==ans.size()) ans.push_back({});
+        ans[depth].push_back(node->val);
+        dfs(node->left,depth+1);
+        dfs(node->right,depth+1);
     }
 };
