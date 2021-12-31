@@ -22,11 +22,11 @@ public:
         auto l=dfs(root->left);
         auto r=dfs(root->right);
         if(l[2]==-1 || r[2]==-1) return {INT_MIN,INT_MAX,-1};
-        if(root->val>l[1] && root->val<r[0]){
+        else if(root->val>l[1] && root->val<r[0]) {
             int count=l[2]+r[2]+1;
             ans=max(ans,count);
-            int low=(l[0]==INT_MAX?root->val:l[0]);
-            int high=(r[1]==INT_MIN?root->val:r[1]);
+            int low=l[0]==INT_MAX?root->val:l[0];
+            int high=r[1]==INT_MIN?root->val:r[1];
             return {low,high,count};
         }else return {INT_MIN,INT_MAX,-1};
     }
