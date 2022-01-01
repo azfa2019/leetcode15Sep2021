@@ -5,6 +5,7 @@ public:
         nums.push_back(1);
         nums.insert(nums.begin(),1);
         vector<vector<int>>dp(n+2,vector<int>(n+2,0));
+        //for(int i=1;i<=n;i++) dp[i][i]=nums[i-1]*nums[i]*nums[i+1];
         for(int len=1;len<=n;len++){
             for(int i=1;i+len-1<=n;i++){
                 int j=i+len-1;
