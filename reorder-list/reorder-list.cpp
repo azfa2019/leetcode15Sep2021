@@ -11,13 +11,10 @@
 class Solution {
 public:
     void reorderList(ListNode* head) {
-        if(!head) return;
-        ListNode* fast=head, *slow=head;
-        while(fast && fast->next){
-            fast=fast->next->next;
-            slow=slow->next;
-        }
-        auto right=reverse(slow);
+        ListNode* dummypre=new ListNode(0,head);
+        ListNode* fast=dummypre, *slow=dummypre;
+        while(fast && fast->next) fast=fast->next->next,slow=slow->next;
+        auto right=reverse(slow->next);
         auto left=head;
         while(left && right){
             ListNode* tmp=left->next;
@@ -27,26 +24,28 @@ public:
             right->next=left;
             right=tmp;
         }
-        if(left) left->next=nullptr;
+        if(left->next) left->next=nullptr;
     }
-    //.   lt
-    //1 2 3
-    //v/v/
-    //4 3 n
-    //.   rt
-    //.     l
-    //1 2 3 n
-    //.   v/
-    //5 4 3 n
-    //.     rt
-    ListNode* reverse(ListNode* head){
+    ListNode* reverse(ListNode* node){
         ListNode* pre=nullptr;
-        while(head){
-            ListNode* tmp=head->next;
-            head->next=pre;
-            pre=head;
-            head=tmp;
+        while(node){
+            ListNode* tmp=node->next;
+            node->next=pre;
+            pre=node;
+            node=tmp;
         }
         return pre;
     }
 };
+//     l  
+// 1 2 3>4>3 
+// v/v/
+// 5 4 n
+//     rt
+//   l 
+// 1 2 3>n
+// v/v/
+// 4>3 n
+//     rt
+// 
+// 
