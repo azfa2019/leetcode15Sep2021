@@ -1,11 +1,13 @@
 class Solution {
-public:
+    public:
     int bitwiseComplement(int n) {
         if(n==0) return 1;
-        int num=n;
-        int count=0;
-        while(num!=0) count++,num=(num>>1);
-        int tmp=pow(2,count)-1;
-        return n^tmp;
+        int pos=31;
+        while(pos >=0 && ((n>>pos)&1)==0) pos--;
+        int ans=0;
+        for(int i=0;i<=pos;i++){
+            if(((n>>i)&1)==0) ans|=(1<<i);
+        }
+        return ans;
     }
 };
