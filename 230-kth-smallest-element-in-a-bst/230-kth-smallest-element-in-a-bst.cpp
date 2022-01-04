@@ -10,15 +10,20 @@
  * };
  */
 class Solution {
-public:
+    public:
     int kthSmallest(TreeNode* root, int k) {
-        int l=numNodes(root->left);
-        if(l==k-1) return root->val;
-        else if(l>k-1) return kthSmallest(root->left,k);
-        else return kthSmallest(root->right,k-l-1);
-    }
-    int numNodes(TreeNode* node){
-        if(!node) return 0;
-        return numNodes(node->left)+numNodes(node->right)+1;
+        stack<TreeNode*>stck;
+        stck.push(root);
+        while(true){
+            while(root){
+                stck.push(root);
+                root=root->left;
+            }
+            root=stck.top();stck.pop();
+            k--;
+            if(k==0) return root->val;
+            root=root->right;
+        }
+        return -1;
     }
 };
