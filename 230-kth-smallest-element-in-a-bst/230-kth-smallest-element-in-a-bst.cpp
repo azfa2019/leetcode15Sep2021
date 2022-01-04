@@ -13,7 +13,6 @@ class Solution {
     public:
     int kthSmallest(TreeNode* root, int k) {
         stack<TreeNode*>stck;
-        stck.push(root);
         while(true){
             while(root){
                 stck.push(root);
@@ -25,5 +24,6 @@ class Solution {
             root=root->right;
         }
         return -1;
+
     }
 };
