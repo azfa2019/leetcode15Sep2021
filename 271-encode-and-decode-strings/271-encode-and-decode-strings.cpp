@@ -1,28 +1,31 @@
 class Codec {
-public:
+    public:
 
     // Encodes a list of strings to a single string.
     string encode(vector<string>& strs) {
         string ans="";
-        for(string s:strs)
+        for(string s:strs){
             ans+=to_string(s.size())+"#"+s;
+        }
         return ans;
     }
+    //"Hello","World"
+    //5#Hello5#World
 
     // Decodes a single string to a list of strings.
     vector<string> decode(string s) {
         vector<string>ans;
-        dfs(s,ans);
+        helper(s,ans);
         return ans;
     }
-    void dfs(string& s,vector<string>&ans){
-        if(s.size()==0) return;
-        int i=s.find("#",0);
-        int len =stoi(s.substr(0,i));
-        string cur=s.substr(i+1,len);
-        ans.push_back(cur);
-        string next=s.substr(i+1+len);
-        dfs(next,ans);
+    void helper(string& s,vector<string>& ans){
+        while(s!=""){
+            int i=s.find("#",0);
+            int len=stoi(s.substr(0,i));
+            string cur=s.substr(i+1,len);
+            ans.push_back(cur);
+            s=s.substr(i+1+len);
+        }
     }
 };
 
