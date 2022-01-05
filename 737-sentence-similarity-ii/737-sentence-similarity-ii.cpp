@@ -41,6 +41,7 @@ class Solution {
         for(auto p:similarPairs)
             uf.unionNodes(p[0],p[1]);
         for(int i=0;i<n;i++){
+            if(sentence1[i]==sentence2[i]) continue;
             if(uf.findParent(sentence1[i])!=uf.findParent(sentence2[i])) return false;
         }
         return true;
