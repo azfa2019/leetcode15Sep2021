@@ -4,7 +4,7 @@ public:
         while(b!=0){
             uint32_t atmp=a;
             a=(atmp^b);
-            b=((atmp&b)<<1);
+            b=(atmp&b)<<1;
         }
         return a;
     }
