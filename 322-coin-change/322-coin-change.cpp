@@ -4,7 +4,7 @@ public:
         vector<int>dp(amount+1,0);
         return helper(coins,amount,dp);
     }
-    int helper(vector<int>& coins, int amount,vector<int>&dp){
+    int helper(vector<int>& coins, int amount, vector<int>&dp){
         if(amount==0) return 0;
         if(amount<0) return -1;
         if(dp[amount]!=0) return dp[amount];
