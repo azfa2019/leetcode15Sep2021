@@ -12,7 +12,7 @@ public:
         int i=0;
         while(i<n){
             count++;
-            int j=i;
+            int j=i+1;
             while(j<n && intervals[j][0]<intervals[i][1]) j++;
             i=j;
         }
