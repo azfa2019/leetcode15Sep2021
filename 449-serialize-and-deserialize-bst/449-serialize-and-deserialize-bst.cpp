@@ -8,12 +8,12 @@
  * };
  */
 class Codec {
-    public:
+public:
 
     // Encodes a tree to a single string.
     string serialize(TreeNode* root) {
         if(!root) return "#";
-        return to_string(root->val) + " "+serialize(root->left)+" "+serialize(root->right);
+        return to_string(root->val)+" "+serialize(root->left)+" "+serialize(root->right);
     }
 
     // Decodes your encoded data to tree.
