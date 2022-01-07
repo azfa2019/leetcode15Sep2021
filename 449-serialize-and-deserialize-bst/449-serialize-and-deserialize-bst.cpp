@@ -8,7 +8,7 @@
  * };
  */
 class Codec {
-    public:
+public:
 
     // Encodes a tree to a single string.
     string serialize(TreeNode* root) {
@@ -22,21 +22,18 @@ class Codec {
                 ans+=to_string(cur->val)+"!";
                 q.push(cur->left);
                 q.push(cur->right);
-            }else
-                ans+="#";
+            }else ans+="#";
         }
-        cout<<ans<<endl;
         return ans;
     }
 
     // Decodes your encoded data to tree.
     TreeNode* deserialize(string data) {
         if(data=="#") return nullptr;
-        queue<TreeNode*>q;
         int i=0,j=0;
         j=data.find("!",i);
-
-        TreeNode* root=new TreeNode(stoi(data.substr(i,j-i)));
+        queue<TreeNode*>q;
+        auto root=new TreeNode(stoi(data.substr(i,j-i)));
         q.push(root);
         while(q.size()){
             auto cur=q.front();q.pop();
@@ -44,26 +41,22 @@ class Codec {
             i=++j;
             if(i>=data.size()) break;
             if(data[i]=='#') cur->left=nullptr;
-            else {
+            else{
                 j=data.find("!",i);
-                string tmp=data.substr(i,j-i);
-                cur->left=new TreeNode(stoi(tmp));
+                cur->left=new TreeNode(stoi(data.substr(i,j-i)));
             }
             q.push(cur->left);
-
+            
             i=++j;
             if(i>=data.size()) break;
             if(data[i]=='#') cur->right=nullptr;
-            else {
+            else{
                 j=data.find("!",i);
-                string tmp=data.substr(i,j-i);
-                cur->right=new TreeNode(stoi(tmp));
+                cur->right=new TreeNode(stoi(data.substr(i,j-i)));
             }
             q.push(cur->right);
         }
-
         return root;
-
     }
 };
 
