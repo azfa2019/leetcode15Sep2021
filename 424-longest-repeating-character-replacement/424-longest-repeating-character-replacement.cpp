@@ -2,25 +2,26 @@ class Solution {
     string s;
     int k;
     vector<int>count;
-    public:
+public:
     int characterReplacement(string s, int k) {
-        int ans=0;
-        int j=0;
-        this->s=s,this->k=k;
-        count=vector<int>(26,0);
-        for(int i=0;i<s.size();i++){
-            while(j<s.size() && checkOk(j,j-i+1)) j++;
-            ans=max(ans,j-i);
-            count[s[i]-'A']--;
+        int right=0,ans=0;
+        this->s=s;
+        this->k=k;
+        this->count=vector<int>(26,0);
+        int n=s.size();
+        for(int left=0;left<n;left++){
+            while(right<n && checkOk(right,right-left+1)) right++;
+            ans=max(ans,right-left);
+            count[s[left]-'A']--;
         }
         return ans;
     }
-    bool checkOk(int j, int total){
-        count[s[j]-'A']++;
+    bool checkOk(int right,int total){
+        count[s[right]-'A']++;
         int maxCount=*max_element(count.begin(),count.end());
         if(total-maxCount<=k) return true;
         else{
-            count[s[j]-'A']--;
+            count[s[right]-'A']--;
             return false;
         }
     }
