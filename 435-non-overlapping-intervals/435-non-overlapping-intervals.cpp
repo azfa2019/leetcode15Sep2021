@@ -9,12 +9,11 @@ public:
         int n=intervals.size();
         sort(intervals.begin(),intervals.end(),compare());
         int count=0;
-        int i=0;
-        while(i<n){
+        int end=INT_MIN;
+        for(int i=0;i<n;i++){
+            if(intervals[i][0]<end) continue;
             count++;
-            int j=i+1;
-            while(j<n && intervals[j][0]<intervals[i][1]) j++;
-            i=j;
+            end=intervals[i][1];
         }
         return n-count;
     }
