@@ -1,24 +1,23 @@
 class FileSystem {
-public:
-    struct fileNode{
-        unordered_map<string,fileNode*>next;
+    struct Node{
         bool isFile;
+        unordered_map<string,Node*>next;
         string content;
-        fileNode():isFile(false),content(""){}
+        Node():isFile(false),content(""){}
     };
-    fileNode* root;
+    Node* root;
+public:
     FileSystem() {
-        root=new fileNode();
+        root=new Node();
     }
-    
-    fileNode* gotoFolder(string path){
-        fileNode* cur=root;
-        stringstream s(path);
+    Node* gotoPath(string path){
+        Node* cur=root;
         string folder;
-        while(getline(s,folder,'/')){
+        stringstream ss(path);
+        while(getline(ss,folder,'/')){
             if(folder.size()){
                 if(cur->next[folder]==nullptr)
-                    cur->next[folder]=new fileNode();
+                    cur->next[folder]=new Node();
                 cur=cur->next[folder];
             }
         }
@@ -26,30 +25,28 @@ public:
     }
     
     vector<string> ls(string path) {
-        fileNode *cur=gotoFolder(path);
-        if(cur->isFile)
-            return {path.substr(path.find_last_of('/')+1)};
-        vector<string>res;
-        for(auto p:cur->next) res.push_back(p.first);
-        sort(res.begin(),res.end());
-        return res;
+        Node* cur=gotoPath(path);
+        if(cur->isFile) return {path.substr(path.find_last_of('/')+1)};
+        vector<string>ans;
+        for(auto e:cur->next) ans.push_back(e.first);
+        sort(ans.begin(),ans.end());
+        return ans;
     }
     
     void mkdir(string path) {
-        fileNode* cur=gotoFolder(path);
+        gotoPath(path);
         
     }
     
     void addContentToFile(string filePath, string content) {
-        fileNode* cur=gotoFolder(filePath);
+        Node* cur=gotoPath(filePath);
         cur->content+=content;
         cur->isFile=true;
     }
     
     string readContentFromFile(string filePath) {
-        fileNode* cur=gotoFolder(filePath);
+        Node* cur=gotoPath(filePath);
         return cur->content;
-        
     }
 };
 
