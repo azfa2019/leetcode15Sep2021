@@ -1,28 +1,27 @@
 class FileSystem {
-    struct Node{
+    struct Node {
         bool isFile;
         unordered_map<string,Node*>next;
         string content;
-        Node():content(""),isFile(false){}
+        Node():isFile(false),content(""){}
     };
     Node* root;
-    public:
+public:
     FileSystem() {
         root=new Node();
     }
     Node* gotoPath(string path){
-        stringstream ss(path);
         Node* cur=root;
+        stringstream ss(path);
         string folder;
-            while(getline(ss,folder,'/')){
-                if(folder.size()){
-                    if(cur->next[folder]==nullptr) cur->next[folder]=new Node();
-                    cur=cur->next[folder];
-                }
+        while(getline(ss,folder,'/')){
+            if(folder.size()){
+                if(cur->next[folder]==nullptr) cur->next[folder]=new Node();
+                cur=cur->next[folder];
             }
+        }
         return cur;
     }
-
     vector<string> ls(string path) {
         Node* cur=gotoPath(path);
         if(cur->isFile) return {path.substr(path.find_last_of('/')+1)};
@@ -31,19 +30,19 @@ class FileSystem {
         sort(ans.begin(),ans.end());
         return ans;
     }
-
+    
     void mkdir(string path) {
         gotoPath(path);
     }
-
+    
     void addContentToFile(string filePath, string content) {
-        auto cur=gotoPath(filePath);
+        Node* cur=gotoPath(filePath);
         cur->content+=content;
         cur->isFile=true;
     }
-
+    
     string readContentFromFile(string filePath) {
-        auto cur=gotoPath(filePath);
+        Node* cur=gotoPath(filePath);
         return cur->content;
     }
 };
