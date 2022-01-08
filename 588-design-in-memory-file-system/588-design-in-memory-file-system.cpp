@@ -26,11 +26,9 @@ public:
     
     vector<string> ls(string path) {
         Node* cur=gotoPath(path);
-        if(cur->isFile)
-            return {path.substr(path.find_last_of('/')+1)};
+        if(cur->isFile) return {path.substr(path.find_last_of('/')+1)};
         vector<string>ans;
-        for(auto e:cur->next)
-            ans.push_back(e.first);
+        for(auto e:cur->next) ans.push_back(e.first);
         sort(ans.begin(),ans.end());
         return ans;
     }
