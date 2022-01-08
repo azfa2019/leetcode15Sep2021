@@ -1,43 +1,33 @@
 class Solution {
-public:
+    string s;
+    int n;
+    public:
     string longestPalindrome(string s) {
-        string t="#";
-        for(char c:s){
-            t.push_back(c);
-            t.push_back('#');
-        }
-        int n=t.size();
-        int maxC=-1,maxR=-1;
-        vector<int>p(n,0);
+        this->s=s;
+        this->n=s.size();
+        int maxLen=0,start=0,len;
         for(int i=0;i<n;i++){
-            int r;
-            if(maxR>=i){
-                int j=maxC*2-i;
-                r=min(maxR-i,p[j]);
-                while(i+r<n && i-r>=0 && t[i+r]==t[i-r]) r++;
-            }else{
-                r=0;
-                while(i+r<n && i-r>=0 && t[i+r]==t[i-r]) r++;
+            len=expand(i,i);
+            if(maxLen<len){
+                maxLen=len;
+                start=i-len/2;
             }
-            p[i]=r-1;
-            if(i+p[i]>maxR){
-                maxR=i+p[i];
-                maxC=i;
-            }
+            // 1 2 3 4 5
         }
-        int maxLen=0,center;
-        for(int i=0;i<n;i++){
-            if(maxLen<p[i]){
-                maxLen=p[i];
-                center=i;
+        for(int i=0;i<n-1;i++)
+            if(s[i]==s[i+1]){
+                len=expand(i,i+1);
+                if(maxLen<len){
+                    maxLen=len;
+                    start=i-len/2+1;
+                }
+                // 1 2 3 4 
             }
-        }
-        return s.substr(center/2-maxLen/2,maxLen);
+        return s.substr(start,maxLen);
+    }
+    int expand(int i,int j){
+        while(i>=0 && j<n && s[i]==s[j]) 
+            i--,j++;
+        return j-1-(i+1)+1;
     }
 };
-// x [x x x x x] x x x [x x x x x] x x x x 
-//        j        mC       i        mR
-//
-//
-//
-//
