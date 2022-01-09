@@ -8,11 +8,9 @@ class Solution {
             int area=min(height[left],height[right])*(right-left);
             ans=max(ans,area);
             if(height[left]<height[right]){
-                int l=height[left];
-                while(left<right && height[left]<=l) left++;
+                left++;
             }else {
-                int r=height[right];
-                while(left<right && height[right]<=r)  right--;
+                right--;
             }
         }
         return ans;
