@@ -7,10 +7,10 @@ class Solution {
         while(left<right){
             int area=min(height[left],height[right])*(right-left);
             ans=max(ans,area);
-            if(left<right && height[left]<height[right]){
+            if(height[left]<height[right]){
                 int l=height[left];
                 while(left<right && height[left]<=l) left++;
-            }else if(left<right && height[left]>=height[right]){
+            }else {
                 int r=height[right];
                 while(left<right && height[right]<=r)  right--;
             }
