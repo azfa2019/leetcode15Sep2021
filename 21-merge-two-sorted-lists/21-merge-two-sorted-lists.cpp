@@ -14,7 +14,7 @@ public:
         ListNode* dummyPre=new ListNode(0);
         ListNode* cur=dummyPre;
         while(list1 && list2){
-            if(list1->val<list2->val) {
+            if(list1->val<list2->val){
                 cur->next=list1;
                 list1=list1->next;
             }else{
@@ -23,8 +23,8 @@ public:
             }
             cur=cur->next;
         }
-        if(!list2) cur->next=list1;
-        else cur->next=list2;
+        if(!list1) cur->next=list2;
+        else cur->next=list1;
         return dummyPre->next;
     }
 };
