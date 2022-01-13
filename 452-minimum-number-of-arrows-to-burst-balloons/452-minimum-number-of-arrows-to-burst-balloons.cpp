@@ -10,12 +10,12 @@ public:
         //find how many don't overlap
         int n=points.size();
         sort(points.begin(),points.end(),compare());
-        int count=0;
-        LL end=LLONG_MIN;
-        for(auto p:points){
-            if(p[0]<=end) continue;
+        int count=1;
+        int end=points[0][1];
+        for(int i=1;i<n;i++){
+            if(points[i][0]<=end) continue;
+            end=points[i][1];
             count++;
-            end=p[1];
         }
         return count;
     }
