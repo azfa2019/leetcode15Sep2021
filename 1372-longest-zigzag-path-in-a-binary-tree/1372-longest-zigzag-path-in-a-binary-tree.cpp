@@ -16,12 +16,12 @@ class Solution {
         auto res=dfs(root);
         return ans-1;
     }
-    vector<int> dfs(TreeNode* node){
+    pair<int,int> dfs(TreeNode* node){
         if(!node) return {0,0};
         auto l=dfs(node->left);
         auto r=dfs(node->right);
-        int curL=l[1]+1;
-        int curR=r[0]+1;
+        int curL=l.second+1;
+        int curR=r.first+1;
         int tmp=max(curL,curR);
         ans=max(ans,tmp);
         return {curL,curR};
