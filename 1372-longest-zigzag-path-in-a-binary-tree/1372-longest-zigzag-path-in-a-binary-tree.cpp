@@ -22,7 +22,8 @@ class Solution {
         auto r=dfs(node->right);
         int curL=l[1]+1;
         int curR=r[0]+1;
-        ans=max(ans,max(curL,curR));
+        int tmp=max(curL,curR);
+        ans=max(ans,tmp);
         return {curL,curR};
     }
 };
