@@ -1,5 +1,5 @@
 class Solution {
-public:
+    public:
     string minWindow(string s, string t) {
         unordered_map<char,int>mp;
         for(char c:t) mp[c]++;
@@ -15,14 +15,14 @@ public:
             }
             while(count==mp.size()){
                 char l=s[left];
-                if (ans>right-left+1){
-                    ans=right-left+1;
-                    start=left;
-                }
                 left++;
                 if(mp.find(l)!=mp.end()){
                     if(mp[l]==0) count--;
                     mp[l]++;
+                }
+                if (ans>right-left+2){
+                    ans=right-left+2;
+                    start=left-1;
                 }
             }
         }
