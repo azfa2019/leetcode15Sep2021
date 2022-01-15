@@ -12,10 +12,16 @@
 class Solution {
 public:
     bool isValidBST(TreeNode* root) {
-        return dfs(root,LLONG_MIN,LLONG_MAX);
+        return dfs(root)[0];
     }
-    bool dfs(TreeNode* node,long long low,long long high){
-        if(!node) return true;
-        return (node->val<high && node->val>low && dfs(node->left,low,node->val) && dfs(node->right,node->val,high));
+    vector<long long> dfs(TreeNode* node){
+        if(!node) return {1,LLONG_MAX,LLONG_MIN};
+        auto l=dfs(node->left);
+        auto r=dfs(node->right);
+        if(l[0] && r[0] && node->val>l[2] && node->val<r[1]){
+            int curMin= node->left?l[1]:node->val;
+            int curMax=node->right?r[2]:node->val;
+            return {1,curMin,curMax};
+        }else return {0,0,0};
     }
 };
