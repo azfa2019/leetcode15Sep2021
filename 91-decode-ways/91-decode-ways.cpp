@@ -14,11 +14,9 @@ public:
     }
     bool valid(string s){
         if(s.size()==1){
-            return (s[0]-'0'>=1 && s[0]-'0'<=9);
+            return (s>="1" && s<="9");
         }
-        if(s[0]=='0') return false;
-        int tmp=stoi(s);
-        return (tmp>=10 && tmp<=26);
+        return (s>="10" && s<="26");
     }
 };
 // 111     0     6
