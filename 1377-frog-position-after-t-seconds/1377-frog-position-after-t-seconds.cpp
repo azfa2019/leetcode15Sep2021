@@ -1,30 +1,33 @@
 class Solution {
 public:
     double frogPosition(int n, vector<vector<int>>& edges, int t, int target) {
-        if(n==1) return 1.0;
-        vector<vector<int>>g(101);
-        for(auto e:edges) {
+        vector<double>p(n+1);
+        p[1]=1.0;
+        vector<vector<int>>g(n+1);
+        for(auto e:edges){
             g[e[0]].push_back(e[1]);
             g[e[1]].push_back(e[0]);
         }
-        return dfs(1,0,t,target,g);
-    }
-    double dfs(int u,int fa,int t,int target,vector<vector<int>>&g){
-        int sz=g[u].size();
-        if(!t || (fa && sz==1)) {
-              if(u==target) return 1;
-              else return 0;
-        }
-        double p=1.0/(fa?sz-1:sz),maxx=0;
-        for(int i=0;i<sz;i++){
-            int v=g[u][i];
-            if(v==fa) continue;
-            double next=dfs(v,u,t-1,target,g);
-            if(next>0) {
-                maxx=next;
-                break;
+        vector<int>seen(n+1);
+        seen[1]=1;
+        queue<int>q{{1}};
+        while(t--){
+            int size=q.size();
+            while(size--){
+                int cur=q.front();q.pop();
+                int children=0;
+                for(int next:g[cur])
+                    if(!seen[next]) children++;
+                for(int next:g[cur]){
+                    if(!seen[next]){
+                        q.push(next);
+                        p[next]=p[cur]/children;
+                        seen[next]=1;
+                    }
+                }
+                if(children>0) p[cur]=0;
             }
         }
-        return p*maxx;
+        return p[target];
     }
 };
