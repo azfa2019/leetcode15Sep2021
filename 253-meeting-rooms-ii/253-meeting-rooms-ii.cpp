@@ -6,13 +6,12 @@ class Solution {
     };
 public:
     int minMeetingRooms(vector<vector<int>>& intervals) {
-        int n=intervals.size();
         sort(intervals.begin(),intervals.end());
-        priority_queue<vector<int>,vector<vector<int>>,compare>pq;
+        priority_queue<vector<int>,vector<vector<int>>,compare> pq;
         for(auto item:intervals){
             if(!pq.empty() && item[0]>=pq.top()[1]) pq.pop();
             pq.push(item);
         }
-        return pq.size(); 
+        return pq.size();
     }
 };
