@@ -1,17 +1,17 @@
 class Solution {
-    struct compare{
-        bool operator()(vector<int>&a,vector<int>&b){
-            return a[1]>b[1];
-        }
-    };
 public:
     int minMeetingRooms(vector<vector<int>>& intervals) {
-        sort(intervals.begin(),intervals.end());
-        priority_queue<vector<int>,vector<vector<int>>,compare> pq;
+        vector<pair<int,int>>all;
         for(auto item:intervals){
-            if(!pq.empty() && item[0]>=pq.top()[1]) pq.pop();
-            pq.push(item);
+            all.push_back({item[0],1});
+            all.push_back({item[1],-1});
         }
-        return pq.size();
+        int ans=0,count=0;
+        sort(all.begin(),all.end());
+        for(auto item:all){
+            count+=item.second;
+            ans=max(ans,count);
+        }
+        return ans;
     }
 };
