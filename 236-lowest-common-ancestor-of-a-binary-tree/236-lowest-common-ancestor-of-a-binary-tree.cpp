@@ -16,7 +16,6 @@ public:
         auto r=lowestCommonAncestor(root->right,p,q);
         if(l && r) return root;
         else if(!l) return r;
-        else if(!r) return l;
-        return nullptr;
+        else return l;
     }
 };
