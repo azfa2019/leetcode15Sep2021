@@ -1,48 +1,45 @@
 class Solution {
     class UF{
-        public:
-        unordered_map<string,string>parent;
-        unordered_map<string,int>rank;
-        UF(vector<string>words){
-            for(int i=0;i<words.size();i++){
-                parent[words[i]]=words[i];
-                rank[words[i]]=0;   
-            } 
-        }
-        bool unionNodes(string& s1,string& s2){
-            string p1=findParent(s1);
-            string p2=findParent(s2);
-            if(p1==p2) return false;
-            if(rank[p1]<rank[p2]) parent[p1]=p2;
-            else if(rank[p1]>rank[p2]) parent[p2]=p1;
-            else parent[p1]=p2,rank[p2]++;
-            return true;
-        }
-        string findParent(string& s){
-            if(s!=parent[s]) parent[s]=findParent(parent[s]);
-            return parent[s];
-        }
-    };
+  public:
+  vector<int>parent;
+  vector<int>rank;
+  UF(int n){
+    parent=vector<int>(n,0);
+    rank=vector<int>(n,0);
+    for(int i=0;i<n;i++)
+      parent[i]=i;
+  }
+  int findParent(int i){
+    if(parent[i]!=i) parent[i]=findParent(parent[i]);
+    return parent[i];
+  }
+  bool unionNodes(int x,int y){
+    x=findParent(x);
+    y=findParent(y);
+    if(x==y) return false;
+    if(rank[x]<rank[y]) parent[x]=y;
+    else if(rank[x]>rank[y]) parent[y]=x;
+    else parent[y]=x,rank[x]++;
+    return true;
+  }
+};
     public:
     bool areSentencesSimilarTwo(vector<string>& sentence1, vector<string>& sentence2, vector<vector<string>>& similarPairs) {
-        unordered_set<string>words;
+        unordered_set<string>st;
+        if(sentence1.size()!=sentence2.size()) return false;
         int n=sentence1.size();
-        if(sentence2.size()!=n) return false;
-        for(int i=0;i<n;i++){
-            words.insert(sentence1[i]);
-            words.insert(sentence2[i]);
+        for(auto s:sentence1) st.insert(s);
+        for(auto s:sentence2) st.insert(s);
+        for(auto item: similarPairs) st.insert(item[0]),st.insert(item[1]);
+        vector<string>words(st.begin(),st.end());
+        unordered_map<string,int>mp;
+        for(int i=0;i<words.size();i++) mp[words[i]]=i;
+        UF uf=UF(words.size());
+        for(auto item:similarPairs){
+            uf.unionNodes(mp[item[0]],mp[item[1]]);
         }
-        for(auto p:similarPairs){
-            words.insert(p[0]);
-            words.insert(p[1]);
-        }
-        vector<string>all(words.begin(),words.end());
-        UF uf=UF(all);
-        for(auto p:similarPairs)
-            uf.unionNodes(p[0],p[1]);
         for(int i=0;i<n;i++){
-            if(sentence1[i]==sentence2[i]) continue;
-            if(uf.findParent(sentence1[i])!=uf.findParent(sentence2[i])) return false;
+            if(uf.findParent(mp[sentence1[i]])!=uf.findParent(mp[sentence2[i]])) return false;
         }
         return true;
     }
