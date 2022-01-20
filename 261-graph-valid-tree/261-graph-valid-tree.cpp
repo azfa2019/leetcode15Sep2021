@@ -1,37 +1,25 @@
 class Solution {
-    class UF{
-  public:
-  vector<int>parent;
-  vector<int>rank;
-  UF(int n){
-    parent=vector<int>(n,0);
-    rank=vector<int>(n,0);
-    for(int i=0;i<n;i++)
-      parent[i]=i;
-  }
-  int findParent(int i){
-    if(parent[i]!=i) parent[i]=findParent(parent[i]);
-    return parent[i];
-  }
-  bool unionNodes(int x,int y){
-    x=findParent(x);
-    y=findParent(y);
-    if(x==y) return false;
-    if(rank[x]<rank[y]) parent[x]=y;
-    else if(rank[x]>rank[y]) parent[y]=x;
-    else parent[y]=x,rank[x]++;
-    return true;
-  }
-};
-public:
+    public:
     bool validTree(int n, vector<vector<int>>& edges) {
-        UF uf=UF(n);
-        for(auto item:edges){
-            if(uf.unionNodes(item[0],item[1])==false) return false;
+        vector<vector<int>>g(n);
+        vector<bool>visited(n,false);
+        for(auto e:edges) {
+            g[e[0]].push_back(e[1]);
+            g[e[1]].push_back(e[0]);
         }
-        unordered_set<int>st;
-        for(int i=0;i<n;i++) st.insert(uf.findParent(i));
-        return st.size()==1;
-        
+        if(dfs(0,visited,-1,g)==false) return false;
+        for(auto e:visited) 
+            if(e==0) return false;
+        return true;
+    }
+    bool dfs(int cur,vector<bool>&visited,int pre,vector<vector<int>>&g){
+        if(visited[cur]) return false;
+        visited[cur]=1;
+        for(auto next:g[cur]){
+            if(next!=pre){
+                if(dfs(next,visited,cur,g)==false) return false;
+            }
+        }
+        return true;
     }
 };
