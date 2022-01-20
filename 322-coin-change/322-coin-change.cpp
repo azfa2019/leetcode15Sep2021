@@ -15,7 +15,7 @@ public:
             int tmp=dfs(amount-c,coins,mem);
             if(tmp>=0) ans=min(ans,tmp+1);
         }
-        mem[amount]=(ans==INT_MAX?-1:ans);
+        mem[amount]=ans==INT_MAX?-1:ans;
         return mem[amount];
     }
 };
