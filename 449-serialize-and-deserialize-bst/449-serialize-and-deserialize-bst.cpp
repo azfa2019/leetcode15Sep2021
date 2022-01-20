@@ -13,14 +13,13 @@ public:
     // Encodes a tree to a single string.
     string serialize(TreeNode* root) {
         if(!root) return "#";
+        string ans;
         queue<TreeNode*>q;
         q.push(root);
-        string ans;
-        while(!q.empty()){
+        while(q.size()){
             auto cur=q.front();q.pop();
-            if(!cur){
-                ans+="#";
-            }else{
+            if(!cur) ans+="#";
+            else {
                 ans+=to_string(cur->val)+"!";
                 q.push(cur->left);
                 q.push(cur->right);
@@ -32,31 +31,29 @@ public:
     // Decodes your encoded data to tree.
     TreeNode* deserialize(string data) {
         if(data=="#") return nullptr;
-        queue<TreeNode*>q;
         int i=0,j=0;
         j=data.find("!",i);
-        auto tmp=data.substr(i,j-i);
-        TreeNode* node=new TreeNode(stoi(tmp));
+        TreeNode* node=new TreeNode(stoi(data.substr(i,j-i)));
+        queue<TreeNode*>q;
         q.push(node);
         while(q.size()){
-            auto node=q.front();q.pop();
-            if(!node) continue;
+            auto cur=q.front();q.pop();
+            if(!cur) continue;
+            
             i=++j;
-            if(i>=data.size()) break;
-            if(data[i]=='#') node->left=nullptr;
+            if(data[i]=='#') cur->left=nullptr;
             else{
                 j=data.find("!",i);
-                node->left=new TreeNode(stoi(data.substr(i,j-i)));
+                cur->left=new TreeNode(stoi(data.substr(i,j-i)));
             }
-            q.push(node->left);
+            q.push(cur->left);
             i=++j;
-            if(i>=data.size()) break;
-            if(data[i]=='#') node->right=nullptr;
+            if(data[i]=='#') cur->right=nullptr;
             else{
                 j=data.find("!",i);
-                node->right=new TreeNode(stoi(data.substr(i,j-i)));
+                cur->right=new TreeNode(stoi(data.substr(i,j-i)));
             }
-            q.push(node->right);
+            q.push(cur->right);
         }
         return node;
     }
