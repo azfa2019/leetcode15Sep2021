@@ -1,25 +1,23 @@
 class Solution {
-  public:
-  bool validTree(int n, vector<vector<int>>& edges) {
-    vector<vector<int>>g(n);
-    vector<bool>visited(n,false);
-    for(auto e:edges) {
-      g[e[0]].push_back(e[1]);
-      g[e[1]].push_back(e[0]);
+public:
+    bool validTree(int n, vector<vector<int>>& edges) {
+        vector<vector<int>>g(n);
+        for(auto item:edges){
+            g[item[0]].push_back(item[1]);
+            g[item[1]].push_back(item[0]);
+        }
+        unordered_set<int>st;
+        queue<int>q;
+        q.push(0),st.insert(0);
+        while(q.size()){
+            int cur=q.front();q.pop();
+            for(int next:g[cur]){
+                if(st.find(next)!=st.end()) return false;
+                q.push(next);
+                st.insert(next);
+                g[next].erase(remove(g[next].begin(),g[next].end(),cur),g[next].end());
+            }
+        }
+        return st.size()==n;
     }
-    if(dfs(g,visited,0,-1)==false) return false;
-    for(auto e:visited) 
-      if(e==false) return false;
-    return true;
-  }
-  bool dfs(vector<vector<int>>&g,vector<bool>&visited,int cur,int pre){
-    if(visited[cur]) return false;
-    visited[cur]=true;
-    for(auto next:g[cur]){
-      if(next!=pre){
-        if(dfs(g,visited,next,cur)==false) return false;
-      }
-    }
-    return true;
-  }
 };
