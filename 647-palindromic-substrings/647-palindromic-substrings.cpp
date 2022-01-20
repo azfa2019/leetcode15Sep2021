@@ -1,39 +1,24 @@
 class Solution {
 public:
     int countSubstrings(string s) {
-        string t="#";
-        for(char c:s){
-            t.push_back(c);
-            t.push_back('#');
-        }
-        int n=t.size();
-        vector<int>p(n);
-        int maxC=0,maxR=0;
-        for(int i=0;i<n;i++){
-            int r;
-            if(maxR>=i){
-                int j=2*maxC-i;
-                r=min(maxR-i,p[j]);
-                while(i-r>=0 && i+r<n && t[i-r]==t[i+r]) r++;
-            }else {
-                r=0;
-                while(i-r>=0 && i+r<n && t[i-r]==t[i+r]) r++;
-            }
-            p[i]=r-1;
-            if(i+p[i]>maxR){
-                maxR=i+p[i];
-                maxC=i;
-            }
-        }
+        int n=s.size();
         int ans=0;
-        for(int num:p)
-            ans+=(num+1)/2;
+        for(int i=0;i<n;i++)
+            ans+=count(i,i,s,n);
+        for(int i=0;i<n-1;i++)
+            if(s[i]==s[i+1]) ans+=count(i,i+1,s,n);
         return ans;
     }
+    int count(int i,int j,string& s,int n){
+        while(i>=0 && j<=n-1 && s[i]==s[j]) i--,j++;
+        return (j-1-(i+1)+1+1)/2;
+    }
+    
 };
+
 // [x [x x x] x x x [x x x] x] x x x x x x x x x x x x x 
-//       j.     mC     i.   mR
-// 
-// 
+//  i    ij.  j  mC     i.   mR
+//  x x x x
+//    i j
 // 
 // 
