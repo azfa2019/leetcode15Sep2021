@@ -2,18 +2,15 @@ class Solution {
     int dp[100001];
 public:
     bool winnerSquareGame(int n) {
-       for(int i=1;i<=n;i++) dp[i]=-1;
-        return canwin(n);
-    }
-    bool canwin(int n){
-        if(dp[n]!=-1) return dp[n];
-        for(int i=1;i*i<=n;i++){
-            if(!canwin(n-i*i)) {
-                dp[n]=1;
-                return dp[n];
+        for(int i=1;i<=n;i++) dp[i]=0;
+        for(int i=1;i<=n;i++){
+            for(int j=1;j*j<=i;j++){
+                if(dp[i-j*j]==0){
+                    dp[i]=1;
+                    break;
+                }
             }
         }
-        dp[n]=0;
         return dp[n];
     }
 };
