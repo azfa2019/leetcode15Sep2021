@@ -11,18 +11,15 @@
 class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
-        ListNode* dummyPre=new ListNode();
-        ListNode* l0=dummyPre;
+        ListNode* dummy=new ListNode();
+        auto cur=dummy;
         int t=0;
-        while(l1 || l2 ||t){
-            if(l1) t+=l1->val;
-            if(l2) t+=l2->val;
-            l0->next=new ListNode(t%10);
+        while(l1 || l2||t){
+            if(l1) t+=l1->val, l1=l1->next;
+            if(l2) t+=l2->val, l2=l2->next;
+            cur=cur->next=new ListNode(t%10);
             t/=10;
-            l0=l0->next;
-            if(l1) l1=l1->next;
-            if(l2) l2=l2->next;
         }
-        return dummyPre->next;
+        return dummy->next;
     }
 };
