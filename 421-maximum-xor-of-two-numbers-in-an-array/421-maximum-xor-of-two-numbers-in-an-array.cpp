@@ -1,0 +1,30 @@
+class Solution {
+    vector<vector<int>>s;
+public:
+    void insert(int x){
+        int p=0;
+        for(int i=30;i>=0;i--){
+            int u=x>>i&1;
+            if(!s[p][u]) s[p][u]=s.size(),s.push_back({0,0});
+            p=s[p][u];
+        }
+    }
+    int query(int x){
+        int p=0,res=0;
+        for(int i=30;i>=0;i--){
+            int u=x>>i&1;
+            if(s[p][!u]) p=s[p][!u], res=res*2+!u;
+            else p=s[p][u],res=res*2+u;
+        }
+        return res^x;
+    }
+    int findMaximumXOR(vector<int>& nums) {
+        int res=0;
+        s.push_back({0,0});
+        for(int num:nums){
+            res=max(res,query(num));
+            insert(num);
+        }
+        return res;
+    }
+};
