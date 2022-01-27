@@ -7,9 +7,8 @@ public:
         else{
             int t=k;
             while(t<nums.size() && nums[t]>nums[k-1]) t++;
-            swap(nums[t-1],nums[k-1]);
+            swap(nums[k-1],nums[t-1]);
             reverse(nums.begin()+k,nums.end());
         }
-        
     }
 };
