@@ -9,14 +9,14 @@ class Solution {
         hash[beginWord]=1;
         while(q.size()){
             auto cur=q.front();q.pop();
-            string t=cur;
-            for(int i=0;i<t.size();i++){
-                cur=t;
+            string tmp=cur;
+            for(int i=0;i<tmp.size();i++){
+                cur=tmp;
                 for(char c='a';c<='z';c++){
                     if(cur[i]!=c){
                         cur[i]=c;
                         if(words.count(cur) && !hash.count(cur)){
-                            hash[cur]=hash[t]+1;
+                            hash[cur]=hash[tmp]+1;
                             if(cur==endWord) return hash[cur];
                             q.push(cur);
                         }
