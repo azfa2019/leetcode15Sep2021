@@ -13,9 +13,9 @@ class Solution {
             for(int i=0;i<tmp.size();i++){
                 cur=tmp;
                 for(int c='a';c<='z';c++){
-                    if(c!=tmp[i]) {
+                    if(c!=tmp[i]){
                         cur[i]=c;
-                        if(words.count(cur) && !dist.count(cur)) {
+                        if(words.count(cur) && !dist.count(cur)){
                             dist[cur]=dist[tmp]+1;
                             if(cur==endWord) return dist[cur];
                             q.push(cur);
