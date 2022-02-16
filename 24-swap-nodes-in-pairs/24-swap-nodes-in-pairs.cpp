@@ -20,11 +20,10 @@ public:
         ListNode* n1=head,*n2=head->next;
 
         while(n1 && n1->next){
-            pre->next=n2;
-            tmp=n2->next;
+            n1->next=n2->next;
             n2->next=n1;
+            pre->next=n2;
             pre=n1;
-            n1->next=tmp;
             n1=n1->next;
             if(n1) n2=n1->next;
         }
