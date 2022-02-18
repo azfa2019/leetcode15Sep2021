@@ -4,17 +4,17 @@ class Solution {
     public:
     string removeKdigits(string num, int k) {
         string res;
-        for(auto x:num){
-            while(res.size() && x<res.back() && k){
-                res.pop_back();
+        for(char c:num){
+            while(k && res.size() && res.back()>c){
                 k--;
+                res.pop_back();
             }
-            res.push_back(x);
+            res.push_back(c);
         }
         while(k) res.pop_back(),k--;
         int i=0;
         while(res[i]=='0') i++;
-        return i==res.size()?"0":res.substr(i);
+        return res.size()==i?"0":res.substr(i);
     }
 };
 //214247
