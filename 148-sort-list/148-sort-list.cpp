@@ -11,13 +11,13 @@
 class Solution {
 public:
     ListNode* sortList(ListNode* head) {
-        auto dummyHead=new ListNode(0);
-        dummyHead->next=head;
+        auto dummy=new ListNode();
+        dummy->next=head;
         int len=0;
         for(auto p=head;p;p=p->next) len++;
         for(int size=1;size<len;size*=2){
-            auto cur=dummyHead->next;
-            auto tail=dummyHead;
+            auto cur=dummy->next;
+            auto tail=dummy;
             while(cur){
                 auto left=cur;
                 auto right=cut(left,size);
@@ -26,7 +26,7 @@ public:
                 while(tail->next) tail=tail->next;
             }
         }
-        return dummyHead->next;
+        return dummy->next;
     }
     ListNode* cut(ListNode* head,int n){
         auto p=head;
