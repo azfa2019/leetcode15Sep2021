@@ -13,9 +13,9 @@ public:
     ListNode* sortList(ListNode* head) {
         auto dummy=new ListNode();
         dummy->next=head;
-        int n=0;
-        for(auto p=head;p;p=p->next) n++;
-        for(int size=1;size<n;size*=2){
+        int len=0;
+        for(auto p=head;p;p=p->next) len++;
+        for(int size=1;size<len;size*=2){
             auto cur=dummy->next;
             auto tail=dummy;
             while(cur){
