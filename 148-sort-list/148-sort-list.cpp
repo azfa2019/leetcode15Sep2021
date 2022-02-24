@@ -37,18 +37,13 @@ public:
         return next;
     }
     ListNode* merge(ListNode* l1,ListNode* l2){
-        auto dummyHead=new ListNode(0);
-        auto p=dummyHead;
+        auto dummy=new ListNode();
+        auto p=dummy;
         while(l1 && l2){
-            if(l1->val<l2->val){
-                p=p->next=l1;
-                l1=l1->next;
-            }else{
-                p=p->next=l2;
-                l2=l2->next;
-            }
+            if(l1->val<l2->val) p=p->next=l1,l1=l1->next;
+            else p=p->next=l2,l2=l2->next;
         }
         p->next=l1?l1:l2;
-        return dummyHead->next;
+        return dummy->next;
     }
 };
