@@ -1,39 +1,16 @@
 class Solution {
 public:
-    int compareVersion(string version1, string version2) {
-        auto v1=extract(version1);
-        auto v2=extract(version2);
-        if(compare(v1.first,v2.first)==-1) return -1;
-        else if(compare(v1.first,v2.first)==1) return 1;
-        else {
-            if(v1.second=="" && v2.second=="") return 0;
-            else return compareVersion(v1.second,v2.second);
+    int compareVersion(string v1, string v2) {
+        for(int i=0,j=0;i<v1.size() || j<v2.size();){
+            int a=i,b=j;
+            while(a<v1.size() && v1[a]!='.') a++;
+            while(b<v2.size() && v2[b]!='.') b++;
+            int x=a==i?0:stoi(v1.substr(i,a-i));
+            int y=b==j?0:stoi(v2.substr(j,b-j));
+            if(x>y) return 1;
+            if(x<y) return -1;
+            i=a+1,j=b+1;
         }
-        
-    }
-    int compare(string& s1,string& s2){
-        if(s1=="") s1="0";
-        if(s2=="") s2="0";
-        if(stoi(s1)>stoi(s2)) return 1;
-        else if(stoi(s1)<stoi(s2)) return -1;
-        else return 0;
-    }
-    pair<string,string>extract(string s){
-        // 1.01
-        // 001
-        if(s=="") return {"",""};
-        string part1=s;
-        string rest="";
-        int dotPos=s.find('.');
-        if(dotPos!=-1){
-            part1=s.substr(0,dotPos);
-            rest=s.substr(dotPos+1);
-        }
-        int i=0;
-        while(part1[i]=='0') i++;
-        if(i==part1.size()) part1="";
-        else part1=part1.substr(i);
-        //cout<<part1<<" "<<rest<<"end"<<endl;
-        return {part1,rest};
+        return 0;
     }
 };
