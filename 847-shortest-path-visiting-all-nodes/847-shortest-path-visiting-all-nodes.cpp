@@ -22,8 +22,7 @@ public:
             }
         }
         int res=1e8;
-        for(int i=0;i<n;i++)
-            res=min(res,f[(1<<n)-1][i]);
+        for(int i=0;i<n;i++) res=min(res,f[(1<<n)-1][i]);
         return res;
     }
 };
