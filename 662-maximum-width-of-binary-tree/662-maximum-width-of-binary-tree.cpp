@@ -17,16 +17,17 @@ public:
         q.push({root,1});
         int width=0;
         while(q.size()){
-            int size=q.size();
+            int cnt=q.size();
             int start=q.front().second;
-            int index;
-            while(size--){
-                auto cur=q.front();q.pop();
-                index=cur.second;
-                if(cur.first->left) q.push({cur.first->left,(long long) index*2-start*2});
-                if(cur.first->right) q.push({cur.first->right,(long long) index*2+1-start*2});
+            int idx;
+            while(cnt--){
+                auto cur=q.front().first;
+                idx=q.front().second;
+                q.pop();
+                if(cur->left) q.push({cur->left,(long long) idx*2-start*2});
+                if(cur->right) q.push({cur->right,(long long) idx*2+1-start*2});
             }
-            width=max(width,index-start+1);
+            width=max(width,idx-start+1);
         }
         return width;
     }
