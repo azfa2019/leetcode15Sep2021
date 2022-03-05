@@ -7,7 +7,8 @@ class Solution {
         memset(cnt,0,sizeof cnt);
         for(int num:nums) cnt[num]++;
         int res=0;
-        for(int i=1;i<N;i++){
+        int maxNum=*max_element(nums.begin(),nums.end());
+        for(int i=1;i<=maxNum;i++){
             f[i][1]=f[i-1][0]+i*cnt[i];
             f[i][0]=max(f[i-1][0],f[i-1][1]);
             res=max(f[i][0],f[i][1]);
