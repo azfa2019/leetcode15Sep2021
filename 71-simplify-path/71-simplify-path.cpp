@@ -1,16 +1,15 @@
 class Solution {
 public:
     string simplifyPath(string path) {
-       string res,name;
+        string res,name;
         if(path.back()!='/') path=path+'/';
         for(auto c:path){
             if(c!='/') name+=c;
-            else {
+            else{
                 if(name==".."){
                     while(res.size() && res.back()!='/') res.pop_back();
                     if(res.size()) res.pop_back();
-                }else if(name!="." && name!="")
-                    res+='/'+name;
+                }else if(name!="." && name!="") res+='/'+name;
                 name.clear();
             }
         }
