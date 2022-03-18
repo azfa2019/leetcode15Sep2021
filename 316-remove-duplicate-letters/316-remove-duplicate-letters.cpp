@@ -2,8 +2,8 @@ class Solution {
 public:
     string removeDuplicateLetters(string s) {
         string stk;
-        unordered_map<char,bool>ins;
         unordered_map<char,int>last;
+        unordered_map<char,bool>ins;
         for(int i=0;i<s.size();i++) last[s[i]]=i;
         for(int i=0;i<s.size();i++){
             if(ins[s[i]]) continue;
@@ -11,8 +11,8 @@ public:
                 ins[stk.back()]=false;
                 stk.pop_back();
             }
-            stk+=s[i];
             ins[s[i]]=true;
+            stk+=s[i];
         }
         return stk;
     }
