@@ -1,14 +1,15 @@
 class FreqStack {
     int n=0;
-    unordered_map<int,stack<int>>stk;
     unordered_map<int,int>cnt;
+    unordered_map<int,stack<int>>stk;
 public:
     FreqStack() {
         
     }
     
     void push(int val) {
-        stk[++cnt[val]].push(val);
+        cnt[val]++;
+        stk[cnt[val]].push(val);
         n=max(n,cnt[val]);
     }
     
