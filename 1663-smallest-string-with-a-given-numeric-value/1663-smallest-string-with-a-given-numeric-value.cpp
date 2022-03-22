@@ -1,10 +1,10 @@
 class Solution {
 public:
     string getSmallestString(int n, int k) {
-       string ans;
+        string ans;
         for(int i=n;i>=1;i--){
             int bound=k-26*(i-1);
-            if(bound>0){
+            if(bound>0) {
                 ans+='a'+bound-1;
                 k-=bound;
             }else{
