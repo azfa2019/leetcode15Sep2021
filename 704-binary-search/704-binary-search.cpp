@@ -7,6 +7,6 @@ public:
             if(nums[m]>target) r=m-1;
             else l=m;
         }
-        return target==nums[l]?l:-1;
+        return nums[l]==target?l:-1;
     }
 };
