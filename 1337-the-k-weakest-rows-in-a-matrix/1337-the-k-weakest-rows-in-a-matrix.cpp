@@ -10,7 +10,8 @@ public:
         priority_queue<pair<int,int>,vector<pair<int,int>>,compare>pq;
         for(int i=0;i<mat.size();i++){
             auto row=mat[i];
-            int s=accumulate(row.begin(),row.end(),0);
+            int s=power(row,row.size());
+            //int s=accumulate(row.begin(),row.end(),0);
             pq.push({s,i});
         }
         vector<int> ans;
@@ -20,5 +21,14 @@ public:
             ans.push_back(idx);
         }
         return ans;
+    }
+    int power(vector<int>&row,int n){
+        int l=0,r=n-1;
+        while(l<r){
+            int m=l+r>>1;
+            if(row[m]==1) l=m+1;
+            else r=m;
+        }
+        return row[l]==0?l:n;
     }
 };
