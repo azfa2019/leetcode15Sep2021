@@ -15,9 +15,8 @@ public:
         int res=min(grid[0][0],grid[m-1][n-1]);
         vector<vector<bool>>st(m,vector<bool>(n,false));
         int i=0,j=0;
-        //st[0][0]=true;
-        while(i!=m-1 || j!=n-1){
-            //st[i][j]=true;
+        while(!(i==m-1 && j==n-1)){
+            st[i][j]=true;
             for(int k=0;k<4;k++){
                 int r=i+dir[k];
                 int c=j+dir[k+1];
