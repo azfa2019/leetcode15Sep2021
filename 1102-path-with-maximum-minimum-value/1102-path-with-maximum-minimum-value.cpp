@@ -17,7 +17,7 @@ public:
         int i=0,j=0;
         st[0][0]=true;
         while(i!=m-1 || j!=n-1){
-            st[i][j]=true;
+            //st[i][j]=true;
             for(int k=0;k<4;k++){
                 int r=i+dir[k];
                 int c=j+dir[k+1];
