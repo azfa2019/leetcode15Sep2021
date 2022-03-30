@@ -20,7 +20,7 @@ public:
             for(int k=0;k<4;k++){
                 int r=i+dir[k];
                 int c=j+dir[k+1];
-                //if(r==m-1 && c==n-1) return res;
+                if(r==m-1 && c==n-1) return res;
                 if(r>=0 && r<m && c>=0 && c<n && st[r][c]==false){
                     st[r][c]=true;
                     pq.push({grid[r][c],r,c});
