@@ -12,10 +12,10 @@ class Solution {
 public:
     ListNode* swapNodes(ListNode* head, int k) {
         if(!head) return head;
-        ListNode* h1=head;
+        auto h1=head;
         for(int i=0;i<k-1;i++) h1=h1->next;
-        ListNode* h2=head;
-        ListNode* h=h1;
+        auto h2=head;
+        auto h=h1;
         while(h->next) h=h->next,h2=h2->next;
         int tmp=h1->val;
         h1->val=h2->val;
