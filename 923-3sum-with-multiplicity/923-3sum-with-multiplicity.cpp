@@ -5,10 +5,9 @@ class Solution {
 public:
     LL C(int a,int b){
         LL res=1;
-        for(int i=a,j=1;j<=b;i--,j++){
-            res=res*i/j;
-        }
-        return res%mod;
+        for(int i=a,j=1;j<=b;j++,i--)
+            res=(res*i/j)%mod;
+        return res;
     }
     int calc(int a,int b,int c){
         if(a==b && b==c) return C(cnt[a],3);
