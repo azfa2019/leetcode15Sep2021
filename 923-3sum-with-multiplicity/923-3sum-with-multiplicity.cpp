@@ -20,7 +20,7 @@ public:
         for(auto x:arr) cnt[x]++;
         for(int i=0;i<=target;i++)
             for(int j=i;j<=target-i-j;j++)
-                    res=(res+calc(i,j,target-i-j))%mod;
+                res=(res+calc(i,j,target-i-j))%mod;
     return res;
     }
 };
