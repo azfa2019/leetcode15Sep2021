@@ -1,8 +1,8 @@
 class Solution {
 public:
     void gameOfLife(vector<vector<int>>& board) {
-        //if(board.size()==0 || board[0].size()==0) return;
-        if (board.empty() || board[0].empty()) return;
+        if(board.size()==0 || board[0].size()==0) return;
+        //if (board.empty() || board[0].empty()) return;
         
         int n=board.size(),m=board[0].size();
         for(int i=0;i<n;i++)
