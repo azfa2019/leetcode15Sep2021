@@ -28,24 +28,21 @@ public:
     }
     
     bool hasNext() {
-        if(check(index+1)) return true;
-        return stk.size();
+        return stk.size() ||check(index+1);
     }
     
     
     int next() {
-        int nextVal;
-        if(check(index+1)){
-            nextVal=nodes[index+1]->val;
-        }else{
-            auto next=stk.top();
-            stk.pop();
-            pushLeft(next->right);
-            nodes.push_back(next);
-            nextVal=next->val;
-        }
         index++;
-        return nextVal;
+        if(index<nodes.size()){
+            return nodes[index]->val;
+        }
+        
+        auto top=stk.top(), right=top->right;
+        nodes.push_back(top);
+        stk.pop();
+        while(right) stk.push(right),right=right->left;
+        return top->val;
     }
     
     bool hasPrev() {
