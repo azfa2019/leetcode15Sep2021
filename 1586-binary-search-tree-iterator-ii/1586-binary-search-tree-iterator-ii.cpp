@@ -41,7 +41,7 @@ public:
         auto top=stk.top(), right=top->right;
         nodes.push_back(top);
         stk.pop();
-        while(right) stk.push(right),right=right->left;
+        pushLeft(right);
         return top->val;
     }
     
