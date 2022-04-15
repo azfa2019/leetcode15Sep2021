@@ -17,32 +17,30 @@ public:
     bool check(int i){
         return i>=0 && i<nodes.size();
     }
-    void pushLeft(TreeNode* root){
+    
+    BSTIterator(TreeNode* root) {
         while(root){
             stk.push(root);
             root=root->left;
         }
     }
-    BSTIterator(TreeNode* root) {
-        pushLeft(root);
-    }
     
     bool hasNext() {
-        return stk.size() ||check(index+1);
+        return check(index+1)||stk.size();
     }
-    
     
     int next() {
         index++;
-        if(index<nodes.size()){
-            return nodes[index]->val;
-        }
-        
-        auto top=stk.top(), right=top->right;
-        nodes.push_back(top);
+        if(check(index)) return nodes[index]->val;
+        auto root=stk.top(),next=root->right;
         stk.pop();
-        pushLeft(right);
-        return top->val;
+        nodes.push_back(root);
+        while(next){
+            stk.push(next);
+            next=next->left;
+        }
+        return root->val;
+        
     }
     
     bool hasPrev() {
