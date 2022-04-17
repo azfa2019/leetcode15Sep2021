@@ -20,3 +20,28 @@
 	<li>The number of nodes in the given tree will be in the range <code>[1, 100]</code>.</li>
 	<li><code>0 &lt;= Node.val &lt;= 1000</code></li>
 </ul></div>
+
+解法: 
+- 算法: 树的遍历
+- 时间复杂度: <img src="https://render.githubusercontent.com/render/math?math=O(n)">
+- 因为是从小到大排列,必然是中序遍历,所以关键是遍历的同时构造新的父子关系
+- 可以把答案想象成一个链表,维护链表的尾节点即可.并且本题也可以像链表一样引入一个虚拟头节点来处理根节点为空的特殊情况.
+```
+class Solution {
+    TreeNode* tail;
+public:
+    TreeNode* increasingBST(TreeNode* root) {
+        TreeNode* dummy=new TreeNode();
+        tail=dummy;
+        dfs(root);
+        return dummy->right;
+    }
+    void dfs(TreeNode* root){
+        if(!root) return;
+        dfs(root->left);
+        root->left=nullptr;
+        tail=tail->right=root;
+        dfs(root->right);
+    }
+};
+```
