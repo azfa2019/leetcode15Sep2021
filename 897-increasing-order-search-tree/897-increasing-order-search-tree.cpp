@@ -22,9 +22,7 @@ public:
         if(!root) return;
         dfs(root->left);
         root->left=nullptr;
-        tail->right=root;
-        tail=tail->right;
-//        tail->left=nullptr;
+        tail=tail->right=root;
         dfs(root->right);
     }
 };
