@@ -25,3 +25,30 @@
 <p>&nbsp;</p>
 <p><strong>Follow up:</strong> If the BST is modified often (i.e., we can do insert and delete operations) and you need to find the kth smallest frequently, how would you optimize?</p>
 </div>
+
+解法:
+- 算法: 树的遍历
+- 时间复杂度: <img src="https://render.githubusercontent.com/render/math?math=O(k)">,k为第k个最小的数
+- 本题只需遍历找到第k个数即可,可以用一个counter,也可以直接--k判断是否为0
+- 注意dfs定义为bool类型,可以保证找到答案后马上返回,不用继续找下去.
+- followup 不用考虑,超纲了
+```
+class Solution {
+    int k,ans;
+public:
+    int kthSmallest(TreeNode* root, int _k) {
+        k=_k;
+        dfs(root);
+        return ans;
+    }
+    bool dfs(TreeNode* root){
+        if(!root) return false;
+        if(dfs(root->left)) return true;
+        if(--k==0) {
+            ans=root->val;
+            return true;
+        }
+        return dfs(root->right);
+    }
+};
+``` 
