@@ -25,3 +25,10 @@
 
 <p>&nbsp;</p>
 <strong>Follow up:</strong> A solution using <code>O(n)</code> space is pretty straight-forward. Could you devise a constant <code>O(1)</code> space solution?</div>
+
+解法: 
+- 算法: 树的Morris遍历
+- 时间复杂度: <img src="https://render.githubusercontent.com/render/math?math=O(n)">,每个节点/边最多遍历两次(求前驱节点一次,访问一次),空间复杂度: <img src="https://render.githubusercontent.com/render/math?math=O(1)">
+- 本题要点1为Morris遍历,可以参考[视频讲解1](https://www.youtube.com/watch?v=L5JA-9fwQpI)和[视频讲解2](https://www.youtube.com/watch?v=wGXB9OWhPTg),就会很快理解.
+- 注意Y总视频讲解中超时的部分出现于当前节点的子节点有指针指向当前节点本身,形成了环,找前驱节点时会无限循环.可以参考上面第二个视频5:57处.
+- 要点2为判断哪两个节点位置错误,这里用first和second记录,需要处理是有一个还是两个逆序对.如果是两个逆序对需交换first和second节点.
