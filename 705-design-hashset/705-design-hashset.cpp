@@ -1,4 +1,4 @@
-const int N=100003;
+const int N=10003;
 class MyHashSet {
     vector<int>h[N];
 public:
