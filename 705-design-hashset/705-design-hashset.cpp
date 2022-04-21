@@ -1,15 +1,13 @@
 const int N=200003;
 class MyHashSet {
-    
     vector<int>h[N];
 public:
     MyHashSet() {
         
     }
     int find(vector<int>&h,int x){
-        for(int i=0;i<h.size();i++){
+        for(int i=0;i<h.size();i++)
             if(h[i]==x) return i;
-        }
         return -1;
     }
     void add(int key) {
