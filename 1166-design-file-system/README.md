@@ -50,3 +50,36 @@ fileSystem.get("/c"); // return -1 because this path doesn't exist.
 	<li><code>1 &lt;= value &lt;= 10<sup>9</sup></code></li>
 </ul>
 </div>
+
+解法: 
+- 算法: 哈希表
+- 时间复杂度: <img src="https://render.githubusercontent.com/render/math?math=O(1)">
+- 需要extract路径中的父路径, 来判断是否父路径不存在, 还需要判断是否某个路径已经存在
+```
+class FileSystem {
+    unordered_map<string,int>paths;
+public:
+    FileSystem() {
+        
+    }
+    
+    bool createPath(string path, int value) {
+        if(paths.count(path)) return false;
+        string cur;
+        for(int i=0;i<path.size();i++){
+            if(i==0||path[i]!='/') cur+=path[i];
+            else if(i!=0 && path[i]=='/'){
+                if(paths.count(cur)==0) return false;
+                else cur+=path[i];
+            }
+        }
+        paths[path]=value;
+        return true;
+    }
+    
+    int get(string path) {
+        if(!paths.empty() && paths.count(path)) return paths[path];
+        else return -1;
+    }
+};
+```
