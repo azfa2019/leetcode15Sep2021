@@ -20,7 +20,7 @@ public:
     }
     
     int get(string path) {
-        if(!path.empty() && paths.count(path)) return paths[path];
+        if(!paths.empty() && paths.count(path)) return paths[path];
         return -1;
     }
 };
