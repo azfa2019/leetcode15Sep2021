@@ -21,7 +21,7 @@ public:
     
     int get(string path) {
         if(!paths.empty() && paths.count(path)) return paths[path];
-        return -1;
+        else return -1;
     }
 };
 
