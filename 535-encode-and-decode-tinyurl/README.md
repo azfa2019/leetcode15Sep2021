@@ -32,3 +32,11 @@ string ans = obj.decode(tiny); // returns the original url after deconding it.
 	<li><code>url</code> is guranteed to be a valid URL.</li>
 </ul>
 </div>
+
+解法: 
+- 算法: 设计哈希表
+- 时间复杂度: <img src="https://render.githubusercontent.com/render/math?math=O(1)">
+- 使用`unordered_map<string,string`> 可以存储从 `shortUrl` 到 `longUrl` 的映射
+- `encode`: 从`longUrl` 到`shortUrl` 的转换通过随机生成, 注意需要判断一下新生成的`shortUrl`是否已经生成过
+- `decode`: 使用`unordered_map`即可
+
