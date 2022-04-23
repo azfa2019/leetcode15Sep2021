@@ -1,12 +1,14 @@
 class Solution {
-    unordered_map<string,string>hash;
     string chars="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-public:
+    unordered_map<string,string>hash;
     string random_str(int k){
         string res;
-        while(k--) res+=chars[rand()%62];
+        while(k--){
+            res+=chars[rand()%62];
+        }
         return res;
     }
+public:
 
     // Encodes a URL to a shortened URL.
     string encode(string longUrl) {
@@ -14,7 +16,7 @@ public:
             string shortUrl=random_str(6);
             if(hash.count(shortUrl)==0){
                 hash[shortUrl]=longUrl;
-                return "http://tynyurl.com/"+shortUrl;
+                return "http://tinyurl.com/"+shortUrl;
             }
         }
         return "";
