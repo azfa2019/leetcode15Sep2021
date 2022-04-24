@@ -1,3 +1,36 @@
+解法: 
+- 算法: 哈希表
+- 时间复杂度: <img src="https://render.githubusercontent.com/render/math?math=O(1)">
+- 此题关键在于怎样设计哈希表存储所有需要的信息. 可以设计第一个哈希表存储`{id -> {startStation,startTime}}`, 第二个哈希表存储`{startStation+endStation -> {totalTravelTime, total#Trips}}`. 第二个哈希表在出站时维护, 可以利用第一个哈希表生成.
+- 计算平均时间只需取第二个哈希表中的`totalTravelTime`除以`total#Trips`即可
+```
+class UndergroundSystem {
+    unordered_map<int,pair<string,int>> record;
+    unordered_map<string,pair<int,int>>cnt;
+public:
+    UndergroundSystem() {
+        
+    }
+    
+    void checkIn(int id, string stationName, int t) {
+        record[id]={stationName,t};
+    }
+    
+    void checkOut(int id, string stationName, int t) {
+        t-=record[id].second;
+        string st=record[id].first+","+stationName;
+        cnt[st].first+=t;
+        cnt[st].second++;
+    }
+    
+    double getAverageTime(string startStation, string endStation) {
+        string st=startStation+","+endStation;
+        return double(cnt[st].first)/cnt[st].second;
+    }
+};
+```
+
+
 <h2><a href="https://leetcode.com/problems/design-underground-system/">1396. Design Underground System</a></h2><h3>Medium</h3><hr><div><p>An underground railway system is keeping track of customer travel times between different stations. They are using this data to calculate the average time it takes to travel from one station to another.</p>
 
 <p>Implement the <code>UndergroundSystem</code> class:</p>
@@ -86,3 +119,4 @@ undergroundSystem.getAverageTime("Leyton", "Paradise"); // return 6.66667, (5 + 
 	<li>Answers within <code>10<sup>-5</sup></code> of the actual value will be accepted.</li>
 </ul>
 </div>
+
