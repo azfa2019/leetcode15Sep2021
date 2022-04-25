@@ -1,3 +1,42 @@
+解法: 
+- 算法: 设计
+- 时间复杂度: <img src="https://render.githubusercontent.com/render/math?math=O(1)">
+- 注意此题已经提供`Iterator`的`next()`和`hasNext()`函数, 可以直接使用. 只需要实现`peek()`即可.
+- 定义`cur`来存储当前的元素, `has_Next`存储是否有下一个元素, 都利用`Iterator`的`next()`和`hasNext()`得到
+```
+class PeekingIterator : public Iterator {
+    bool has_next;
+    int cur;
+public:
+	PeekingIterator(const vector<int>& nums) : Iterator(nums) {
+	    // Initialize any member here.
+	    // **DO NOT** save a copy of nums and manipulate it directly.
+	    // You should only use the Iterator interface methods.
+	    has_next=Iterator::hasNext();
+        if(has_next) cur=Iterator::next();
+	}
+	
+    // Returns the next element in the iteration without advancing the iterator.
+	int peek() {
+        return cur;
+	}
+	
+	// hasNext() and next() should behave the same as in the Iterator interface.
+	// Override them if needed.
+	int next() {
+	    int t=cur;
+        has_next=Iterator::hasNext();
+        if(has_next) cur=Iterator::next();
+        return t;
+	}
+	
+	bool hasNext() const {
+	    return has_next;
+	}
+};
+```
+
+
 <h2><a href="https://leetcode.com/problems/peeking-iterator/">284. Peeking Iterator</a></h2><h3>Medium</h3><hr><div><p>Design an iterator that supports the <code>peek</code> operation on an existing iterator in addition to the <code>hasNext</code> and the <code>next</code> operations.</p>
 
 <p>Implement the <code>PeekingIterator</code> class:</p>
