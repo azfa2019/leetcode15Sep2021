@@ -9,9 +9,9 @@ public:
         int n=points.size();
         //printf("n=%d\n",n);
         bool st[n+1];
-        for(int i=0;i<=n;i++) st[i]=false;
+        memset(st,0,sizeof st);
         int dist[n+1];
-        for(int i=0;i<=n;i++) dist[i]=INT_MAX;
+        memset(dist,0x3f,sizeof dist);
         //cout<<"hi"<<endl;
 //        memset(dist,0x3f,sizeof dist);
         int res=0;
