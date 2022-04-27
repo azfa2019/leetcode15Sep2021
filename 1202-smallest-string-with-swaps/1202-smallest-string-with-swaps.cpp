@@ -25,7 +25,7 @@ class Solution {
 public:
     string smallestStringWithSwaps(string s, vector<vector<int>>& pairs) {
         int n=s.size();
-        UnionFind uf=UnionFind(n);
+        UnionFind uf(n);
         for(auto e:pairs) uf.unionnodes(e[0],e[1]);
         unordered_map<int,vector<int>>hash;
         for(int i=0;i<n;i++) hash[uf.findroot(i)].push_back(i);
