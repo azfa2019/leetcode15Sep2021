@@ -25,21 +25,20 @@ class Solution {
 public:
     string smallestStringWithSwaps(string s, vector<vector<int>>& pairs) {
         int n=s.size();
-        vector<char>rs(n);
-        UnionFind ds(n);
-        for(auto e:pairs) ds.unionnodes(e[0],e[1]);
-        
+        UnionFind uf=UnionFind(n);
+        for(auto e:pairs) uf.unionnodes(e[0],e[1]);
         unordered_map<int,vector<int>>hash;
-        for(int i=0;i<n;i++) hash[ds.findroot(i)].push_back(i);
-        for(auto [k,v]:hash){
+        for(int i=0;i<n;i++) hash[uf.findroot(i)].push_back(i);
+        vector<char>res(n);
+        for(auto [e,v]:hash){
             vector<int>c=v;
             sort(v.begin(),v.end(),[&](auto a,auto b){
                 return s[a]<s[b];
             });
-            for(int i=0;i<c.size();i++) rs[c[i]]=s[v[i]];
+            for(int i=0;i<c.size();i++) res[c[i]]=s[v[i]];
         }
         s="";
-        for(auto c:rs) s+=c;
+        for(auto c:res) s+=c;
         return s;
     }
 };
