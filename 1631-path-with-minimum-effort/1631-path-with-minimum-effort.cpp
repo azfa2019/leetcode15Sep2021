@@ -2,13 +2,15 @@ class Solution {
 public:
     int minimumEffortPath(vector<vector<int>>& heights) {
         int m=heights.size(),n=heights[0].size();
-        int l=0,r=1e6,res=0;
-        int dx[4]={1,0,-1,0},dy[4]={0,-1,0,1};
+        int l=0,r=1e6;
+        int res=0;
+        int dx[4]={1,0,-1,0};
+        int dy[4]={0,-1,0,1};
         while(l<r){
             int mid=(l+r)>>1;
             queue<pair<int,int>>q;
             q.push({0,0});
-            vector<bool> st(m*n);
+            vector<bool>st(m*n);
             st[0]=1;
             while(q.size()){
                 auto [x,y]=q.front();
@@ -20,7 +22,7 @@ public:
                 }
             }
             if(st[m*n-1]) res=mid,r=mid;
-                else l=mid+1;
+            else l=mid+1;
         }
         return res;
     }
