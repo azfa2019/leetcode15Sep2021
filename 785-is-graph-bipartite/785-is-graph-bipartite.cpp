@@ -1,8 +1,7 @@
 const int N=110;
-class Solution {
-   
+class Solution {  
     int color[N];
-    bool dfs( vector<vector<int>>&g,int u,int c){
+    bool dfs(vector<vector<int>>&g,int u,int c){
         color[u]=c;
         for(auto i:g[u]){
             if(!color[i]){
@@ -13,7 +12,6 @@ class Solution {
     }
 public:
     bool isBipartite(vector<vector<int>>& graph) {
-        
         int n=graph.size();
         bool flag=true;
         for(int i=0;i<n;i++){
