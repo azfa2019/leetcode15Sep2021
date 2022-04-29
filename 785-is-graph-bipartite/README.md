@@ -2,7 +2,36 @@
 - 算法: 染色法判断二分图
 - 时间复杂度: <img src="https://render.githubusercontent.com/render/math?math=O(n)">
 - 此题为模板题，参考y总代码即可，只要把邻接表存储换成矩阵存储
-
+```
+const int N=110;
+class Solution {  
+    int color[N];
+    bool dfs(vector<vector<int>>&g,int u,int c){
+        color[u]=c;
+        for(auto i:g[u]){
+            if(!color[i]){
+                if(!dfs(g,i,3-c)) return false;
+            }else if(color[i]==c) return false;
+        }
+        return true;
+    }
+public:
+    bool isBipartite(vector<vector<int>>& graph) {
+        int n=graph.size();
+        bool flag=true;
+        for(int i=0;i<n;i++){
+            if(!color[i]){
+                if(!dfs(graph,i,1)) {
+                    flag=false;
+                    break;
+                }
+            }
+        }
+        if(flag) return true;
+        return false;
+    }
+};
+```
 
 <h2><a href="https://leetcode.com/problems/is-graph-bipartite/">785. Is Graph Bipartite?</a></h2><h3>Medium</h3><hr><div><p>There is an <strong>undirected</strong> graph with <code>n</code> nodes, where each node is numbered between <code>0</code> and <code>n - 1</code>. You are given a 2D array <code>graph</code>, where <code>graph[u]</code> is an array of nodes that node <code>u</code> is adjacent to. More formally, for each <code>v</code> in <code>graph[u]</code>, there is an undirected edge between node <code>u</code> and node <code>v</code>. The graph has the following properties:</p>
 
