@@ -1,3 +1,35 @@
+解法: 
+- 算法: floyd算法求多源汇最短路
+- 时间复杂度: <img src="https://render.githubusercontent.com/render/math?math=O(n^3)">
+- 需要把已知信息转换成图,注意用`unordered_map<string,unordered_map<string,double>>`表示图是一种常用方法. 节点用`unordered_set`存储
+- 套用floyd模板即可求出每两个节点之间的距离,根据queries把两点间的距离存到答案里
+```
+class Solution {
+public:
+    vector<double> calcEquation(vector<vector<string>>& equations, vector<double>& values, vector<vector<string>>& queries) {
+        unordered_set<string>vers;
+        unordered_map<string,unordered_map<string,double>>d;
+        for(int i=0;i<equations.size();i++){
+            auto a=equations[i][0],b=equations[i][1];
+            auto c=values[i];
+            d[a][b]=c,d[b][a]=1/c;
+            vers.insert(a),vers.insert(b);
+        }
+        for(auto k:vers)
+            for(auto i:vers)
+                for(auto j:vers)
+                    if(d[i][k]&&d[k][j]) d[i][j]=d[i][k]*d[k][j];
+        vector<double>res;
+        for(auto q:queries){
+            auto a=q[0],b=q[1];
+            res.push_back(d[a][b]?d[a][b]:-1);
+        }
+        return res;
+    }
+};
+```
+
+
 <h2><a href="https://leetcode.com/problems/evaluate-division/">399. Evaluate Division</a></h2><h3>Medium</h3><hr><div><p>You are given an array of variable pairs <code>equations</code> and an array of real numbers <code>values</code>, where <code>equations[i] = [A<sub>i</sub>, B<sub>i</sub>]</code> and <code>values[i]</code> represent the equation <code>A<sub>i</sub> / B<sub>i</sub> = values[i]</code>. Each <code>A<sub>i</sub></code> or <code>B<sub>i</sub></code> is a string that represents a single variable.</p>
 
 <p>You are also given some <code>queries</code>, where <code>queries[j] = [C<sub>j</sub>, D<sub>j</sub>]</code> represents the <code>j<sup>th</sup></code> query where you must find the answer for <code>C<sub>j</sub> / D<sub>j</sub> = ?</code>.</p>
