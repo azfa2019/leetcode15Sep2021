@@ -1,3 +1,27 @@
+解法: 
+- 算法: 快慢指针,模拟
+- 时间复杂度: <img src="https://render.githubusercontent.com/render/math?math=O(n)">
+- 空间复杂度可以用快慢指针实现<img src="https://render.githubusercontent.com/render/math?math=O(1)">,只需用`slow`记录操作字符串后的最后一个位置,用`resize(slow)`得到处理完毕的字符串
+```
+class Solution {
+public:
+    bool backspaceCompare(string s, string t) {
+        extract(s),extract(t);
+        return s==t;
+    }
+    void extract(string& s){
+        int slow=0;
+        for(auto c:s){
+            if(c=='#') {
+                if(slow>0) slow--;
+            }else s[slow++]=c;
+        }
+        s.resize(slow);
+    }
+};
+```
+
+
 <h2><a href="https://leetcode.com/problems/backspace-string-compare/">844. Backspace String Compare</a></h2><h3>Easy</h3><hr><div><p>Given two strings <code>s</code> and <code>t</code>, return <code>true</code> <em>if they are equal when both are typed into empty text editors</em>. <code>'#'</code> means a backspace character.</p>
 
 <p>Note that after backspacing an empty text, the text will continue empty.</p>
