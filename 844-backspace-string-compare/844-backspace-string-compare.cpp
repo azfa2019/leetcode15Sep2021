@@ -4,17 +4,11 @@ public:
         return extract(s)==extract(t);
     }
     string extract(string& s){
-        stack<char>stk;
+        string res;
         for(auto c:s){
-            if(c!='#') stk.push(c);
-            else {
-                if(stk.size()) stk.pop();
-            }
-        }
-        string res="";
-        while(stk.size()){
-            res=res+stk.top();
-            stk.pop();
+            if(c=='#') {
+                if(res.size()) res.pop_back();
+            }else res.push_back(c);
         }
         return res;
     }
