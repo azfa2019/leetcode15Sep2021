@@ -10,7 +10,7 @@ public:
                 continue;
             }
             int start=pos;
-            while(pos<s.size()&&s[pos]=='D') pos++;
+            while(pos<s.size() && s[pos]=='D') pos++;
             reverse(res.begin()+start,res.begin()+pos+1);
         }
         return res;
