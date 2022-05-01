@@ -1,15 +1,16 @@
 class Solution {
 public:
     bool backspaceCompare(string s, string t) {
-        return extract(s)==extract(t);
+        extract(s),extract(t);
+        return s==t;
     }
-    string extract(string& s){
-        string res;
+    void extract(string& s){
+        int slow=0;
         for(auto c:s){
             if(c=='#') {
-                if(res.size()) res.pop_back();
-            }else res.push_back(c);
+                if(slow>0) slow--;
+            }else s[slow++]=c;
         }
-        return res;
+        s.resize(slow);
     }
 };
