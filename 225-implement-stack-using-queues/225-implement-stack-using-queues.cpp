@@ -10,24 +10,22 @@ public:
     }
     
     int pop() {
-        while (q.size() > 1) w.push(q.front()), q.pop();
-        int t = q.front();
-        q.pop();
-        while (w.size()) q.push(w.front()), w.pop();
+        while(q.size()>1) w.push(q.front()),q.pop();
+        int t=q.front(); q.pop();
+        while(w.size()) q.push(w.front()),w.pop();
         return t;
     }
     
     int top() {
-         while (q.size() > 1) w.push(q.front()), q.pop();
-        int t = q.front();
-        q.pop();
-        while (w.size()) q.push(w.front()), w.pop();
+        while(q.size()>1) w.push(q.front()),q.pop();
+        int t=q.front();q.pop();
+        while(w.size()) q.push(w.front()),w.pop();
         q.push(t);
         return t;
     }
     
     bool empty() {
-       return q.empty(); 
+        return q.empty();
     }
 };
 
