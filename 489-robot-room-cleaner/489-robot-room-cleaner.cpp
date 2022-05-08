@@ -37,7 +37,7 @@ public:
                 robot.turnRight();
                 robot.turnRight();
             }
-               robot.turnRight();
+               robot.turnLeft();
         }
     }
 };
