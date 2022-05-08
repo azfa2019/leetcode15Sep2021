@@ -17,15 +17,15 @@
  */
 
 class NestedIterator {
-    int k=0;
     vector<int>q;
+    int k=0;
 public:
     NestedIterator(vector<NestedInteger> &nestedList) {
-        for(auto l: nestedList) dfs(l);
+        for(auto l:nestedList) dfs(l);
     }
     void dfs(NestedInteger& l){
         if(l.isInteger()) q.push_back(l.getInteger());
-        else{
+        else {
             for(auto v:l.getList()) dfs(v);
         }
     }
