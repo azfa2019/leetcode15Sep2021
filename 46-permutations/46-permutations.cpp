@@ -1,11 +1,11 @@
 class Solution {
-    vector<bool>st;
     vector<vector<int>>ans;
+    vector<bool>st;
     vector<int>path;
 public:
     vector<vector<int>> permute(vector<int>& nums) {
-        path=vector<int>(nums.size());
         st=vector<bool>(nums.size());
+        path=vector<int>(nums.size());
         dfs(nums,0);
         return ans;
     }
@@ -16,8 +16,8 @@ public:
         }
         for(int i=0;i<nums.size();i++){
             if(!st[i]){
-                path[u]=nums[i];
                 st[i]=true;
+                path[u]=nums[i];
                 dfs(nums,u+1);
                 st[i]=false;
             }
