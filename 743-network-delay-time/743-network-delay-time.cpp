@@ -1,5 +1,5 @@
-const int N=110,M=6010, INF=0x3f3f3f3f;
-int h[N],e[M],ne[M],w[M],idx;
+const int N=110,M=6010,INF=0x3f3f3f3f;
+int h[N],w[M],ne[M],e[M],idx;
 int dist[N];
 bool st[N];
 class Solution {
@@ -12,14 +12,13 @@ class Solution {
         memset(dist,0x3f,sizeof dist);
         dist[start]=0;
         while(q.size()){
-            int t=q.front();
-            q.pop();
+            auto t=q.front();q.pop();
             st[t]=false;
             for(int i=h[t];~i;i=ne[i]){
                 int j=e[i];
                 if(dist[j]>dist[t]+w[i]){
                     dist[j]=dist[t]+w[i];
-                    if(!st[j]) q.push(j),st[j]=true;
+                    if(!st[j]) st[j]=true,q.push(j);
                 }
             }
         }
@@ -32,8 +31,8 @@ public:
             int a=e[0],b=e[1],c=e[2];
             add(a,b,c);
         }
+        int res=0;
         spfa(k);
-        int res=1;
         for(int i=1;i<=n;i++) res=max(res,dist[i]);
         if(res==INF) res=-1;
         return res;
