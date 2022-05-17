@@ -9,16 +9,12 @@
  */
 
 class Solution {
-    TreeNode* res;
 public:
     TreeNode* getTargetCopy(TreeNode* original, TreeNode* cloned, TreeNode* target) {
-        inorder(cloned,target);
-        return res;
-    }
-    void inorder(TreeNode* root,TreeNode* target){
-        if(!root) return;
-        inorder(root->left,target);
-        if(root->val==target->val) res=root;
-        inorder(root->right,target);
+        if(!original) return nullptr;
+        if(original==target) return cloned;
+        TreeNode* left=getTargetCopy(original->left,cloned->left,target);
+        TreeNode* right=getTargetCopy(original->right,cloned->right,target);
+        return left?left:right;
     }
 };
