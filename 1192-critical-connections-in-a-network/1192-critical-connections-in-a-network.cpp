@@ -15,18 +15,14 @@ public:
         return res;
     }
     void tarjan(int u,int fa){
-        dfn[u] = low[u] = ++num;
-        for (int v : adj[u]) {
-            if (v == fa) continue;
-            if (!dfn[v]) {
-                tarjan(v, u);
-                low[u] = min(low[u], low[v]);
-                if (dfn[u] < low[v]) res.push_back({u, v});
-            } else {
-                low[u] = min(low[u], dfn[v]);
-            }
+        dfn[u]=low[u]=++num;
+        for(int v:adj[u]){
+            if(v==fa) continue;
+            if(!dfn[v]){
+                tarjan(v,u);
+                low[u]=min(low[u],low[v]);
+                if(dfn[u]<low[v]) res.push_back({u,v});
+            }else low[u]=min(low[u],dfn[v]);
         }
-
-
     }
 };
