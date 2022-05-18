@@ -22,7 +22,7 @@ public:
                 tarjan(v,u);
                 low[u]=min(low[u],low[v]);
                 if(dfn[u]<low[v]) res.push_back({u,v});
-            }else low[u]=min(low[u],dfn[v]);
+            }else low[u]=min(low[u],low[v]);
         }
     }
 };
