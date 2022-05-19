@@ -10,12 +10,12 @@ public:
             adj[e[0]].push_back(e[1]);
             adj[e[1]].push_back(e[0]);
         }
-            for(int i=0;i<n;i++)
-                if(!dfn[i]) tarjan(i,-1);
+        for(int i=0;i<n;i++) 
+            if(!dfn[i]) tarjan(i,-1);
         return res;
     }
     void tarjan(int u,int fa){
-        dfn[u]=low[u]=++num;
+        low[u]=dfn[u]=++num;
         for(int v:adj[u]){
             if(v==fa) continue;
             if(!dfn[v]){
