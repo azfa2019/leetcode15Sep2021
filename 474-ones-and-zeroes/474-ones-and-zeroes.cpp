@@ -4,10 +4,8 @@ public:
         vector<vector<int>>f(m+1,vector<int>(n+1));
         for(auto str:strs){
             int a=0,b=0;
-            for(char c:str){
-                if(c=='0') a++;
-                else b++;
-            }
+            for(auto c:str)
+                c=='0'? a++:b++;
             for(int i=m;i>=a;i--)
                 for(int j=n;j>=b;j--)
                     f[i][j]=max(f[i][j],f[i-a][j-b]+1);
