@@ -1,13 +1,13 @@
 class Solution {
 public:
-    int coinChange(vector<int>& coins, int amount) {
-        vector<int>f(amount+1,1e8);
+    int coinChange(vector<int>& coins, int m) {
+        vector<int>f(m+1,1e9);
         f[0]=0;
         for(int c:coins){
-            for(int j=c;j<=amount;j++)
-                f[j]=min(f[j],f[j-c]+1);
+            for(int i=c;i<=m;i++){
+                f[i]=min(f[i],f[i-c]+1);
+            }
         }
-        if(f[amount]==1e8) return -1;
-        return f[amount];
+        return f[m]==1e9?-1:f[m];
     }
 };
