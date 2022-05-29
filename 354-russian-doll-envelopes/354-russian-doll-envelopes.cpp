@@ -4,12 +4,12 @@ class Solution {
         else return a[0]<b[0];
     }
 public:
-    int maxEnvelopes(vector<vector<int>>& w) {
-        sort(w.begin(),w.end(),cmp);
+    int maxEnvelopes(vector<vector<int>>& es) {
+        sort(es.begin(),es.end(),cmp);
         vector<int>q;
-        for(auto e:w){
+        for(auto e:es){
             if(q.empty() || e[1]>q.back()) q.push_back(e[1]);
-            else{
+            else {
                 auto iter=lower_bound(q.begin(),q.end(),e[1]);
                 *iter=e[1];
             }
