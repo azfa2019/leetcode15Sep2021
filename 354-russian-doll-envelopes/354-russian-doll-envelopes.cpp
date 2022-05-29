@@ -8,7 +8,7 @@ public:
         sort(es.begin(),es.end(),cmp);
         vector<int>q;
         for(auto e:es){
-            if(q.empty() || e[1]>q.back()) q.push_back(e[1]);
+            if(q.empty()||e[1]>q.back()) q.push_back(e[1]);
             else {
                 auto iter=lower_bound(q.begin(),q.end(),e[1]);
                 *iter=e[1];
