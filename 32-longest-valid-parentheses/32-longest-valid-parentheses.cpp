@@ -10,7 +10,7 @@ public:
                     stk.pop();
                     if(stk.size()) res=max(res,i-stk.top());
                     else res=max(res,i-start);
-                }else start=i;
+                } else start=i;
             }
         }
         return res;
