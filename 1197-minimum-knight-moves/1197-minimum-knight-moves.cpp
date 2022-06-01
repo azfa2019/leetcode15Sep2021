@@ -7,7 +7,7 @@ public:
         q.push({310,310});
         vector<vector<bool>>vis(700,vector<bool>(700));
         vis[310][310]=true;
-        vector<vector<int>>dir={{-2, 1}, {-1, 2}, {1, 2}, {2, 1}, {2, -1}, {1, -2}, {-1, -2}, {-2, -1}};
+        int dir[8][2]={{-2, 1}, {-1, 2}, {1, 2}, {2, 1}, {2, -1}, {1, -2}, {-1, -2}, {-2, -1}};
         while (q.size()){
             int l=q.size();
             while(l--){
