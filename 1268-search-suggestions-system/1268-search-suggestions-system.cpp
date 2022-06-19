@@ -29,7 +29,7 @@ public:
                     cur->words.pop();
                 }
                 reverse(select.begin(),select.end());
-                ans.push_back(move(select));
+                ans.push_back(select);
             }
         }
         return ans;
