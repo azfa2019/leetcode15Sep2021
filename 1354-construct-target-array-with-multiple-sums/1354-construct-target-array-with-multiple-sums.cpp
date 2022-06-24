@@ -8,10 +8,10 @@ public:
             sum+=e; 
             q.push(e);
         }
-        while(q.top()!=1){
+        while(q.top()>1){
             LL curMax=q.top();q.pop();
             LL otherSum=sum-curMax;
-            if(curMax-otherSum<1||otherSum==0) return false;
+            if(curMax-otherSum<1||otherSum<1) return false;
             LL temp=curMax%otherSum;
             if(temp==0) temp=otherSum;
             q.push(temp);
