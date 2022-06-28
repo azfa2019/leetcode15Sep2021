@@ -3,6 +3,7 @@ public:
     int minDeletions(string s) {
         set<int>st;
         int a[26]={0};
+        //cout<<a[0]<<a[25]<<endl;
         for(char c:s) a[c-'a']++;
         int cnt=0;
         for(int i=0;i<26;i++){
