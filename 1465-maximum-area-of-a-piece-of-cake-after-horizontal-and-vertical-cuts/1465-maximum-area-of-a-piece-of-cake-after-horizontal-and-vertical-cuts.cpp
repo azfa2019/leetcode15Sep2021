@@ -12,6 +12,6 @@ public:
             maxw=max(maxw,vc[i]-vc[i-1]);
                 //return int64_t(maxh)*int64_t(maxh)%1000000007;
 
-        return int64_t(maxh)*int64_t(maxw)%mod;
+        return (long long)maxh*(long long)maxw%mod;
     }
 };
