@@ -7,9 +7,8 @@ public:
             for(char c:s) 
                 c=='0'?a++:b++;
             for(int i=m;i>=a;i--)
-                for(int j=n;j>=b;j--){
+                for(int j=n;j>=b;j--)
                     f[i][j]=max(f[i][j],f[i-a][j-b]+1);
-                }
         }
         return f[m][n];
     }
