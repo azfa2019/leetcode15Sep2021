@@ -4,8 +4,8 @@ public:
         unordered_map<char,int>maxcnt;
         for(auto& w:words2) {
             unordered_map<char,int>cnt;
-            for(auto c:w) cnt[c]++;
-            for(auto [k,v]:cnt) maxcnt[k]=max(maxcnt[k],v);
+            for(auto c:w) cnt[c]++,maxcnt[c]=max(maxcnt[c],cnt[c]);
+            //for(auto [k,v]:cnt) maxcnt[k]=max(maxcnt[k],v);
         }
         vector<string>res;
         for(auto& w:words1){
