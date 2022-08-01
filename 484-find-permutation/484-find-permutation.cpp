@@ -5,13 +5,13 @@ public:
         for(int i=0;i<res.size();i++) res[i]=i+1;
         int pos=0;
         while(pos<s.size()){
-            if(s[pos]=='I'){
+            if(s[pos]=='I') {
                 pos++;
                 continue;
             }
-            int start=pos;
-            while(pos<s.size() && s[pos]=='D') pos++;
-            reverse(res.begin()+start,res.begin()+pos+1);
+            int st=pos;
+            while(pos<s.size()&&s[pos]=='D') pos++;
+            reverse(res.begin()+st,res.begin()+pos+1);
         }
         return res;
     }
