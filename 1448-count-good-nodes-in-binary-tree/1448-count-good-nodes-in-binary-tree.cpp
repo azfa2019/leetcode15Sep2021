@@ -13,7 +13,7 @@ class Solution {
 public:
     int res=0;
     int goodNodes(TreeNode* root) {
-        helper(root,INT_MIN);
+        dfs(root,INT_MIN);
         return res;
     }
     void helper(TreeNode* root,int max){
@@ -25,4 +25,14 @@ public:
         helper(root->left,max);
         helper(root->right,max);
     }
+    void dfs(TreeNode *root,int mymax)
+    {
+        if(root==nullptr)
+            return ;
+        if(root->val>=mymax)
+            res++;
+        dfs(root->left,max(mymax,root->val));
+        dfs(root->right,max(mymax,root->val));
+    }
+
 };
