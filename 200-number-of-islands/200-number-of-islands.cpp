@@ -1,16 +1,16 @@
 class Solution {
 public:
-    int n,m;
     vector<vector<char>>g;
-    int dx[4]{1,0,-1,0},dy[4]={0,-1,0,1};
+    int n,m;
+    int dx[4]={1,0,-1,0},dy[4]={0,-1,0,1};
     int numIslands(vector<vector<char>>& grid) {
         g=grid;
+        int cnt=0;
         n=g.size(),m=g[0].size();
-        int res=0;
         for(int i=0;i<n;i++)
             for(int j=0;j<m;j++)
-                if(g[i][j]=='1') dfs(i,j),res++;
-        return res;
+                if(g[i][j]=='1') dfs(i,j),cnt++;
+        return cnt;
     }
     void dfs(int x,int y){
         g[x][y]='0';
