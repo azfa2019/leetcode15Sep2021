@@ -13,6 +13,7 @@ public:
         return res;
     }
 };
+// see https://www.acwing.com/solution/content/4910/
 // res p   l   r
 // 0   200 0   3
 // 1   100 1   3
