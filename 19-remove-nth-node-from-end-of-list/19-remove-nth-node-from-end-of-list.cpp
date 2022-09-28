@@ -14,11 +14,13 @@ public:
         auto dummy=new ListNode();
         dummy->next=head;
         auto fast=dummy,slow=dummy;
-        for(int i=1;i<=n;i++) fast=fast->next;
-        while(fast->next){
+        for(int i=1;i<n;i++) fast=fast->next;
+        //cout<<fast->val<<endl;
+        while(fast->next->next){
             fast=fast->next;
             slow=slow->next;
         }
+        //cout<<slow->val<<endl;
         slow->next=slow->next->next;
         return dummy->next;
     }
