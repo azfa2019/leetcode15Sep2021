@@ -14,7 +14,7 @@ public:
         int i=r,j=r;
         for(int u=0;u<k-1;u++){
             if(i-1<0) j++;
-            else if(j+1>=arr.size()) i--;
+            else if(j+1>arr.size()-1) i--;
             else{
                 int x=arr[i-1],y=arr[j+1];
                 pair<int,int> a{abs(t-x),x},b{abs(t-y),y};
