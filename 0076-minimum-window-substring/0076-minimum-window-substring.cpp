@@ -9,10 +9,11 @@ public:
             hs[s[i]]++;
             if(hs[s[i]]<=ht[s[i]]) cnt++;
             while(hs[s[j]]>ht[s[j]]) hs[s[j++]]--;
-            if(cnt==t.size()){
-                if(res.empty()||i-j+1<res.size()) res=s.substr(j,i-j+1);
+            if(t.size()==cnt){
+                if(res.empty()||res.size()>i-j+1) res=s.substr(j,i-j+1);
             }
         }
+
         return res;
     }
 };
