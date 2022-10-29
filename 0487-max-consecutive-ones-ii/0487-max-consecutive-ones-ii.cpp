@@ -10,7 +10,7 @@ public:
         for(int i=1;i<n;i++){
             if(nums[i]==0) noflip[i]=0,flip[i]=noflip[i-1]+1;
             else noflip[i]=noflip[i-1]+1,flip[i]=flip[i-1]+1;
-            ans=max(ans,max(noflip[i],flip[i]));
+            ans=max(ans,flip[i]);
         }
         return ans;
     }
