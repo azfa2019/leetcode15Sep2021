@@ -5,7 +5,7 @@ public:
         Node* son[26];
         Node(){
             id=-1;
-            for(int i=0;i<26;i++) son[i]=0;
+            for(int i=0;i<26;i++) son[i]=NULL;
         }
     }*root;
     vector<vector<char>>g;
