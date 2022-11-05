@@ -13,7 +13,7 @@ public:
     int dx[4]={1,0,-1,0},dy[4]={0,-1,0,1};
     void insert(string& word,int id){
         auto p=root;
-        for(auto c:word){
+        for(auto& c:word){
             int u=c-'a';
             if(!p->son[u]) p->son[u]=new Node();
             p=p->son[u];
@@ -31,7 +31,7 @@ public:
             }
         }
         vector<string>res;
-        for(auto id:ids) res.push_back(words[id]);
+        for(auto& id:ids) res.push_back(words[id]);
         return res;
     }
     void dfs(int x,int y,Node* p){
