@@ -11,7 +11,7 @@ public:
     vector<vector<char>>g;
     unordered_set<int>ids;
     int dx[4]={1,0,-1,0},dy[4]={0,-1,0,1};
-    void insert(string& word,int id){
+    void insert(string& word,int& id){
         auto p=root;
         for(auto& c:word){
             int u=c-'a';
