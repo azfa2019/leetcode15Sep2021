@@ -34,7 +34,7 @@ public:
         for(auto& id:ids) res.push_back(words[id]);
         return res;
     }
-    void dfs(int x,int y,Node* p){
+    void dfs(int& x,int& y,Node* p){
         if(p->id!=-1) ids.insert(p->id);
         char t=g[x][y];
         g[x][y]='.';
