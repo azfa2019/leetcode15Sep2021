@@ -10,6 +10,7 @@ public:
     }*root;
     vector<vector<char>>g;
     unordered_set<int>ids;
+    vector<vector<bool>>st;
     int dx[4]={1,0,-1,0},dy[4]={0,-1,0,1};
     void insert(string& word,int& id){
         auto p=root;
@@ -25,6 +26,7 @@ public:
         root=new Node();
         for(int i=0;i<words.size();i++) insert(words[i],i);
         int n=g.size(),m=g[0].size();
+        st=vector<vector<bool>>(n,vector<bool>(m,false));
         for(int i=0;i<n;i++){
             for(int j=0;j<m;j++){
                 int u=g[i][j]-'a';
@@ -37,16 +39,16 @@ public:
     }
     void dfs(int& x,int& y,Node* p){
         if(p->id!=-1) ids.insert(p->id);
-        char t=g[x][y];
-        g[x][y]='.';
+        st[x][y]=true;
+        //g[x][y]='.';
         for(int i=0;i<4;i++){
             int a=x+dx[i],b=y+dy[i];
-            if(a>=0 && a<g.size() && b>=0 && b<g[0].size() && g[a][b]!='.'){
+            if(a>=0 && a<g.size() && b>=0 && b<g[0].size() && !st[a][b]){
                 int u=g[a][b]-'a';
                 if(p->son[u]) dfs(a,b,p->son[u]);
             }
         }
-        g[x][y]=t;
+        st[x][y]=false;
         
     }
 };
