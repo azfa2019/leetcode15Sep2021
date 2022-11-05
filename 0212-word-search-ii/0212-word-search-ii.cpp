@@ -1,45 +1,50 @@
 class Solution {
-    class Trie{
-        public:
-        Trie* children[26]={};
-        string word="";
-        Trie(){};
-    };
-    Trie* root;
-    int m,n;
-    int dir[5]={1,0,-1,0,1};
-    vector<string>ans;
 public:
-    vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
-        this->root=new Trie();
-        for(string w:words){
-            auto node=root;
-            for(char c:w){
-                if(!node->children[c-'a']) node->children[c-'a']=new Trie();
-                node=node->children[c-'a'];
-            }
-            node->word=w;
+    struct Node{
+        int id;
+        Node* son[26];
+        Node(){
+            id=-1;
+            for(int i=0;i<26;i++) son[i]=0;
         }
-        m=board.size(),n=board[0].size();
-        for(int i=0;i<m;i++){
-            for(int j=0;j<n;j++){
-                dfs(i,j,board,root);
-            }
+    }*root;
+    vector<vector<char>>g;
+    unordered_set<int>ids;
+    int dx[4]={1,0,-1,0},dy[4]={0,-1,0,1};
+    void insert(string& word,int& id){
+        auto p=root;
+        for(auto& c:word){
+            int u=c-'a';
+            if(!p->son[u]) p->son[u]=new Node();
+            p=p->son[u];
         }
-        return ans;
+        p->id=id;
     }
-    void dfs(int i,int j,vector<vector<char>>&board,Trie* node){
-        if(i<0||j<0||i>m-1||j>n-1||board[i][j]=='#') return;
-        char c=board[i][j];
-        if(!node->children[c-'a']) return;
-        node=node->children[c-'a'];
-        if(node->word!="") ans.push_back(node->word),node->word="";
-        board[i][j]='#';
-        for(int d=0;d<4;d++){
-            int r=i+dir[d];
-            int c=j+dir[d+1];
-            dfs(r,c,board,node);
+    vector<string> findWords(vector<vector<char>>& board, vector<string>& words) {
+        g=board;
+        root=new Node();
+        for(int i=0;i<words.size();i++) insert(words[i],i);
+        for(int i=0;i<g.size();i++){
+            for(int j=0;j<g[i].size();j++){
+                int u=g[i][j]-'a';
+                if(root->son[u]) dfs(i,j,root->son[u]);
+            }
         }
-        board[i][j]=c;
+        vector<string>res;
+        for(auto& id:ids) res.push_back(words[id]);
+        return res;
+    }
+    void dfs(int& x,int& y,Node* p){
+        if(p->id!=-1) ids.insert(p->id);
+        char t=g[x][y];
+        g[x][y]='.';
+        for(int i=0;i<4;i++){
+            int a=x+dx[i],b=y+dy[i];
+            if(a>=0 && a<g.size() && b>=0 && b<g[0].size() && g[a][b]!='.'){
+                int u=g[a][b]-'a';
+                if(p->son[u]) dfs(a,b,p->son[u]);
+            }
+        }
+        g[x][y]=t;
     }
 };
