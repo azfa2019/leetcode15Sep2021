@@ -5,7 +5,7 @@ public:
         Node* son[26];
         Node(){
             id=-1;
-            for(int i=0;i<26;i++) son[i]=NULL;
+            for(int i=0;i<26;i++) son[i]=0;
         }
     }*root;
     vector<vector<char>>g;
@@ -24,8 +24,9 @@ public:
         g=board;
         root=new Node();
         for(int i=0;i<words.size();i++) insert(words[i],i);
-        for(int i=0;i<g.size();i++){
-            for(int j=0;j<g[i].size();j++){
+        int n=g.size(),m=g[0].size();
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
                 int u=g[i][j]-'a';
                 if(root->son[u]) dfs(i,j,root->son[u]);
             }
@@ -46,5 +47,6 @@ public:
             }
         }
         g[x][y]=t;
+        
     }
 };
