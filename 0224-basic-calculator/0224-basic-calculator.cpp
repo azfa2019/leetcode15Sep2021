@@ -1,46 +1,35 @@
 class Solution {
 public:
-    stack<int>num;
-    stack<char>op;
-    void eval(){
-        
-        int b=num.top();num.pop();
-        int a=num.top();num.pop();
-        char c=op.top();op.pop();
-        int res;
-        if(c=='+') res=a+b;
-        else if(c=='-') res=a-b;
-        else if(c=='*') res=a*b;
-        else res=a/b;
-        num.push(res);
-    }
-    void replace(string& s,string a,string b){
-        int pos=s.find(a),n=a.size();
-        while(pos!=-1) s.replace(pos,n,b),pos=s.find(a);
-    }
     int calculate(string s) {
-        replace(s," ","");
-        replace(s,"(-","(0-");
-        replace(s,"(+","(0+");
-        num.push(0);
-        for(int i=0;i<s.size();i++){
-            char c=s[i];
+        string s0="+";
+        for(char c:s) {
             if(c==' ') continue;
-            if(isdigit(c)) {
-                int x=0,j=i;
-                while(j<s.size()&&isdigit(s[j])) x=x*10+(s[j++]-'0');
-                num.push(x);
-                i=j-1;
-            }else if(c=='(') op.push(c);
-            else if(c==')'){
-                while(op.top()!='(') eval();
-                op.pop();
-            }else{
-                while(op.size() && op.top()!='(') eval();
-                op.push(c);
+            s0.push_back(c);
+            if(c=='(') s0.push_back('+');
+        }
+        s=s0;
+        int n=s.size();
+        int sum=0,sign;
+        stack<int>signs,nums;
+        for(int i=0;i<n;i++){
+            char c=s[i];
+            if(c=='+' || c=='-'){
+                sign=c=='+'?1:-1;
+            }else if(isdigit(c)){
+                int i0=i;
+                while(i<n && isdigit(s[i])) i++;
+                int num=stoi(s.substr(i0,i-i0));
+                sum+=num*sign;
+                i--;
+            }else if(c=='('){
+                signs.push(sign);
+                nums.push(sum);
+                sum=0;
+            }else if(c==')'){
+                sum=sum*signs.top();signs.pop();
+                sum=nums.top()+sum; nums.pop();
             }
         }
-        while(op.size()) eval();
-        return num.top();
+        return sum;
     }
 };
