@@ -6,7 +6,7 @@ public:
             string t;
             for(int j=0;j<s.size();){
                 int k=j+1;
-                while(k<s.size()&&s[j]==s[k]) k++;
+                while(k<s.size()&&s[k]==s[j]) k++;
                 t+=to_string(k-j)+s[j];
                 j=k;
             }
