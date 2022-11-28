@@ -4,7 +4,7 @@ public:
         vector<int>win,lose;
         map<int,int>mlose;
         for(auto m:matches){
-            mlose[m[0]];
+            mlose[m[0]]=mlose[m[0]];
             mlose[m[1]]++;
         }
         for(auto it=mlose.begin();it!=mlose.end();it++) {
