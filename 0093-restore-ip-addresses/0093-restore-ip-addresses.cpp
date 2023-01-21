@@ -17,7 +17,7 @@ public:
         for(int i=u,t=0;i<s.size();i++){
             if(i>u && s[u]=='0') break;
             t=t*10+s[i]-'0';
-            if(t<=255) dfs(i+1,k+1,path+to_string(t)+".");
+            if(t<=255) dfs(i+1,k+1,path+to_string(t)+'.');
             else break;
         }
     }
