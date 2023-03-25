@@ -10,12 +10,14 @@ public:
         dfs(0);
         return res;
     }
-    void dfs(int start){
-        res.push_back(path);
-        for(int i=start;i<n;i++){
-            path.push_back(nums[i]);
-            dfs(i+1);
-            path.pop_back();
+    void dfs(int idx){
+        if(idx==n) {
+            res.push_back(path);
+            return;
         }
-    }
+        path.push_back(nums[idx]);//选
+        dfs(idx+1);
+        path.pop_back();
+        dfs(idx+1); //不选
+        }
 };
