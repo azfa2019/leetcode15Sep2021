@@ -1,0 +1,11 @@
+class Solution {
+public:
+    vector<int> successfulPairs(vector<int>& spells, vector<int>& potions, long long success) {
+        sort(potions.begin(),potions.end());
+        for(int &x:spells){
+            x=potions.end()-upper_bound(potions.begin(),potions.end(),(success-1)/x);
+            cout<<x<<endl;
+        }
+        return spells;
+    }
+};
