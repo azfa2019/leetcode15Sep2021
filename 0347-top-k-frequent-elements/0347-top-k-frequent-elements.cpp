@@ -2,12 +2,16 @@ typedef pair<int,int> PII;
 class Solution {
 public:
     vector<int> topKFrequent(vector<int>& nums, int k) {
-        priority_queue<PII>heap;
         unordered_map<int,int>hash;
         for(int& num:nums) hash[num]++;
-        for(auto& h:hash) heap.push({h.second,h.first});
+        int n=nums.size();
+        vector<int>s(n+1);
+        for(auto h:hash) s[h.second]++;
+        int i=n,t=0;
+        while(t<k) t+=s[i--];
         vector<int>res;
-        while(k--) res.push_back(heap.top().second),heap.pop();
+        for(auto [x,c]:hash) 
+            if(c>i) res.push_back(x);
         return res;
     }
 };
