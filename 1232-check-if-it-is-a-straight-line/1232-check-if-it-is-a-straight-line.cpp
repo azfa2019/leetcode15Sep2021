@@ -1,23 +1,11 @@
 class Solution {
 public:
-    bool checkStraightLine(vector<vector<int>>& co) {
-        int n=co.size();
-        double eps=1e-8;
-        double x0=co[0][0],y0=co[0][1];
-        double x1=co[1][0],y1=co[1][1];
-        if(x1-x0==0){
-            for(int i=2;i<n;i++)
-                if(co[i][0]-x0!=0) return false;
-            return true;
+    bool checkStraightLine(vector<vector<int>>& c) {
+        for(int i=2;i<c.size();i++){
+            int x1=c[1][0]-c[0][0],y1=c[1][1]-c[0][1];
+            int x2=c[i][0]-c[0][0],y2=c[i][1]-c[0][1];
+            if(x1*y2-x2*y1) return false;
         }
-        else{
-            double k=(y1-y0)/(x1-x0);
-            //cout<<k<<endl;
-            for(int i=2;i<n;i++)
-                if (fabs((co[i][1]-y0)/(co[i][0]-x0)-k)>eps) return false;
-            return true;
-    }
-    
-        
+        return true;
     }
 };
