@@ -13,8 +13,8 @@ public:
                 else stk.push(second);
             }else stk.push(c);
         }
-        string res="";
-        res+=stk.top();
+        string res;
+        res=stk.top();
         return res;
     }
 };
