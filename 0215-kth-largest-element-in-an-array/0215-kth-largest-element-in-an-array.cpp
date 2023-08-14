@@ -1,7 +1,7 @@
 class Solution {
 public:
     int qsort(vector<int>& nums,int l,int r,int k){
-        if(l==r) return nums[k];
+        if(l==r) return nums[l];
         int i=l-1,j=r+1,x=nums[(l+r)/2];
         while(i<j){
             while(nums[++i]>x);
