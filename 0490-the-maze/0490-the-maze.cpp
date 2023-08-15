@@ -20,8 +20,7 @@ public:
                  maze[x+dx[i]][y+dy[i]]!=1){
                 x+=dx[i],y+=dy[i];
             }
-         if(helper(maze,x,y,dst,visit)) return true;
-    
+            if(helper(maze,x,y,dst,visit)) return true;
         }
         return false;
     }
