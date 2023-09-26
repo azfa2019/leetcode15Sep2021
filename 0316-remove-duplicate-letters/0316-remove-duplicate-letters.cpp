@@ -8,7 +8,7 @@ public:
         for(int i=0;i<n;i++) pos[s[i]]=i;
         for(int i=0;i<n;i++){
             if(ins[s[i]]) continue;
-            while(stk.size() && s[i]<stk.back() && i<pos[stk.back()]) ins[stk.back()]=false, stk.pop_back();
+            while(stk.size() && stk.back()>s[i] && pos[stk.back()]>i) ins[stk.back()]=false, stk.pop_back();
             ins[s[i]]=true;
             stk+=s[i];
         }
