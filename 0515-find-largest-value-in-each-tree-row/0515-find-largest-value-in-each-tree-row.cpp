@@ -12,7 +12,7 @@
 class Solution {
 public:
     vector<int> largestValues(TreeNode* root) {
-                vector<int>res;
+        vector<int>res;
         if(!root) return res;
         queue<TreeNode*>q;
         q.push(root);
