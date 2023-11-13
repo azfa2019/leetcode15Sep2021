@@ -3,8 +3,7 @@ public:
     string sortVowels(string s) {
         unordered_set<char>v{'A','E','I','O','U','a','e','i','o','u'};
         string tmp;
-        vector<int>pos;
-        for(int i=0;i<s.size();i++) if(v.count(s[i])) tmp+=s[i],pos.push_back(i);
+        for(int i=0;i<s.size();i++) if(v.count(s[i])) tmp+=s[i];
         sort(tmp.begin(),tmp.end());
         cout<<tmp<<endl;
         int j=0;
