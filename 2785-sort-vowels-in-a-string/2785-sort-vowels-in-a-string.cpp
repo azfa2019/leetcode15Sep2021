@@ -5,7 +5,7 @@ public:
         string tmp;
         for(int i=0;i<s.size();i++) if(v.count(s[i])) tmp+=s[i];
         sort(tmp.begin(),tmp.end());
-        cout<<tmp<<endl;
+        //cout<<tmp<<endl;
         int j=0;
         for(int i=0;i<s.size();i++){
             if(v.count(s[i])) s[i]=tmp[j++];
