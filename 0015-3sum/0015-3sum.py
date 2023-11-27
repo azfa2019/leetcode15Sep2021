@@ -7,6 +7,10 @@ class Solution:
             x=nums[i]
             if i>0 and x==nums[i-1]:
                 continue
+            if x+nums[i+1]+nums[i+2]>0:
+                break
+            if x+nums[-2]+nums[-1]<0:
+                continue
             left=i+1
             right=n-1
             while left<right:
