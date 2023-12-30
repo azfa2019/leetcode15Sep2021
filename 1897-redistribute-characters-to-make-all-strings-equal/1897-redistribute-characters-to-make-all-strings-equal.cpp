@@ -2,7 +2,8 @@ class Solution {
 public:
     bool makeEqual(vector<string>& words) {
         int n=words.size();
-        vector<int> hash(26);
+        int hash[26];
+        memset(hash,0,sizeof hash);
         for(auto& w:words)
             for(auto&c:w){
                 hash[c-'a']++;
