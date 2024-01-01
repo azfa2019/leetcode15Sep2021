@@ -8,6 +8,7 @@ public:
         for(int i=0,j=0;i<n;i++){
             while(j<m && g[i]>s[j]) j++;
             if(j<m && g[i]<=s[j]) res++,j++;
+            else break;
         }
         return res;
     }
