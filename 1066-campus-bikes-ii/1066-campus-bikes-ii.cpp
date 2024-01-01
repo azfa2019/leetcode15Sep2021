@@ -13,6 +13,9 @@ public:
                         f[i][j]=min(f[i][j],f[i-1][j-(1<<k)]+d);
                     }
                 }
-        return *min_element(f[n],f[n]+(1<<m));
+        int res=1e9;
+        for(int i=0;i<1<<m;i++)
+            res=min(res,f[n][i]);
+        return res;
     }
 };
