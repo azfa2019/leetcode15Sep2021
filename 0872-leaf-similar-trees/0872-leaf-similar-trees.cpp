@@ -12,12 +12,9 @@
 class Solution {
 public:
     bool leafSimilar(TreeNode* root1, TreeNode* root2) {
-        return helper(root1)==helper(root2);
-    }
-    vector<int>helper(TreeNode* root){
-        vector<int>ans;
-        inorder(root,ans);
-        return ans;
+        vector<int>ans1,ans2;
+        inorder(root1,ans1),inorder(root2,ans2);
+        return ans1==ans2;
     }
     void inorder(TreeNode* root,vector<int>&ans){
         if(root->left) inorder(root->left,ans);
