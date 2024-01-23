@@ -1,15 +1,10 @@
 class Solution {
 public:
-    int n;
-    vector<vector<int>>ans;
-    vector<int>path,nums;
-    vector<vector<int>> subsets(vector<int>& _nums) {
-        nums=_nums;
-        n=nums.size();
-        dfs(0);
-        return ans;
-    }
-    void dfs(int i){
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>>ans;
+        vector<int>path;
+        int n=nums.size();
+        function<void(int)>dfs=[&](int i){
         ans.push_back(path);
         if(i==n) return;
         for(int j=i;j<n;j++){
@@ -17,5 +12,9 @@ public:
             dfs(j+1);
             path.pop_back();
         }
+        };
+        dfs(0);
+        return ans;
     }
+
 };
