@@ -1,23 +1,21 @@
 class Solution {
 public:
-    vector<vector<int>>res;
-    vector<int>path;
     int n;
-    vector<int>nums;
+    vector<vector<int>>ans;
+    vector<int>path,nums;
     vector<vector<int>> subsets(vector<int>& _nums) {
         nums=_nums;
         n=nums.size();
         dfs(0);
-        return res;
+        return ans;
     }
-    void dfs(int idx){
-        if(idx==n) {
-            res.push_back(path);
-            return;
+    void dfs(int i){
+        ans.push_back(path);
+        if(i==n) return;
+        for(int j=i;j<n;j++){
+            path.push_back(nums[j]);
+            dfs(j+1);
+            path.pop_back();
         }
-        path.push_back(nums[idx]);//选
-        dfs(idx+1);
-        path.pop_back();
-        dfs(idx+1); //不选
     }
 };
