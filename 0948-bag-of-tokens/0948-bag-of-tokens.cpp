@@ -3,14 +3,18 @@ public:
     int bagOfTokensScore(vector<int>& tokens, int power) {
         sort(tokens.begin(),tokens.end());
         int n=tokens.size();
-        int l=0;
-        while(l<n && power>=tokens[l]) power-=tokens[l++];
-        int res=l;
-        for(int r=n-1;r>l;r--){
-            if(l<n-r) break;
-            power+=tokens[r];
-            while(l<r && power>=tokens[l]) power-=tokens[l++];
-            res=max(res,l-(n-r));
+        int l=0,r=n-1;
+        int res=0,score=0;
+        while(l<=r){
+            if(power<tokens[l]){
+                if(score<=0) return res;
+                power+=tokens[r];
+                score--,r--;
+            }else{
+                power-=tokens[l];
+                score++,l++;
+                res=max(res,score);
+            }
         }
         return res;
     }
