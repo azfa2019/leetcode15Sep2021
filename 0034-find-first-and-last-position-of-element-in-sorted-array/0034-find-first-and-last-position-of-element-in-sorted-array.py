@@ -1,13 +1,13 @@
 def lowerbound(nums:List[int],target:int)->int:
-    l=0
+    l=-1
     r=len(nums)
-    while l<r:
+    while l+1<r:
         mid=(l+r)//2
         if nums[mid]>=target:
             r=mid
         else:
-            l=mid+1
-    return l
+            l=mid
+    return r
 class Solution:    
     def searchRange(self, nums: List[int], target: int) -> List[int]:
         start=lowerbound(nums,target)
