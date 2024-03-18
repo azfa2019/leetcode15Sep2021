@@ -8,7 +8,7 @@ def lowerbound(nums:List[int],target:int)->int:
         else:
             l=mid
     return r
-class Solution:    
+class Solution:
     def searchRange(self, nums: List[int], target: int) -> List[int]:
         start=lowerbound(nums,target)
         if start==len(nums) or nums[start]!=target:
