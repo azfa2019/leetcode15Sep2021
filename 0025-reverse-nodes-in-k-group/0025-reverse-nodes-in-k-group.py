@@ -9,9 +9,9 @@ class Solution:
         cur=head
         while cur:
             n+=1
-            cur=cur.next;
+            cur=cur.next
         pre,cur=None,head
-        p0=dummy=ListNode(next=head)
+        dummy=p0=ListNode(next=head)
         while n>=k:
             n-=k
             for _ in range(k):
@@ -23,4 +23,5 @@ class Solution:
             p0.next.next=cur
             p0.next=pre
             p0=nxt
+            
         return dummy.next
