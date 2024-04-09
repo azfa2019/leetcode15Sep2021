@@ -5,7 +5,8 @@
 #         self.next = next
 class Solution:
     def midnode(self,head: Optional[ListNode]) -> Optional[ListNode]:
-        slow=fast=head
+        slow=head
+        fast=head
         while fast and fast.next:
             slow=slow.next
             fast=fast.next.next
@@ -13,12 +14,11 @@ class Solution:
     def reverse(self,head: Optional[ListNode]) -> Optional[ListNode]:
         pre,cur=None,head
         while cur:
-            ne=cur.next
+            nxt=cur.next
             cur.next=pre
             pre=cur
-            cur=ne
+            cur=nxt
         return pre
-            
     def reorderList(self, head: Optional[ListNode]) -> None:
         """
         Do not return anything, modify head in-place instead.
@@ -26,10 +26,9 @@ class Solution:
         mid=self.midnode(head)
         head2=self.reverse(mid)
         while head2.next:
-            ne=head.next
-            ne2=head2.next
+            nxt=head.next
+            nxt2=head2.next
             head.next=head2
-            head2.next=ne
-            head=ne
-            head2=ne2
-        
+            head2.next=nxt
+            head=nxt
+            head2=nxt2
