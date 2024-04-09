@@ -4,13 +4,13 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    def midnode(self,head: Optional[ListNode]) -> None:
+    def midnode(self,head: Optional[ListNode]) -> Optional[ListNode]:
         slow=fast=head
         while fast and fast.next:
             slow=slow.next
             fast=fast.next.next
         return slow
-    def reverse(self,head: Optional[ListNode]) -> None:
+    def reverse(self,head: Optional[ListNode]) -> Optional[ListNode]:
         pre,cur=None,head
         while cur:
             ne=cur.next
