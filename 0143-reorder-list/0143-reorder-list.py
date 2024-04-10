@@ -4,13 +4,6 @@
 #         self.val = val
 #         self.next = next
 class Solution:
-    def midnode(self,head: Optional[ListNode]) -> Optional[ListNode]:
-        slow=head
-        fast=head
-        while fast and fast.next:
-            slow=slow.next
-            fast=fast.next.next
-        return slow
     def reverse(self,head: Optional[ListNode]) -> Optional[ListNode]:
         pre,cur=None,head
         while cur:
@@ -19,6 +12,12 @@ class Solution:
             pre=cur
             cur=nxt
         return pre
+    def midnode(self,head: Optional[ListNode]) -> Optional[ListNode]:
+        slow=fast=head
+        while fast and fast.next:
+            slow=slow.next
+            fast=fast.next.next
+        return slow
     def reorderList(self, head: Optional[ListNode]) -> None:
         """
         Do not return anything, modify head in-place instead.
