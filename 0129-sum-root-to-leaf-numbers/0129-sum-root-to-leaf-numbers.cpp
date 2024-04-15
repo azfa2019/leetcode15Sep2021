@@ -11,15 +11,17 @@
  */
 class Solution {
 public:
-    int ans;
+    int res=0;
     int sumNumbers(TreeNode* root) {
-        if(root) helper(root,0);
-        return ans;
+        dfs(root,0);
+        return res;
     }
-    void helper(TreeNode* root,int num){
-        num=num*10+root->val;
-        if(!root->left && !root->right) ans+=num;
-        if(root->left) helper(root->left,num);
-        if(root->right) helper(root->right,num);
+    void dfs(TreeNode* node,int cur){
+        if(!node->left&& !node->right){
+            res+=cur*10+node->val;
+            return;
+        }
+        if(node->left) dfs(node->left,cur*10+node->val);
+        if(node->right) dfs(node->right,cur*10+node->val);
     }
 };
