@@ -10,7 +10,6 @@ class Solution:
         def dfs(root: Optional[TreeNode],d:int) -> None:
             if root is None:
                 return
-            nonlocal ans
             if len(ans)==d:
                 ans.append(root.val)
             dfs(root.right,d+1)
