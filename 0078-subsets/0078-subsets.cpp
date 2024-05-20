@@ -1,19 +1,22 @@
 class Solution {
 public:
-    vector<vector<int>> subsets(vector<int>& nums) {
-        vector<vector<int>>ans;
-        vector<int>path;
-        int n=nums.size();
-        function<void(int)>dfs=[&](int i){
+    int n;
+    vector<vector<int>>ans;
+    vector<int> nums;
+    void dfs(vector<int>& path,int cur){
         ans.push_back(path);
-        if(i==n) return;
-        for(int j=i;j<n;j++){
+        if(cur==n) return;
+        for(int j=cur;j<n;j++){
             path.push_back(nums[j]);
-            dfs(j+1);
+            dfs(path,j+1);
             path.pop_back();
         }
-        };
-        dfs(0);
+    }
+    vector<vector<int>> subsets(vector<int>& _nums) {
+        nums=_nums;
+        n=nums.size();
+        vector<int>path;
+        dfs(path,0);
         return ans;
     }
 
