@@ -1,18 +1,19 @@
 class Solution {
 public:
-    vector<bool> canMakePaliQueries(string s, vector<vector<int>>& queries) {
-        int n=s.size(),q=queries.size();
-        vector<vector<int>>sum(n+1,vector<int>(26));
+    vector<bool> canMakePaliQueries(string s, vector<vector<int>>& q) {
+        int n=s.size(),m=q.size();
+        vector<vector<int>>cnt(n+1,vector<int>(26));
         for(int i=0;i<n;i++){
-            sum[i+1]=sum[i];
-            sum[i+1][s[i]-'a']++;
+            cnt[i+1]=cnt[i];
+            cnt[i+1][s[i]-'a']++;
         }
-        vector<bool>ans(q);
-        for(int i=0;i<q;i++){
-            int l=queries[i][0],r=queries[i][1],k=queries[i][2],cnt=0;
-            for(int j=0;j<26;j++)
-                cnt+=(sum[r+1][j]-sum[l][j])%2;
-            if(cnt/2<=k) ans[i]=true;
+        vector<bool>ans(m);
+        for(int i=0;i<m;i++){
+            int l=q[i][0],r=q[i][1],k=q[i][2],sum=0;
+            for(int j=0;j<26;j++){
+                sum+=((cnt[r+1][j]-cnt[l][j])%2==1);
+            }
+            ans[i]=(sum/2<=k);
         }
         return ans;
     }
