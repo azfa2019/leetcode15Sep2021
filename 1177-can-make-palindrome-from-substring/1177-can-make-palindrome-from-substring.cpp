@@ -9,8 +9,9 @@ public:
         }
         vector<bool>ans(m);
         for(int i=0;i<m;i++){
-            int l=q[i][0],r=q[i][1],k=q[i][2];
-            int cnt=__builtin_popcount(sum[r+1]^sum[l]);
+            int l=q[i][0],r=q[i][1],k=q[i][2],cnt;
+            for(int j=0;j<26;j++)
+                cnt=__builtin_popcount(sum[r+1]^sum[l]);
             ans[i]=cnt/2<=k;
         }
         return ans;
