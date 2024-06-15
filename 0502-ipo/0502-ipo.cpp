@@ -5,16 +5,15 @@ public:
         int n=profits.size();
         for(int i=0;i<n;i++) q.push_back({capital[i],profits[i]});
         sort(q.begin(),q.end());
-        int i=0;
         priority_queue<int>heap;
+        int res=0,i=0;
         while(k--){
-        while(i<n && q[i].first<=w) heap.push(q[i].second),i++;
-        if(heap.empty()) break;
-        auto t=heap.top();
-        heap.pop();
-        w+=t;
+            while(i<n && q[i].first<=w) heap.push(q[i].second),i++;
+            if(heap.empty()) break;
+            auto t=heap.top();
+            w+=t;
+            heap.pop();
         }
-    
-    return w;
+        return w;
     }
 };
