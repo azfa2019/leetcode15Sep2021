@@ -1,39 +1,49 @@
-struct DSU{
-    int f[100005];
-    int N;
-    void init(int n){
-        N=n;
-        for(int i=1;i<=n;i++) f[i]=i;
-    }
-    int find(int x){
-        if(f[x]!=x) f[x]=find(f[x]);
-        return f[x];
-    }
-    bool merge(int x,int y){
-        int fx=find(x),fy=find(y);
-        if(fx==fy) return false;
-        f[fx]=fy;
-        N--;
-        return true;
-    }
-}a,b;
 class Solution {
 public:
+    vector<int>par;
+    int cnt;
+    int getroot(int x){
+        int root=x;
+        while(par[root]!=root) root=par[root];
+        while(par[x]!=root){
+            int tmp=par[x];
+            par[x]=root;
+            x=tmp;
+        }
+        return root;
+    }
+    void merge(int x,int y){
+        int px=getroot(x),py=getroot(y);
+        if(px!=py) par[px]=py,cnt--;
+    }
+    void init(int n){
+        cnt=n;
+        for(int i=1;i<=n;i++) par[i]=i;
+    }
     int maxNumEdgesToRemove(int n, vector<vector<int>>& edges) {
-        a.init(n),b.init(n);
+        par=vector<int>(n+1);
         int ans=0;
-        for(auto& e:edges){
-            if(e[0]==3){
-                bool ba=a.merge(e[1],e[2]);
-                bool bb=b.merge(e[1],e[2]);
-                if(!ba && !bb) ans++;
-            }
+        int cnt1=0,cnt2=0,cnt3=0;
+        init(n);
+        for(int i=0;i<edges.size();i++){
+            if(edges[i][0]==1||edges[i][0]==3)
+                merge(edges[i][1],edges[i][2]),cnt1++;
         }
-        for(auto& e:edges){
-            if(e[0]==1 && !a.merge(e[1],e[2])) ans++;
-            if(e[0]==2 && !b.merge(e[1],e[2])) ans++;
+        if(cnt!=1) return -1;
+        init(n);
+        for(int i=0;i<edges.size();i++){
+            if(edges[i][0]==2||edges[i][0]==3)
+                merge(edges[i][1],edges[i][2]),cnt2++;
         }
-        if(a.N>1 || b.N>1) return -1;
+        if(cnt!=1) return -1;
+        init(n);
+        for(int i=0;i<edges.size();i++){
+            if(edges[i][0]==3)
+                merge(edges[i][1],edges[i][2]),cnt3++;
+        }
+        cnt1-=cnt3,cnt2-=cnt3;
+        ans+=(cnt3-(n-cnt));
+        ans+=cnt1-(cnt-1)+cnt2-(cnt-1);
         return ans;
     }
 };
