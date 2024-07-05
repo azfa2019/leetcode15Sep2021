@@ -11,19 +11,26 @@
 class Solution {
 public:
     vector<int> nodesBetweenCriticalPoints(ListNode* head) {
-        vector<int>a,b;
-        for(;head;head=head->next){
-            a.push_back(head->val);
+        ListNode *a = head, *b = head->next, *c = head->next->next;
+        int first = 0, last = 0, minDis = INT_MAX;
+        for (int i = 1, prev = 0; c != nullptr; ++i) { // Traversing the list to find critical points
+            if ((a->val < b->val && b->val > c->val) || (a->val > b->val && b->val < c->val)) {
+                if (first == 0) {
+                    first = i; // First critical point position
+                }
+                last = i; // Last critical point position
+                if (prev > 0 && i - prev < minDis) {
+                    minDis = i - prev; // Update the minimum difference between adjacent critical points
+                }
+                prev = i;
+            }
+            a = b;
+            b = c;
+            c = c->next;
         }
-        if(a.size()<=2) return {-1,-1};
-        for(int i=1;i<a.size()-1;i++){
-            if((a[i]>a[i-1]&&a[i]>a[i+1])||(a[i]<a[i-1]&&a[i]<a[i+1])) b.push_back(i);
-        }
-        if(b.size()<=1) return {-1,-1};
-        sort(b.begin(),b.end());
-//for(auto num:b) cout<<num<<endl;
-        int mind=2e5,maxd=-1;
-        for(int i=1;i<b.size();i++) mind=min(mind,b[i]-b[i-1]);
-        return {mind,b.back()-b[0]};
+        if (first == last) { // Less than two critical points
+            return {-1, -1};
+        }  
+    return {minDis, last - first};
     }
 };
