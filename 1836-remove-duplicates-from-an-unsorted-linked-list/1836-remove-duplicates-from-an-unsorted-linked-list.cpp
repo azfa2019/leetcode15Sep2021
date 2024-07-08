@@ -13,13 +13,11 @@ public:
     ListNode* deleteDuplicatesUnsorted(ListNode* head) {
         unordered_map<int,int>hash;
         for(auto cur=head;cur;cur=cur->next) hash[cur->val]++;
-        ListNode dummy(0,head);
-        ListNode *cur=&dummy;
-        while(cur){
-            while(cur->next && hash.count(cur->next->val) && hash[cur->next->val]>1)
-                cur->next=cur->next->next;
-            cur=cur->next;
+        ListNode *dummy=new ListNode(0,head);
+        for(ListNode *pre=dummy,*cur=head;cur;cur=cur->next){
+            if(hash[cur->val]>1) pre->next=cur->next;
+            else pre=cur;
         }
-        return dummy.next;
+        return dummy->next;
     }
 };
