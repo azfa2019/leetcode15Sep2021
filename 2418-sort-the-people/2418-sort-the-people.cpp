@@ -1,13 +1,14 @@
 class Solution {
 public:
     vector<string> sortPeople(vector<string>& names, vector<int>& heights) {
-        unordered_map<int,string>hash;
-        int n=names.size();
-            for(int i=0;i<n;i++) 
-                hash[heights[i]]=names[i];
-        sort(heights.rbegin(),heights.rend());
-        vector<string>ans;
-        for(auto& h:heights) ans.push_back(hash[h]);
+        int n=names.size(),id[n];
+            
+        iota(id,id+n,0);
+        sort(id,id+n,[&](const auto&i, const auto&j){
+            return heights[i]>heights[j];
+        });
+        vector<string>ans(n);
+        for(int i=0;i<n;i++) ans[i]=names[id[i]];
         return ans;
     }
 };
