@@ -1,19 +1,16 @@
 class Solution {
 public:
     int kthSmallest(vector<vector<int>>& matrix, int k) {
-        int n=matrix.size();
-        function<bool(int)>check=[&](int mid)->bool{
-            int i=n-1,j=0,num=0;
-            while(i>=0 && j<n){
-                if(matrix[i][j]<=mid) num+=i+1,j+=1;
-                else i-=1;
-            }
-            return num>=k;
-        };
-        int l=matrix[0][0],r=matrix[n-1][n-1];
+        int n=matrix.size(),l=INT_MIN,r=INT_MAX;
+        
         while(l<r){
-            int mid=(l+r)>>1;
-            if(check(mid)) r=mid;
+            int mid=(long long) l+r>>1;
+            int i=n-1,cnt=0;
+            for(int j=0;j<n;j++){
+                while(i>=0 && matrix[j][i]>mid) i--;
+                cnt+=i+1;
+            }
+            if(cnt>=k) r=mid;
             else l=mid+1;
         }
         return l;
