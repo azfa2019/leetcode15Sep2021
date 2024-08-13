@@ -12,15 +12,15 @@ public:
             ans.push_back(path);
             return;
         }
-        if(u==c.size()) return;
-        int k=u+1;
-        while(k<c.size()&&c[k]==c[u]) k++;
-        int cnt=k-u;
-        for(int i=0;c[u]*i<=target&& i<=cnt;i++){
-            dfs(c,k,target-c[u]*i);
-            path.push_back(c[u]);
-        }
-        for(int i=0;c[u]*i<=target && i<=cnt;i++)
+        if(target<0 || u==c.size()) return;
+        
+        for(int i=u;i<c.size();i++){
+            if(i>u && c[i]==c[i-1]) continue;
+            int tmp=target-c[i];
+            if(tmp<0) return;
+            path.push_back(c[i]);
+            dfs(c,i+1,tmp);
             path.pop_back();
+        }
     }
 };
