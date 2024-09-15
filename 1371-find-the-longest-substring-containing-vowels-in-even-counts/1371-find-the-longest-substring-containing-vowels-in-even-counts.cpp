@@ -11,8 +11,8 @@ public:
             else if(c=='i') status^=(1<<2);
             else if(c=='o') status^=(1<<3);
             else if(c=='u') status^=(1<<4);
-        if(pos[status]!=-1) ans=max(ans,i-pos[status]+1);
-        else pos[status]=i+1;
+            if(pos[status]!=-1) ans=max(ans,i-pos[status]+1);
+            else pos[status]=i+1;
         }
         return ans;
     }
