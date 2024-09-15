@@ -15,6 +15,5 @@ public:
         else pos[status]=i+1;
         }
         return ans;
-        
     }
 };
